@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addruleprefix="JoomService\Component\Servicedirectory\Administrator\Rule"
+	addfieldprefix="JoomService\Component\Servicedirectory\Administrator\Field"
+>
+	<config>
+		<inlinehelp button="show"/>
+	</config>
+	<fieldset name="details">
+		<!-- Default Fields. -->
+		<!-- Id Field. Type: Text (joomla) -->
+		<field
+			name="id"
+			type="text" class="readonly" label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC" size="10" default="0"
+			readonly="true"
+		/>
+		<!-- Date Created Field. Type: Calendar (joomla) -->
+		<field
+			name="created"
+			type="calendar"
+			label="COM_SERVICEDIRECTORY_FILE_CREATED_DATE_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_CREATED_DATE_DESC"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="user_utc"
+		/>
+		<!-- User Created Field. Type: User (joomla) -->
+		<field
+			name="created_by"
+			type="user"
+			label="COM_SERVICEDIRECTORY_FILE_CREATED_BY_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_CREATED_BY_DESC"
+		/>
+		<!-- Published Field. Type: List (joomla) -->
+		<field name="published" type="list" label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+			filter="intval" size="1" default="1" >
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+			<option value="2">
+				JARCHIVED</option>
+			<option value="-2">
+				JTRASHED</option>
+		</field>
+		<!-- Date Modified Field. Type: Calendar (joomla) -->
+		<field name="modified" type="calendar" class="readonly"
+			label="COM_SERVICEDIRECTORY_FILE_MODIFIED_DATE_LABEL" description="COM_SERVICEDIRECTORY_FILE_MODIFIED_DATE_DESC"
+			size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+		<!-- User Modified Field. Type: User (joomla) -->
+		<field name="modified_by" type="user"
+			label="COM_SERVICEDIRECTORY_FILE_MODIFIED_BY_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_MODIFIED_BY_DESC"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+		/>
+		<!-- Access Field. Type: Accesslevel (joomla) -->
+		<field name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC"
+			default="1"
+			required="false"
+		/>
+		<!-- Ordering Field. Type: Numbers (joomla) -->
+		<field
+			name="ordering"
+			type="number"
+			class="inputbox validate-ordering"
+			label="COM_SERVICEDIRECTORY_FILE_ORDERING_LABEL"
+			description=""
+			default="0"
+			size="6"
+			required="false"
+		/>
+		<!-- Version Field. Type: Text (joomla) -->
+		<field
+			name="version"
+			type="text"
+			class="readonly"
+			label="COM_SERVICEDIRECTORY_FILE_VERSION_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_VERSION_DESC"
+			size="6"
+			default="1"
+			readonly="true"
+			filter="unset"
+		/>
+		<!-- Was added due to Permissions JS needing a Title field -->
+		<!-- Let us know at gh-629 should this change -->
+		<!-- https://github.com/vdm-io/Joomla-Component-Builder/issues/629#issuecomment-750117235 -->
+		<field
+			name="title"
+			type="hidden"
+			default="servicedirectory file"
+		/>
+		<!-- Dynamic Fields. -->
+		<!-- Name Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="name"
+			label="COM_SERVICEDIRECTORY_FILE_NAME_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_NAME_DESCRIPTION"
+			required="true"
+			message="COM_SERVICEDIRECTORY_FILE_NAME_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_FILE_NAME_HINT"
+		/>
+		<!-- File_type Field. Type: Filetypes. (custom) -->
+		<field
+			type="filetypes"
+			name="file_type"
+			label="COM_SERVICEDIRECTORY_FILE_FILE_TYPE_LABEL"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="false"
+			required="true"
+			button="false"
+		/>
+		<!-- Size Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="size"
+			label="COM_SERVICEDIRECTORY_FILE_SIZE_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_SIZE_DESCRIPTION"
+			required="true"
+			message="COM_SERVICEDIRECTORY_FILE_SIZE_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_FILE_SIZE_HINT"
+		/>
+		<!-- Entity_type Field. Type: List. (joomla) -->
+		<field
+			type="list"
+			name="entity_type"
+			label="COM_SERVICEDIRECTORY_FILE_ENTITY_TYPE_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_ENTITY_TYPE_DESCRIPTION"
+			message="COM_SERVICEDIRECTORY_FILE_ENTITY_TYPE_MESSAGE"
+			required="true">
+			<!-- Option Set. -->
+			<option value="">
+				COM_SERVICEDIRECTORY_FILE_SELECT_AN_OPTION</option>
+			<option value="extension">
+				COM_SERVICEDIRECTORY_FILE_EXTENSION</option>
+			<option value="company">
+				COM_SERVICEDIRECTORY_FILE_COMPANY</option>
+			<option value="volunteer">
+				COM_SERVICEDIRECTORY_FILE_VOLUNTEER</option>
+			<option value="platform">
+				COM_SERVICEDIRECTORY_FILE_PLATFORM</option>
+			<option value="category">
+				COM_SERVICEDIRECTORY_FILE_CATEGORY</option>
+			<option value="tag">
+				COM_SERVICEDIRECTORY_FILE_TAG</option>
+			<option value="area_of_expertise">
+				COM_SERVICEDIRECTORY_FILE_AREA_OF_EXPERTISE</option>
+			<option value="ticket">
+				COM_SERVICEDIRECTORY_FILE_TICKET</option>
+		</field>
+		<!-- Guid Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="guid"
+			label="COM_SERVICEDIRECTORY_FILE_GUID_LABEL"
+			size="40"
+			maxlength="40"
+			description="COM_SERVICEDIRECTORY_FILE_GUID_DESCRIPTION"
+			class="text_area"
+			readonly="true"
+			filter="CMD"
+			validate="guid"
+			hint="COM_SERVICEDIRECTORY_FILE_GUID_HINT"
+		/>
+		<!-- Entity Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="entity"
+			label="COM_SERVICEDIRECTORY_FILE_ENTITY_LABEL"
+			size="40"
+			maxlength="40"
+			description="COM_SERVICEDIRECTORY_FILE_ENTITY_DESCRIPTION"
+			class="text_area"
+			readonly="true"
+			required="false"
+			filter="CMD"
+			validate="guid"
+			hint="COM_SERVICEDIRECTORY_FILE_ENTITY_HINT"
+		/>
+		<!-- File_path Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="file_path"
+			label="COM_SERVICEDIRECTORY_FILE_FILE_PATH_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_FILE_PATH_DESCRIPTION"
+			required="true"
+			message="COM_SERVICEDIRECTORY_FILE_FILE_PATH_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_FILE_FILE_PATH_HINT"
+		/>
+		<!-- Extension Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="extension"
+			label="COM_SERVICEDIRECTORY_FILE_EXTENSION_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_EXTENSION_DESCRIPTION"
+			required="true"
+			message="COM_SERVICEDIRECTORY_FILE_EXTENSION_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_FILE_EXTENSION_HINT"
+		/>
+		<!-- Mime Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="mime"
+			label="COM_SERVICEDIRECTORY_FILE_MIME_LABEL"
+			description="COM_SERVICEDIRECTORY_FILE_MIME_DESCRIPTION"
+			required="true"
+			message="COM_SERVICEDIRECTORY_FILE_MIME_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_FILE_MIME_HINT"
+		/>
+	</fieldset>
+
+	<!-- Access Control Fields. -->
+	<fieldset name="accesscontrol">
+		<!-- Asset Id Field. Type: Hidden (joomla) -->
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		<!-- Rules Field. Type: Rules (joomla) -->
+		<field
+			name="rules"
+			type="rules"
+			label="Permissions in relation to this file"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_servicedirectory"
+			section="file"
+		/>
+	</fieldset>
+</form>

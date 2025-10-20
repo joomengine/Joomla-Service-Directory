@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+	<update>
+		<name>Service Directory</name>
+		<description>A professional directory component for listing and showcasing service providers.</description>
+		<element>pkg_servicedirectory</element>
+		<type>package</type>
+		<client>site</client>
+		<version>5.0.0</version>
+		<infourl title="Service Directory!">https://github.com/joomengine/Joomla-Service-Directory</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/joomengine/pkg-servicedirectory/archive/refs/tags/v5.0.0.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<maintainer>Lemuel van der Merwe</maintainer>
+		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
+		<targetplatform name="joomla" version="5\.[01234]"/>
+	</update>
+</updates>

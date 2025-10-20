@@ -1,0 +1,24 @@
+DROP TABLE IF EXISTS `#__servicedirectory_company`;
+DROP TABLE IF EXISTS `#__servicedirectory_portfolio`;
+DROP TABLE IF EXISTS `#__servicedirectory_category`;
+DROP TABLE IF EXISTS `#__servicedirectory_tag`;
+DROP TABLE IF EXISTS `#__servicedirectory_social_handle`;
+DROP TABLE IF EXISTS `#__servicedirectory_area_of_expertise`;
+DROP TABLE IF EXISTS `#__servicedirectory_file`;
+DROP TABLE IF EXISTS `#__servicedirectory_address`;
+DROP TABLE IF EXISTS `#__servicedirectory_ticket`;
+DROP TABLE IF EXISTS `#__servicedirectory_region`;
+DROP TABLE IF EXISTS `#__servicedirectory_subregion`;
+DROP TABLE IF EXISTS `#__servicedirectory_country`;
+DROP TABLE IF EXISTS `#__servicedirectory_state`;
+DROP TABLE IF EXISTS `#__servicedirectory_city`;
+DROP TABLE IF EXISTS `#__servicedirectory_timezone`;
+DROP TABLE IF EXISTS `#__servicedirectory_platform`;
+DROP TABLE IF EXISTS `#__servicedirectory_language`;
+DROP TABLE IF EXISTS `#__servicedirectory_address_type`;
+DROP TABLE IF EXISTS `#__servicedirectory_file_type`;
+DROP TABLE IF EXISTS `#__servicedirectory_company_language`;
+DROP TABLE IF EXISTS `#__servicedirectory_company_tag`;
+DROP TABLE IF EXISTS `#__servicedirectory_company_area_of_expertise`;
+DROP TABLE IF EXISTS `#__servicedirectory_ticket_comment`;
+

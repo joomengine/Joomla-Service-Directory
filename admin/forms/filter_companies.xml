@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addruleprefix="JoomService\Component\Servicedirectory\Administrator\Rule"
+	addfieldprefix="JoomService\Component\Servicedirectory\Administrator\Field"
+>
+	<fields name="filter">
+		<field
+			type="text"
+			name="search"
+			inputmode="search"
+			label="COM_SERVICEDIRECTORY_FILTER_SEARCH"
+			description="COM_SERVICEDIRECTORY_FILTER_SEARCH_COMPANIES"
+			hint="JSEARCH_FILTER"
+		/>
+		<field
+			type="status"
+			name="published"
+			label="COM_SERVICEDIRECTORY_FILTER_PUBLISHED"
+			description="COM_SERVICEDIRECTORY_FILTER_PUBLISHED_COMPANIES"
+			class="js-select-submit-on-change"
+		>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			type="accesslevel"
+			name="access"
+			label="JGRID_HEADING_ACCESS"
+			hint="JOPTION_SELECT_ACCESS"
+			multiple="true"
+			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select"
+		/>
+		<field
+			type="categories"
+			name="category"
+			label="COM_SERVICEDIRECTORY_COMPANY_CATEGORY_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<field
+			type="companiesfiltercreatedby"
+			name="created_by"
+			label="COM_SERVICEDIRECTORY_COMPANY_CREATED_BY_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<input type="hidden" name="form_submited" value="1"/>
+	</fields>
+
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			class="js-select-submit-on-change"
+			default="a.id DESC"
+			validate="options"
+		>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+			<option value="a.published ASC">JSTATUS_ASC</option>
+			<option value="a.published DESC">JSTATUS_DESC</option>
+			<option value="a.name ASC">COM_SERVICEDIRECTORY_FILTER_NAME_ASCENDING</option>
+			<option value="a.name DESC">COM_SERVICEDIRECTORY_FILTER_NAME_DESCENDING</option>
+			<option value="g.name ASC">COM_SERVICEDIRECTORY_FILTER_CATEGORY_ASCENDING</option>
+			<option value="g.name DESC">COM_SERVICEDIRECTORY_FILTER_CATEGORY_DESCENDING</option>
+			<option value="a.created_by ASC">COM_SERVICEDIRECTORY_FILTER_CREATED_BY_ASCENDING</option>
+			<option value="a.created_by DESC">COM_SERVICEDIRECTORY_FILTER_CREATED_BY_DESCENDING</option>
+			<option value="a.chamber_of_commerce ASC">COM_SERVICEDIRECTORY_FILTER_CHAMBER_OF_COMMERCE_ASCENDING</option>
+			<option value="a.chamber_of_commerce DESC">COM_SERVICEDIRECTORY_FILTER_CHAMBER_OF_COMMERCE_DESCENDING</option>
+			<option value="a.email ASC">COM_SERVICEDIRECTORY_FILTER_EMAIL_ASCENDING</option>
+			<option value="a.email DESC">COM_SERVICEDIRECTORY_FILTER_EMAIL_DESCENDING</option>
+			<option value="a.website ASC">COM_SERVICEDIRECTORY_FILTER_WEBSITE_ASCENDING</option>
+			<option value="a.website DESC">COM_SERVICEDIRECTORY_FILTER_WEBSITE_DESCENDING</option>
+			<option value="a.phone ASC">COM_SERVICEDIRECTORY_FILTER_PHONE_ASCENDING</option>
+			<option value="a.phone DESC">COM_SERVICEDIRECTORY_FILTER_PHONE_DESCENDING</option>
+			<option value="a.companysize ASC">COM_SERVICEDIRECTORY_FILTER_COMPANY_SIZE_ASCENDING</option>
+			<option value="a.companysize DESC">COM_SERVICEDIRECTORY_FILTER_COMPANY_SIZE_DESCENDING</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			class="js-select-submit-on-change"
+		/>
+	</fields>
+</form>

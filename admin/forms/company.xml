@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addruleprefix="JoomService\Component\Servicedirectory\Administrator\Rule"
+	addfieldprefix="JoomService\Component\Servicedirectory\Administrator\Field"
+>
+	<config>
+		<inlinehelp button="show"/>
+	</config>
+	<fieldset name="details">
+		<!-- Default Fields. -->
+		<!-- Id Field. Type: Text (joomla) -->
+		<field
+			name="id"
+			type="text" class="readonly" label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC" size="10" default="0"
+			readonly="true"
+		/>
+		<!-- Date Created Field. Type: Calendar (joomla) -->
+		<field
+			name="created"
+			type="calendar"
+			label="COM_SERVICEDIRECTORY_COMPANY_CREATED_DATE_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_CREATED_DATE_DESC"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="user_utc"
+		/>
+		<!-- Published Field. Type: List (joomla) -->
+		<field name="published" type="list" label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+			filter="intval" size="1" default="1" >
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+			<option value="2">
+				JARCHIVED</option>
+			<option value="-2">
+				JTRASHED</option>
+		</field>
+		<!-- Date Modified Field. Type: Calendar (joomla) -->
+		<field name="modified" type="calendar" class="readonly"
+			label="COM_SERVICEDIRECTORY_COMPANY_MODIFIED_DATE_LABEL" description="COM_SERVICEDIRECTORY_COMPANY_MODIFIED_DATE_DESC"
+			size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+		<!-- User Modified Field. Type: User (joomla) -->
+		<field name="modified_by" type="user"
+			label="COM_SERVICEDIRECTORY_COMPANY_MODIFIED_BY_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_MODIFIED_BY_DESC"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+		/>
+		<!-- Access Field. Type: Accesslevel (joomla) -->
+		<field name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC"
+			default="1"
+			required="false"
+		/>
+		<!-- Ordering Field. Type: Numbers (joomla) -->
+		<field
+			name="ordering"
+			type="number"
+			class="inputbox validate-ordering"
+			label="COM_SERVICEDIRECTORY_COMPANY_ORDERING_LABEL"
+			description=""
+			default="0"
+			size="6"
+			required="false"
+		/>
+		<!-- Version Field. Type: Text (joomla) -->
+		<field
+			name="version"
+			type="text"
+			class="readonly"
+			label="COM_SERVICEDIRECTORY_COMPANY_VERSION_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_VERSION_DESC"
+			size="6"
+			default="1"
+			readonly="true"
+			filter="unset"
+		/>
+		<!-- Metakey Field. Type: Textarea (joomla) -->
+		<field
+			name="metakey"
+			type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL"
+			description="JFIELD_META_KEYWORDS_DESC"
+			rows="3"
+			cols="30"
+		/>
+		<!-- Metadesc Field. Type: Textarea (joomla) -->
+		<field
+			name="metadesc"
+			type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL"
+			description="JFIELD_META_DESCRIPTION_DESC"
+			rows="3"
+			cols="30"
+		/>
+		<!-- Was added due to Permissions JS needing a Title field -->
+		<!-- Let us know at gh-629 should this change -->
+		<!-- https://github.com/vdm-io/Joomla-Component-Builder/issues/629#issuecomment-750117235 -->
+		<field
+			name="title"
+			type="hidden"
+			default="servicedirectory company"
+		/>
+		<!-- Dynamic Fields. -->
+		<!-- Name Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="name"
+			label="COM_SERVICEDIRECTORY_COMPANY_NAME_LABEL"
+			size="40"
+			maxlength="150"
+			description="COM_SERVICEDIRECTORY_COMPANY_NAME_DESCRIPTION"
+			class="text_area"
+			readonly="false"
+			disabled="false"
+			required="true"
+			filter="STRING"
+			message="COM_SERVICEDIRECTORY_COMPANY_NAME_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_COMPANY_NAME_HINT"
+		/>
+		<!-- Contactname Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="contactname"
+			label="COM_SERVICEDIRECTORY_COMPANY_CONTACTNAME_LABEL"
+			size="10"
+			maxlength="50"
+			default=""
+			description="COM_SERVICEDIRECTORY_COMPANY_CONTACTNAME_DESCRIPTION"
+			class="text_area"
+			readonly="false"
+			disabled="false"
+			required="true"
+			filter="STRING"
+			message="COM_SERVICEDIRECTORY_COMPANY_CONTACTNAME_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_COMPANY_CONTACTNAME_HINT"
+			autocomplete="on"
+		/>
+		<!-- Category Field. Type: Categories. (custom) -->
+		<field
+			type="categories"
+			name="category"
+			label="COM_SERVICEDIRECTORY_COMPANY_CATEGORY_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_CATEGORY_DESCRIPTION"
+			message="COM_SERVICEDIRECTORY_COMPANY_CATEGORY_MESSAGE"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="false"
+			required="true"
+			button="false"
+			entity="company"
+		/>
+		<!-- Created_by Field. Type: User. (joomla) -->
+		<field
+			type="user"
+			name="created_by"
+			label="COM_SERVICEDIRECTORY_COMPANY_CREATED_BY_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_CREATED_BY_DESCRIPTION"
+		/>
+		<!-- Note_file_vdm_uploader Field. Type: Note. A None Database Field. (joomla) -->
+		<field type="note" name="note_file_vdm_uploader" description="COM_SERVICEDIRECTORY_COMPANY_NOTE_FILE_VDM_UPLOADER_DESCRIPTION" class="note_file_vdm_uploader" showon="file_type!:" />
+		<!-- Note_file_vdm_display Field. Type: Note. A None Database Field. (joomla) -->
+		<field type="note" name="note_file_vdm_display" description="COM_SERVICEDIRECTORY_COMPANY_NOTE_FILE_VDM_DISPLAY_DESCRIPTION" class="uk-clearfix uk-width-1-1 uk-margin note_file_vdm_display" />
+		<!-- Addresses Field. Type: Subform. (joomla) -->
+		<field
+			type="subform"
+			name="addresses"
+			label="COM_SERVICEDIRECTORY_COMPANY_ADDRESSES_LABEL"
+			layout="joomla.form.field.subform.repeatable"
+			multiple="true"
+			buttons="add,remove"
+			icon="list"
+			max="10"
+			min="0">
+			<form hidden="true" name="list_addresses_modal" repeat="true">
+				<!-- Guid Field. Type: Hidden. (joomla) -->
+				<field
+					type="hidden"
+					name="guid"
+					default="0"
+					filter="STRING"
+				/>
+				<!-- Type Field. Type: Addresstype. (custom) -->
+				<field
+					type="addresstype"
+					name="type"
+					label="COM_SERVICEDIRECTORY_COMPANY_TYPE_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_TYPE_DESCRIPTION"
+					class="list_class"
+					layout="joomla.form.field.list-fancy-select"
+					multiple="false"
+					required="true"
+					button="false"
+					entity="company"
+				/>
+				<!-- Line_one Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="line_one"
+					label="COM_SERVICEDIRECTORY_COMPANY_LINE_ONE_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_LINE_ONE_DESCRIPTION"
+					class="text_area"
+					required="true"
+					filter="STRING"
+					message="COM_SERVICEDIRECTORY_COMPANY_LINE_ONE_MESSAGE"
+					hint="COM_SERVICEDIRECTORY_COMPANY_LINE_ONE_HINT"
+				/>
+				<!-- Line_two Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="line_two"
+					label="COM_SERVICEDIRECTORY_COMPANY_LINE_TWO_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_LINE_TWO_DESCRIPTION"
+					class="text_area"
+					required="false"
+					filter="STRING"
+					hint="COM_SERVICEDIRECTORY_COMPANY_LINE_TWO_HINT"
+				/>
+				<!-- Country Field. Type: Countries. (custom) -->
+				<field
+					type="countries"
+					name="country"
+					label="COM_SERVICEDIRECTORY_COMPANY_COUNTRY_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_COUNTRY_DESCRIPTION"
+					message="COM_SERVICEDIRECTORY_COMPANY_COUNTRY_MESSAGE"
+					class="list_class"
+					layout="joomla.form.field.list-fancy-select"
+					multiple="false"
+					required="true"
+					button="false"
+					entity="company"
+				/>
+				<!-- State Field. Type: List. (joomla) -->
+				<field
+					type="list"
+					name="state"
+					label="COM_SERVICEDIRECTORY_COMPANY_STATE_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_STATE_DESCRIPTION"
+					class="list_class"
+					layout="joomla.form.field.list-fancy-select"
+					multiple="false"
+					required="true">
+					<!-- Option Set. -->
+					<option value="">
+						COM_SERVICEDIRECTORY_COMPANY_SELECT_A_COUNTRY</option>
+				</field>
+				<!-- City Field. Type: List. (joomla) -->
+				<field
+					type="list"
+					name="city"
+					label="COM_SERVICEDIRECTORY_COMPANY_CITY_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_CITY_DESCRIPTION"
+					class="list_class"
+					layout="joomla.form.field.list-fancy-select"
+					multiple="false">
+					<!-- Option Set. -->
+					<option value="">
+						COM_SERVICEDIRECTORY_COMPANY_SELECT_A_STATE</option>
+				</field>
+				<!-- Postal Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="postal"
+					label="COM_SERVICEDIRECTORY_COMPANY_POSTAL_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_POSTAL_DESCRIPTION"
+					class="text_area"
+					required="false"
+					hint="COM_SERVICEDIRECTORY_COMPANY_POSTAL_HINT"
+				/>
+			</form>
+		</field>
+		<!-- File_type Field. Type: Entityfiletypes. (custom) -->
+		<field
+			type="entityfiletypes"
+			name="file_type"
+			label="COM_SERVICEDIRECTORY_COMPANY_FILE_TYPE_LABEL"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="false"
+			required="false"
+			button="false"
+			entity="company"
+		/>
+		<!-- Chamber_of_commerce Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="chamber_of_commerce"
+			label="COM_SERVICEDIRECTORY_COMPANY_CHAMBER_OF_COMMERCE_LABEL"
+			size="10"
+			maxlength="50"
+			default=""
+			description="COM_SERVICEDIRECTORY_COMPANY_CHAMBER_OF_COMMERCE_DESCRIPTION"
+			class="text_area"
+			readonly="false"
+			disabled="false"
+			required="false"
+			filter="STRING"
+			message="COM_SERVICEDIRECTORY_COMPANY_CHAMBER_OF_COMMERCE_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_COMPANY_CHAMBER_OF_COMMERCE_HINT"
+			autocomplete="on"
+		/>
+		<!-- Languages Field. Type: Lang. (custom) -->
+		<field
+			type="lang"
+			name="languages"
+			label="COM_SERVICEDIRECTORY_COMPANY_LANGUAGES_LABEL"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			default="en-GB"
+			required="true"
+			button="true"
+		/>
+		<!-- Tags Field. Type: Tags. (custom) -->
+		<field
+			type="tags"
+			name="tags"
+			label="COM_SERVICEDIRECTORY_COMPANY_TAGS_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_TAGS_DESCRIPTION"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			required="false"
+			button="false"
+			entity="company"
+		/>
+		<!-- Guid Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="guid"
+			label="COM_SERVICEDIRECTORY_COMPANY_GUID_LABEL"
+			size="40"
+			maxlength="40"
+			description="COM_SERVICEDIRECTORY_COMPANY_GUID_DESCRIPTION"
+			class="text_area"
+			readonly="true"
+			filter="CMD"
+			validate="guid"
+			hint="COM_SERVICEDIRECTORY_COMPANY_GUID_HINT"
+		/>
+		<!-- Areas_of_expertise Field. Type: Areasofexpertise. (custom) -->
+		<field
+			type="areasofexpertise"
+			name="areas_of_expertise"
+			label="COM_SERVICEDIRECTORY_COMPANY_AREAS_OF_EXPERTISE_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_AREAS_OF_EXPERTISE_DESCRIPTION"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
+			required="false"
+			button="false"
+			entity="company"
+		/>
+		<!-- Email Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="email"
+			label="COM_SERVICEDIRECTORY_COMPANY_EMAIL_LABEL"
+			size="10"
+			maxlength="50"
+			description="COM_SERVICEDIRECTORY_COMPANY_EMAIL_DESCRIPTION"
+			class="text_area"
+			required="true"
+			filter="STRING"
+			message="COM_SERVICEDIRECTORY_COMPANY_EMAIL_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_COMPANY_EMAIL_HINT"
+		/>
+		<!-- Alias Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="alias"
+			label="COM_SERVICEDIRECTORY_COMPANY_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			readonly="true"
+			filter="STRING"
+			hint="COM_SERVICEDIRECTORY_COMPANY_ALIAS_HINT"
+		/>
+		<!-- Company_type Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="company_type"
+			label="COM_SERVICEDIRECTORY_COMPANY_COMPANY_TYPE_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_COMPANY_TYPE_DESCRIPTION"
+			class="text_area"
+			hint="COM_SERVICEDIRECTORY_COMPANY_COMPANY_TYPE_HINT"
+		/>
+		<!-- Description Field. Type: Editor. (joomla) -->
+		<field
+			type="editor"
+			name="description"
+			label="COM_SERVICEDIRECTORY_COMPANY_DESCRIPTION_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_DESCRIPTION_DESCRIPTION"
+			message="COM_SERVICEDIRECTORY_COMPANY_DESCRIPTION_MESSAGE"
+			width="100%"
+			height="400"
+			maxlength="2000"
+			buttons="false"
+			syntax="markdown"
+			editor="codemirror|none"
+			filter="STRING"
+			required="true"
+			validate="maxlength"
+		/>
+		<!-- Note_portfolio Field. Type: Note. A None Database Field. (joomla) -->
+		<field type="note" name="note_portfolio" label="COM_SERVICEDIRECTORY_COMPANY_NOTE_PORTFOLIO_LABEL" description="COM_SERVICEDIRECTORY_COMPANY_NOTE_PORTFOLIO_DESCRIPTION" heading="h4" class="alert alert-info note_portfolio" />
+		<!-- Website Field. Type: Url. (joomla) -->
+		<field
+			type="url"
+			name="website"
+			label="COM_SERVICEDIRECTORY_COMPANY_WEBSITE_LABEL"
+			size="60"
+			maxlength="150"
+			description="COM_SERVICEDIRECTORY_COMPANY_WEBSITE_DESCRIPTION"
+			class="text_area"
+			required="true"
+			filter="url"
+			validated="url"
+			scheme="http,https"
+			message="COM_SERVICEDIRECTORY_COMPANY_WEBSITE_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_COMPANY_WEBSITE_HINT"
+		/>
+		<!-- Portfolios Field. Type: Subform. (joomla) -->
+		<field
+			type="subform"
+			name="portfolios"
+			label="COM_SERVICEDIRECTORY_COMPANY_PORTFOLIOS_LABEL"
+			layout="joomla.form.field.subform.repeatable"
+			multiple="true"
+			buttons="add,remove"
+			description="COM_SERVICEDIRECTORY_COMPANY_PORTFOLIOS_DESCRIPTION"
+			icon="list"
+			max="20"
+			min="0">
+			<form hidden="true" name="list_portfolios_modal" repeat="true">
+				<!-- Guid Field. Type: Hidden. (joomla) -->
+				<field
+					type="hidden"
+					name="guid"
+					default="0"
+					filter="STRING"
+				/>
+				<!-- Project_title Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="project_title"
+					label="COM_SERVICEDIRECTORY_COMPANY_PROJECT_TITLE_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_PROJECT_TITLE_DESCRIPTION"
+					class="text_area"
+					required="true"
+					filter="STRING"
+					message="COM_SERVICEDIRECTORY_COMPANY_PROJECT_TITLE_MESSAGE"
+					hint="COM_SERVICEDIRECTORY_COMPANY_PROJECT_TITLE_HINT"
+				/>
+				<!-- Client_name Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="client_name"
+					label="COM_SERVICEDIRECTORY_COMPANY_CLIENT_NAME_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_CLIENT_NAME_DESCRIPTION"
+					class="text_area"
+					hint="COM_SERVICEDIRECTORY_COMPANY_CLIENT_NAME_HINT"
+				/>
+				<!-- Target_industry Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="target_industry"
+					label="COM_SERVICEDIRECTORY_COMPANY_TARGET_INDUSTRY_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_TARGET_INDUSTRY_DESCRIPTION"
+					class="text_area"
+					required="true"
+					hint="COM_SERVICEDIRECTORY_COMPANY_TARGET_INDUSTRY_HINT"
+				/>
+				<!-- Services_provided Field. Type: Text. (joomla) -->
+				<field
+					type="text"
+					name="services_provided"
+					label="COM_SERVICEDIRECTORY_COMPANY_SERVICES_PROVIDED_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_SERVICES_PROVIDED_DESCRIPTION"
+					class="text_area"
+					required="true"
+					hint="COM_SERVICEDIRECTORY_COMPANY_SERVICES_PROVIDED_HINT"
+				/>
+				<!-- Project_url Field. Type: Url. (joomla) -->
+				<field
+					type="url"
+					name="project_url"
+					label="COM_SERVICEDIRECTORY_COMPANY_PROJECT_URL_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_PROJECT_URL_DESCRIPTION"
+					class="text_area"
+					required="false"
+					filter="url"
+					validated="url"
+					scheme="http,https"
+					message="COM_SERVICEDIRECTORY_COMPANY_PROJECT_URL_MESSAGE"
+					hint="COM_SERVICEDIRECTORY_COMPANY_PROJECT_URL_HINT"
+				/>
+				<!-- Description Field. Type: Editor. (joomla) -->
+				<field
+					type="editor"
+					name="description"
+					label="COM_SERVICEDIRECTORY_COMPANY_DESCRIPTION_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_DESCRIPTION_DESCRIPTION"
+					message="COM_SERVICEDIRECTORY_COMPANY_DESCRIPTION_MESSAGE"
+					width="100%"
+					height="400"
+					maxlength="2000"
+					buttons="false"
+					syntax="markdown"
+					editor="codemirror|none"
+					filter="STRING"
+					required="true"
+					validate="maxlength"
+				/>
+			</form>
+		</field>
+		<!-- Social_handles Field. Type: Subform. (joomla) -->
+		<field
+			type="subform"
+			name="social_handles"
+			label="COM_SERVICEDIRECTORY_COMPANY_SOCIAL_HANDLES_LABEL"
+			layout="joomla.form.field.subform.repeatable"
+			multiple="true"
+			buttons="add,remove"
+			icon="list"
+			max="20"
+			min="0">
+			<form hidden="true" name="list_social_handles_modal" repeat="true">
+				<!-- Guid Field. Type: Hidden. (joomla) -->
+				<field
+					type="hidden"
+					name="guid"
+					default="0"
+					filter="STRING"
+				/>
+				<!-- Platform Field. Type: Platforms. (custom) -->
+				<field
+					type="platforms"
+					name="platform"
+					label="COM_SERVICEDIRECTORY_COMPANY_PLATFORM_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_PLATFORM_DESCRIPTION"
+					class="list_class"
+					layout="joomla.form.field.list-fancy-select"
+					multiple="false"
+					required="false"
+					button="false"
+					entity="company"
+				/>
+				<!-- Handle Field. Type: Url. (joomla) -->
+				<field
+					type="url"
+					name="handle"
+					label="COM_SERVICEDIRECTORY_COMPANY_HANDLE_LABEL"
+					description="COM_SERVICEDIRECTORY_COMPANY_HANDLE_DESCRIPTION"
+					class="text_area"
+					required="true"
+					filter="url"
+					validated="url"
+					scheme="https://"
+					message="COM_SERVICEDIRECTORY_COMPANY_HANDLE_MESSAGE"
+					hint="COM_SERVICEDIRECTORY_COMPANY_HANDLE_HINT"
+				/>
+			</form>
+		</field>
+		<!-- Phone Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="phone"
+			label="COM_SERVICEDIRECTORY_COMPANY_PHONE_LABEL"
+			size="10"
+			maxlength="50"
+			default=""
+			description="COM_SERVICEDIRECTORY_COMPANY_PHONE_DESCRIPTION"
+			class="text_area"
+			readonly="false"
+			disabled="false"
+			required="true"
+			validated="tel"
+			message="COM_SERVICEDIRECTORY_COMPANY_PHONE_MESSAGE"
+			hint="COM_SERVICEDIRECTORY_COMPANY_PHONE_HINT"
+		/>
+		<!-- Companysize Field. Type: List. (joomla) -->
+		<field
+			type="list"
+			name="companysize"
+			label="COM_SERVICEDIRECTORY_COMPANY_COMPANYSIZE_LABEL"
+			description="COM_SERVICEDIRECTORY_COMPANY_COMPANYSIZE_DESCRIPTION"
+			message="COM_SERVICEDIRECTORY_COMPANY_COMPANYSIZE_MESSAGE"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="false">
+			<!-- Option Set. -->
+			<option value="1 person">
+				COM_SERVICEDIRECTORY_COMPANY_ONE_PERSON</option>
+			<option value="2-3 persons">
+				COM_SERVICEDIRECTORY_COMPANY_TWOTHREE_PERSONS</option>
+			<option value="4-5 persons">
+				COM_SERVICEDIRECTORY_COMPANY_FOURFIVE_PERSONS</option>
+			<option value="6-9 persons">
+				COM_SERVICEDIRECTORY_COMPANY_SIXNINE_PERSONS</option>
+			<option value="10 or more persons">
+				COM_SERVICEDIRECTORY_COMPANY_TEN_OR_MORE_PERSONS</option>
+		</field>
+	</fieldset>
+
+	<!-- Metadata Fields. -->
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="vdmmetadata"
+			label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<!-- Robots Field. Type: List (joomla) -->
+			<field name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC" >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+			<!-- Author Field. Type: Text (joomla) -->
+			<field name="author"
+				type="text"
+				label="JAUTHOR" description="JFIELD_METADATA_AUTHOR_DESC"
+				size="20"
+			/>
+			<!-- Rights Field. Type: Textarea (joomla) -->
+			<field name="rights" type="textarea" label="JFIELD_META_RIGHTS_LABEL"
+				description="JFIELD_META_RIGHTS_DESC" required="false" filter="string"
+				cols="30" rows="2"
+			/>
+		</fieldset>
+	</fields>
+
+	<!-- Access Control Fields. -->
+	<fieldset name="accesscontrol">
+		<!-- Asset Id Field. Type: Hidden (joomla) -->
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		<!-- Rules Field. Type: Rules (joomla) -->
+		<field
+			name="rules"
+			type="rules"
+			label="Permissions in relation to this company"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_servicedirectory"
+			section="company"
+		/>
+	</fieldset>
+</form>
