@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addruleprefix="JoomService\Component\Servicedirectory\Administrator\Rule"
+	addfieldprefix="JoomService\Component\Servicedirectory\Administrator\Field"
+>
+	<config>
+		<inlinehelp button="show"/>
+	</config>
+	<fieldset name="details">
+		<!-- Default Fields. -->
+		<!-- Id Field. Type: Text (joomla) -->
+		<field
+			name="id"
+			type="text" class="readonly" label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC" size="10" default="0"
+			readonly="true"
+		/>
+		<!-- Date Created Field. Type: Calendar (joomla) -->
+		<field
+			name="created"
+			type="calendar"
+			label="COM_SERVICEDIRECTORY_TICKET_CREATED_DATE_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_CREATED_DATE_DESC"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="user_utc"
+		/>
+		<!-- User Created Field. Type: User (joomla) -->
+		<field
+			name="created_by"
+			type="user"
+			label="COM_SERVICEDIRECTORY_TICKET_CREATED_BY_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_CREATED_BY_DESC"
+		/>
+		<!-- Date Modified Field. Type: Calendar (joomla) -->
+		<field name="modified" type="calendar" class="readonly"
+			label="COM_SERVICEDIRECTORY_TICKET_MODIFIED_DATE_LABEL" description="COM_SERVICEDIRECTORY_TICKET_MODIFIED_DATE_DESC"
+			size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+		<!-- User Modified Field. Type: User (joomla) -->
+		<field name="modified_by" type="user"
+			label="COM_SERVICEDIRECTORY_TICKET_MODIFIED_BY_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_MODIFIED_BY_DESC"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+		/>
+		<!-- Access Field. Type: Accesslevel (joomla) -->
+		<field name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC"
+			default="1"
+			required="false"
+		/>
+		<!-- Ordering Field. Type: Numbers (joomla) -->
+		<field
+			name="ordering"
+			type="number"
+			class="inputbox validate-ordering"
+			label="COM_SERVICEDIRECTORY_TICKET_ORDERING_LABEL"
+			description=""
+			default="0"
+			size="6"
+			required="false"
+		/>
+		<!-- Version Field. Type: Text (joomla) -->
+		<field
+			name="version"
+			type="text"
+			class="readonly"
+			label="COM_SERVICEDIRECTORY_TICKET_VERSION_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_VERSION_DESC"
+			size="6"
+			default="1"
+			readonly="true"
+			filter="unset"
+		/>
+		<!-- Was added due to Permissions JS needing a Title field -->
+		<!-- Let us know at gh-629 should this change -->
+		<!-- https://github.com/vdm-io/Joomla-Component-Builder/issues/629#issuecomment-750117235 -->
+		<field
+			name="title"
+			type="hidden"
+			default="servicedirectory ticket"
+		/>
+		<!-- Dynamic Fields. -->
+		<!-- Subject Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="subject"
+			label="COM_SERVICEDIRECTORY_TICKET_SUBJECT_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_SUBJECT_DESCRIPTION"
+			class="text_area"
+			hint="COM_SERVICEDIRECTORY_TICKET_SUBJECT_HINT"
+		/>
+		<!-- Company Field. Type: Companies. (custom) -->
+		<field
+			type="companies"
+			name="company"
+			label="COM_SERVICEDIRECTORY_TICKET_COMPANY_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_COMPANY_DESCRIPTION"
+			message="COM_SERVICEDIRECTORY_TICKET_COMPANY_MESSAGE"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="false"
+			required="true"
+			button="false"
+			entity="ticket"
+		/>
+		<!-- Published Field. Type: List. (joomla) -->
+		<field
+			type="list"
+			name="published"
+			label="COM_SERVICEDIRECTORY_TICKET_PUBLISHED_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_PUBLISHED_DESCRIPTION"
+			class="list_class"
+			multiple="false"
+			filter="INT"
+			required="true"
+			default="1">
+			<!-- Option Set. -->
+			<option value="1">
+				COM_SERVICEDIRECTORY_TICKET_OPEN</option>
+			<option value="0">
+				COM_SERVICEDIRECTORY_TICKET_ONHOLD</option>
+			<option value="2">
+				COM_SERVICEDIRECTORY_TICKET_CLOSED</option>
+			<option value="-2">
+				COM_SERVICEDIRECTORY_TICKET_TRASHED</option>
+		</field>
+		<!-- Guid Field. Type: Text. (joomla) -->
+		<field
+			type="text"
+			name="guid"
+			label="COM_SERVICEDIRECTORY_TICKET_GUID_LABEL"
+			size="40"
+			maxlength="40"
+			description="COM_SERVICEDIRECTORY_TICKET_GUID_DESCRIPTION"
+			class="text_area"
+			readonly="true"
+			filter="CMD"
+			validate="guid"
+			hint="COM_SERVICEDIRECTORY_TICKET_GUID_HINT"
+		/>
+		<!-- Note_file_vdm_display Field. Type: Note. A None Database Field. (joomla) -->
+		<field type="note" name="note_file_vdm_display" description="COM_SERVICEDIRECTORY_TICKET_NOTE_FILE_VDM_DISPLAY_DESCRIPTION" class="uk-clearfix uk-width-1-1 uk-margin note_file_vdm_display" />
+		<!-- Note_file_vdm_uploader Field. Type: Note. A None Database Field. (joomla) -->
+		<field type="note" name="note_file_vdm_uploader" description="COM_SERVICEDIRECTORY_TICKET_NOTE_FILE_VDM_UPLOADER_DESCRIPTION" class="note_file_vdm_uploader" showon="file_type!:" />
+		<!-- File_type Field. Type: Entityfiletypes. (custom) -->
+		<field
+			type="entityfiletypes"
+			name="file_type"
+			label="COM_SERVICEDIRECTORY_TICKET_FILE_TYPE_LABEL"
+			class="list_class"
+			layout="joomla.form.field.list-fancy-select"
+			multiple="false"
+			required="false"
+			button="false"
+			entity="ticket"
+		/>
+		<!-- Comment Field. Type: Editor. (joomla) -->
+		<field
+			type="editor"
+			name="comment"
+			label="COM_SERVICEDIRECTORY_TICKET_COMMENT_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_COMMENT_DESCRIPTION"
+			message="COM_SERVICEDIRECTORY_TICKET_COMMENT_MESSAGE"
+			width="100%"
+			height="400"
+			maxlength="2000"
+			buttons="false"
+			syntax="markdown"
+			editor="codemirror|none"
+			filter="STRING"
+			required="true"
+			validate="maxlength"
+		/>
+	</fieldset>
+
+	<!-- Access Control Fields. -->
+	<fieldset name="accesscontrol">
+		<!-- Asset Id Field. Type: Hidden (joomla) -->
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		<!-- Rules Field. Type: Rules (joomla) -->
+		<field
+			name="rules"
+			type="rules"
+			label="Permissions in relation to this ticket"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_servicedirectory"
+			section="ticket"
+		/>
+	</fieldset>
+</form>

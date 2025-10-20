@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SERVICEDIRECTORY_MENU_COMPANIES_TITLE" option="COM_SERVICEDIRECTORY_MENU_COMPANIES_OPTION">
+		<message>
+			<![CDATA[COM_SERVICEDIRECTORY_MENU_COMPANIES_DESC]]>
+		</message>
+	</layout>
+</metadata>

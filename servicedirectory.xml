@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="5.0" method="upgrade">
+	<name>COM_SERVICEDIRECTORY</name>
+	<creationDate>20th October, 2025</creationDate>
+	<author>Lemuel van der Merwe</author>
+	<authorEmail>joomla@vdm.io</authorEmail>
+	<authorUrl>https://github.com/joomengine/Joomla-Service-Directory</authorUrl>
+	<copyright>Copyright (C) 2015 Vast Development Method. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>5.0.1</version>
+	<description><![CDATA[
+		<h1>Service Directory (v.5.0.1)</h1>
+		<div style="clear: both;"></div>
+		<p>The Service Directory component is a powerful Joomla solution for creating and managing a public or private directory of people who offer services. Each listing can include essential contact details, a clear description of the services provided, and other relevant business information. The component also supports showcasing portfolios or previous work, allowing visitors to learn more about each provider's experience and capabilities.
+
+Designed for flexibility and ease of use, Service Directory helps you organize and present service providers in an accessible, structured, and visually appealing way; perfect for communities, organizations, or businesses looking to connect users with the right services.</p>
+		<p>Created by <a href="https://github.com/joomengine/Joomla-Service-Directory" target="_blank">Lemuel van der Merwe</a><br /><small>Development started 4th October, 2025</small></p>
+	]]></description>
+	<namespace path="src">JoomService\Component\Servicedirectory</namespace>
+
+	<!-- Runs on install -->
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+
+	<!-- Runs on uninstall -->
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+
+	<!-- Runs on install/uninstall/update -->
+	<scriptfile>ServicedirectoryInstallerScript.php</scriptfile>
+
+	<media destination="com_servicedirectory" folder="media">
+		<filename>index.html</filename>
+		<folder>js</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>uikit-v3</folder>
+	</media>
+
+	<!-- Update Schema -->
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql/</schemapath>
+		</schemas>
+	</update>
+
+	<files folder="site">
+		<filename>index.html</filename>
+		<folder>assets</folder>
+		<folder>forms</folder>
+		<folder>layouts</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB/en-GB.com_servicedirectory.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_servicedirectory.sys.ini</language>
+	</languages>
+
+	<administration>
+		<menu>COM_SERVICEDIRECTORY_MENU</menu>
+		<submenu>
+			<!-- Instead of link you can specify individual link attributes -->
+			<menu option="com_servicedirectory" view="servicedirectory">COM_SERVICEDIRECTORY_MENU_DASHBOARD</menu>
+			<menu option="com_servicedirectory" view="companies">COM_SERVICEDIRECTORY_MENU_COMPANIES</menu>
+			<menu option="com_servicedirectory" view="portfolios">COM_SERVICEDIRECTORY_MENU_PORTFOLIOS</menu>
+			<menu option="com_servicedirectory" view="categories">COM_SERVICEDIRECTORY_MENU_CATEGORIES</menu>
+			<menu option="com_servicedirectory" view="tags">COM_SERVICEDIRECTORY_MENU_TAGS</menu>
+			<menu option="com_servicedirectory" view="social_handles">COM_SERVICEDIRECTORY_MENU_SOCIAL_HANDLES</menu>
+			<menu option="com_servicedirectory" view="areas_of_expertise">COM_SERVICEDIRECTORY_MENU_AREAS_OF_EXPERTISE</menu>
+			<menu option="com_servicedirectory" view="files">COM_SERVICEDIRECTORY_MENU_FILES</menu>
+			<menu option="com_servicedirectory" view="addresses">COM_SERVICEDIRECTORY_MENU_ADDRESSES</menu>
+			<menu option="com_servicedirectory" view="tickets">COM_SERVICEDIRECTORY_MENU_TICKETS</menu>
+			<menu option="com_servicedirectory" view="regions">COM_SERVICEDIRECTORY_MENU_REGIONS</menu>
+			<menu option="com_servicedirectory" view="subregions">COM_SERVICEDIRECTORY_MENU_SUBREGIONS</menu>
+			<menu option="com_servicedirectory" view="countries">COM_SERVICEDIRECTORY_MENU_COUNTRIES</menu>
+			<menu option="com_servicedirectory" view="states">COM_SERVICEDIRECTORY_MENU_STATES</menu>
+			<menu option="com_servicedirectory" view="cities">COM_SERVICEDIRECTORY_MENU_CITIES</menu>
+			<menu option="com_servicedirectory" view="timezones">COM_SERVICEDIRECTORY_MENU_TIMEZONES</menu>
+			<menu option="com_servicedirectory" view="platforms">COM_SERVICEDIRECTORY_MENU_PLATFORMS</menu>
+			<menu option="com_servicedirectory" view="languages">COM_SERVICEDIRECTORY_MENU_LANGUAGES</menu>
+			<menu option="com_servicedirectory" view="address_types">COM_SERVICEDIRECTORY_MENU_ADDRESS_TYPES</menu>
+		</submenu>
+		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
+			<filename>README.txt</filename>
+			<folder>assets</folder>
+			<folder>forms</folder>
+			<folder>layouts</folder>
+			<folder>presets</folder>
+			<folder>services</folder>
+			<folder>sql</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+		</files>
+
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/en-GB.com_servicedirectory.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_servicedirectory.sys.ini</language>
+		</languages>
+
+	</administration>
+	<updateservers>
+		<server type="extension" enabled="1" element="com_servicedirectory" name="Service Directory">https://raw.githubusercontent.com/joomengine/Joomla-Service-Directory/refs/heads/5.x/update_server.xml</server>
+	</updateservers>
+	<changelogurl>https://raw.githubusercontent.com/joomengine/Joomla-Service-Directory/refs/heads/5.x/changelog_server.xml</changelogurl>
+</extension>

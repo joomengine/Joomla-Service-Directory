@@ -1,0 +1,321 @@
+<?php
+/**
+ * @package    Service Directory
+ *
+ * @created    4th October, 2025
+ * @author     Lemuel van der Merwe <https://github.com/joomengine/Joomla-Service-Directory>
+ * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * A professional directory component for listing and showcasing service providers.
+ */
+namespace JoomService\Component\Servicedirectory\Site\View\Directory;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper as Html;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Document\Document;
+use JoomService\Component\Servicedirectory\Site\Helper\HeaderCheck;
+use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
+use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
+use Joomla\CMS\Helper\ModuleHelper;
+use JoomService\Joomla\Utilities\StringHelper;
+use JoomService\Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Application\CMSApplicationInterface;
+use Joomla\Input\Input;
+use Joomla\Registry\Registry;
+use Joomla\CMS\User\User;
+
+// No direct access to this file
+\defined('_JEXEC') or die;
+
+/**
+ * Servicedirectory Html View class for the Directory
+ *
+ * @since  1.6
+ */
+class HtmlView extends BaseHtmlView
+{
+	/**
+	 * The app class
+	 *
+	 * @var    CMSApplicationInterface
+	 * @since  5.2.1
+	 */
+	public CMSApplicationInterface $app;
+
+	/**
+	 * The input class
+	 *
+	 * @var    Input
+	 * @since  5.2.1
+	 */
+	public Input $input;
+
+	/**
+	 * The params registry
+	 *
+	 * @var    Registry
+	 * @since  5.2.1
+	 */
+	public Registry $params;
+
+	/**
+	 * The user object.
+	 *
+	 * @var    User
+	 * @since  3.10.11
+	 */
+	public User $user;
+
+	/**
+	 * The items from the model
+	 *
+	 * @var    mixed
+	 * @since  3.10.11
+	 */
+	public mixed $items;
+
+	/**
+	 * The toolbar object
+	 *
+	 * @var    Toolbar
+	 * @since  3.10.11
+	 */
+	public Toolbar $toolbar;
+
+	/**
+	 * The styles url array
+	 *
+	 * @var    array
+	 * @since  5.0.0
+	 */
+	protected array $styles;
+
+	/**
+	 * The scripts url array
+	 *
+	 * @var    array
+	 * @since  5.0.0
+	 */
+	protected array $scripts;
+
+	/**
+	 * The actions object
+	 *
+	 * @var    object
+	 * @since  3.10.11
+	 */
+	public object $canDo;
+
+	/**
+	 * Display the view
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  void
+	 * @throws \Exception
+	 * @since  1.6
+	 */
+	public function display($tpl = null): void
+	{
+		// get application
+		$this->app ??= Factory::getApplication();
+		// get input
+		$this->input ??= method_exists($this->app, 'getInput') ? $this->app->getInput() : $this->app->input;
+		// set params
+		$this->params ??= method_exists($this->app, 'getParams')
+			? $this->app->getParams()
+			: ComponentHelper::getParams('com_servicedirectory');
+		$this->menu = $this->app->getMenu()->getActive();
+		// get the user object
+		$this->user ??= $this->getCurrentUser();
+		// Load module values
+		$model = $this->getModel();
+		$this->styles = $model->getStyles() ?? [];
+		$this->scripts = $model->getScripts() ?? [];
+		// Initialise variables.
+		$this->items = $model->getItems();
+		$this->images = $model->getImages();
+		$this->mine = $model->getMine();
+
+		// Set the toolbar
+		$this->addToolBar();
+
+		// Set the html view document stuff
+		$this->_prepareDocument();
+
+		// Check for errors.
+		if (count($errors = $model->getErrors()))
+		{
+			throw new \Exception(implode(PHP_EOL, $errors), 500);
+		}
+
+		parent::display($tpl);
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 * @since   1.6
+	 */
+	protected function addToolbar(): void
+	{
+
+		// set help url for this view if found
+		$this->help_url = ServicedirectoryHelper::getHelpUrl('directory');
+		if (StringHelper::check($this->help_url))
+		{
+			ToolbarHelper::help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
+		}
+
+		// add the toolbar if it's not already loaded
+		$this->toolbar ??= $this->getDocument()->getToolbar();
+	}
+
+	/**
+	 * Prepare some document related stuff.
+	 *
+	 * @return  void
+	 * @since   1.6
+	 */
+	protected function _prepareDocument(): void
+	{
+
+		// Only load jQuery if needed. (default is true)
+		if ($this->params->get('add_jquery_framework', 1) == 1)
+		{
+			Html::_('jquery.framework');
+		}
+		// Load the header checker class.
+		// Initialize the header checker.
+		$HeaderCheck = new HeaderCheck();
+
+		// Load uikit options.
+		$uikit = $this->params->get('uikit_load');
+		// Set script size.
+		$size = $this->params->get('uikit_min');
+		// The uikit css.
+		if ((!$HeaderCheck->css_loaded('uikit.min') || $uikit == 1) && $uikit != 2 && $uikit != 3)
+		{
+			Html::_('stylesheet', 'media/com_servicedirectory/uikit-v3/css/uikit'.$size.'.css', ['version' => 'auto']);
+		}
+		// The uikit js.
+		if ((!$HeaderCheck->js_loaded('uikit.min') || $uikit == 1) && $uikit != 2 && $uikit != 3)
+		{
+			Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit'.$size.'.js', ['version' => 'auto']);
+			Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit-icons'.$size.'.js', ['version' => 'auto']);
+		}
+		// load the meta description
+		if ($this->params->get('menu-meta_description'))
+		{
+			$this->getDocument()->setDescription($this->params->get('menu-meta_description'));
+		}
+		// load the key words if set
+		if ($this->params->get('menu-meta_keywords'))
+		{
+			$this->getDocument()->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
+		}
+		// check the robot params
+		if ($this->params->get('robots'))
+		{
+			$this->getDocument()->setMetadata('robots', $this->params->get('robots'));
+		}
+		// add styles
+		foreach ($this->styles as $style)
+		{
+			Html::_('stylesheet', $style, ['version' => 'auto']);
+		}
+		// add scripts
+		foreach ($this->scripts as $script)
+		{
+			Html::_('script', $script, ['version' => 'auto']);
+		}
+	}
+
+	/**
+	 * Escapes a value for output in a view script.
+	 *
+	 * @param   mixed  $var     The output to escape.
+	 * @param   bool   $shorten The switch to shorten.
+	 * @param   int    $length  The shorting length.
+	 *
+	 * @return  mixed  The escaped value.
+	 * @since   1.6
+	 */
+	public function escape($var, bool $shorten = false, int $length = 40)
+	{
+		if (!is_string($var))
+		{
+			return $var;
+		}
+
+		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
+	}
+
+	/**
+	 * Get the modules published in a position
+	 */
+	public function getModules($position, $seperator = '', $class = '')
+	{
+		// set default
+		$found = false;
+		// check if we aleady have these modules loaded
+		if (isset($this->setModules[$position]))
+		{
+			$found = true;
+		}
+		else
+		{
+			// this is where you want to load your module position
+			$modules = ModuleHelper::getModules($position);
+			if (ArrayHelper::check($modules, true))
+			{
+				// set the place holder
+				$this->setModules[$position] = [];
+				foreach($modules as $module)
+				{
+					$this->setModules[$position][] = ModuleHelper::renderModule($module);
+				}
+				$found = true;
+			}
+		}
+		// check if modules were found
+		if ($found && isset($this->setModules[$position]) && ArrayHelper::check($this->setModules[$position]))
+		{
+			// set class
+			if (StringHelper::check($class))
+			{
+				$class = ' class="'.$class.'" ';
+			}
+			// set seperating return values
+			switch($seperator)
+			{
+				case 'none':
+					return implode('', $this->setModules[$position]);
+					break;
+				case 'div':
+					return '<div'.$class.'>'.implode('</div><div'.$class.'>', $this->setModules[$position]).'</div>';
+					break;
+				case 'list':
+					return '<ul'.$class.'><li>'.implode('</li><li>', $this->setModules[$position]).'</li></ul>';
+					break;
+				case 'array':
+				case 'Array':
+					return $this->setModules[$position];
+					break;
+				default:
+					return implode('<br />', $this->setModules[$position]);
+					break;
+			}
+		}
+		return false;
+	}
+}

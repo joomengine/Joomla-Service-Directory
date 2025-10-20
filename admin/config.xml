@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset
+		addruleprefix="JoomService\Component\Servicedirectory\Administrator\Rule"
+		addfieldprefix="JoomService\Component\Servicedirectory\Administrator\Field"
+		name="global_config"
+		label="COM_SERVICEDIRECTORY_CONFIG_GLOBAL_LABEL"
+		description="COM_SERVICEDIRECTORY_CONFIG_GLOBAL_DESC">
+		<field
+			name="check_in"
+			type="list"
+			default="0"
+			label="COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_DESC">
+			<option
+				value="-5 hours">COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_OPTION_ONE</option>
+			<option
+				value="-12 hours">COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_OPTION_TWO</option>
+			<option
+				value="-1 day">COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_OPTION_THREE</option>
+			<option
+				value="-2 day">COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_OPTION_FOUR</option>
+			<option
+				value="-1 week">COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_OPTION_FIVE</option>
+			<option
+				value="0">COM_SERVICEDIRECTORY_CONFIG_CHECK_TIMER_OPTION_SIX</option>
+		</field>
+		<field type="spacer" name="spacerAuthor" hr="true" />
+		<field
+			name="save_history"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="1"
+			label="JGLOBAL_SAVE_HISTORY_OPTIONS_LABEL"
+			description="JGLOBAL_SAVE_HISTORY_OPTIONS_DESC"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+			name="history_limit"
+			type="text"
+			filter="integer"
+			label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"
+			description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"
+			default="10"
+		/>
+		<field type="spacer" name="spacerHistory" hr="true" />
+		<field name="autorTitle"
+			type="spacer"
+			label="COM_SERVICEDIRECTORY_CONFIG_AUTHOR"
+		/>
+		<field name="autorName"
+			type="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_AUTHOR_NAME_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_AUTHOR_NAME_DESC"
+			size="60"
+			default="Lemuel van der Merwe"
+			readonly="true"
+			class="readonly"
+		/>
+		<field name="autorEmail"
+			type="email"
+			label="COM_SERVICEDIRECTORY_CONFIG_AUTHOR_EMAIL_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_AUTHOR_EMAIL_DESC"
+			size="60"
+			default="joomla@vdm.io"
+			readonly="true"
+			class="readonly"
+		/>
+		<field type="spacer" name="spacerContributor1" hr="true" />
+		<field name="contributor1"
+			type="spacer"
+			class="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_ONE"
+		/>
+		<field name="titleContributor1"
+			type="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_TITLE_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_TITLE_DESC"
+			size="60"
+			default="Contributor"
+		/>
+		<field name="nameContributor1"
+			type="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_NAME_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_NAME_DESC"
+			size="60"
+			default="Llewellyn van der Merwe"
+		/>
+		<field name="emailContributor1"
+			type="email"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_EMAIL_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_EMAIL_DESC"
+			size="60"
+			default="joomla@vdm.io"
+		/>
+		<field name="linkContributor1"
+			type="url"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_LINK_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_LINK_DESC"
+			size="60"
+			default="https://git.vdm.dev/joomla/Service-Directory"
+		/>
+		<field name="useContributor1"
+			type="list"
+			default="2"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_DESC">
+			<option value="0">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_NONE</option>
+			<option value="1">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_EMAIL</option>
+			<option value="2">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_WWW</option>
+		</field>
+		<field name="showContributor1"
+			type="list"
+			default="3"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_DESC">
+			<option value="0">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_NONE</option>
+			<option value="1">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_BACK</option>
+			<option value="2">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_FRONT</option>
+			<option value="3">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_ALL</option>
+		</field>
+		<field type="spacer" name="spacerContributor2" hr="true" />
+		<field name="contributor2"
+			type="spacer"
+			class="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_TWO"
+		/>
+		<field name="titleContributor2"
+			type="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_TITLE_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_TITLE_DESC"
+			size="60"
+			default="Contributor"
+		/>
+		<field name="nameContributor2"
+			type="text"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_NAME_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_NAME_DESC"
+			size="60"
+			default="Tom van der Laan"
+		/>
+		<field name="emailContributor2"
+			type="email"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_EMAIL_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_EMAIL_DESC"
+			size="60"
+			default="info@tlwebdesign.nl"
+		/>
+		<field name="linkContributor2"
+			type="url"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_LINK_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_LINK_DESC"
+			size="60"
+			default="http://www.tlwebdesign.nl/"
+		/>
+		<field name="useContributor2"
+			type="list"
+			default="2"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_DESC">
+			<option value="0">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_NONE</option>
+			<option value="1">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_EMAIL</option>
+			<option value="2">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_USE_WWW</option>
+		</field>
+		<field name="showContributor2"
+			type="list"
+			default="3"
+			label="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_DESC">
+			<option value="0">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_NONE</option>
+			<option value="1">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_BACK</option>
+			<option value="2">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_FRONT</option>
+			<option value="3">COM_SERVICEDIRECTORY_CONFIG_CONTRIBUTOR_SHOW_ALL</option>
+		</field>
+	</fieldset>
+	<fieldset
+		name="uikit_config"
+		label="COM_SERVICEDIRECTORY_CONFIG_UIKIT_LABEL"
+		description="COM_SERVICEDIRECTORY_CONFIG_UIKIT_DESC">
+		<field name="add_jquery_framework"
+			type="radio"
+			label="COM_SERVICEDIRECTORY_CONFIG_JQUERY_LOAD_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_JQUERY_LOAD_DESC"
+			class="btn-group btn-group-yesno"
+			default="">
+			<!-- Option Set. -->
+			<option value="0">
+				COM_SERVICEDIRECTORY_CONFIG_JQUERY_REMOVE</option>"
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_JQUERY_LOAD</option>"
+		</field>
+		<field name="uikit_load"
+			type="radio"
+			label="COM_SERVICEDIRECTORY_CONFIG_UIKIT_LOAD_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_UIKIT_LOAD_DESC"
+			class="btn-group btn-group-yesno"
+			default="">
+			<!-- Option Set. -->
+			<option value="">
+				COM_SERVICEDIRECTORY_CONFIG_AUTO_LOAD</option>"
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_FORCE_LOAD</option>"
+			<option value="2">
+				COM_SERVICEDIRECTORY_CONFIG_DONT_LOAD</option>"
+		</field>
+		<field name="uikit_min"
+			type="radio"
+			label="COM_SERVICEDIRECTORY_CONFIG_UIKIT_MIN_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_UIKIT_MIN_DESC"
+			class="btn-group btn-group-yesno"
+			default="">
+			<!-- Option Set. -->
+			<option value="">
+				COM_SERVICEDIRECTORY_CONFIG_NO</option>"
+			<option value=".min">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>"
+		</field>
+	</fieldset>
+	<fieldset
+		name="directory_custom_config"
+		label="COM_SERVICEDIRECTORY_CONFIG_DIRECTORY">
+
+		<!-- Show_login Field. Type: Radio. (joomla) -->
+		<field
+			type="radio"
+			name="show_login"
+			label="COM_SERVICEDIRECTORY_CONFIG_SHOW_LOGIN_LABEL"
+			layout="joomla.form.field.radio.switcher"
+			default="0"
+			filter="integer">
+			<!-- Option Set. -->
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>
+			<option value="0">
+				COM_SERVICEDIRECTORY_CONFIG_NO</option>
+		</field>
+	</fieldset>
+	<fieldset
+		name="listing_custom_config"
+		label="COM_SERVICEDIRECTORY_CONFIG_LISTING">
+
+		<!-- Max_listings Field. Type: Number. (joomla) -->
+		<field
+			type="number"
+			name="max_listings"
+			label="COM_SERVICEDIRECTORY_CONFIG_MAX_LISTINGS_LABEL"
+			default="1"
+			min="1"
+			max="100"
+			step="1"
+		/>
+		<!-- Max_tags Field. Type: Number. (joomla) -->
+		<field
+			type="number"
+			name="max_tags"
+			label="COM_SERVICEDIRECTORY_CONFIG_MAX_TAGS_LABEL"
+			default="5"
+			min="1"
+			max="10"
+			step="1"
+		/>
+		<!-- Max_expertise Field. Type: Number. (joomla) -->
+		<field
+			type="number"
+			name="max_expertise"
+			label="COM_SERVICEDIRECTORY_CONFIG_MAX_EXPERTISE_LABEL"
+			default="5"
+			min="1"
+			max="10"
+			step="1"
+		/>
+		<!-- Max_languages Field. Type: Number. (joomla) -->
+		<field
+			type="number"
+			name="max_languages"
+			label="COM_SERVICEDIRECTORY_CONFIG_MAX_LANGUAGES_LABEL"
+			default="5"
+			min="1"
+			max="10"
+			step="1"
+		/>
+		<!-- Show_listing_object Field. Type: Radio. (joomla) -->
+		<field
+			type="radio"
+			name="show_listing_object"
+			label="COM_SERVICEDIRECTORY_CONFIG_SHOW_LISTING_OBJECT_LABEL"
+			layout="joomla.form.field.radio.switcher"
+			default="0"
+			filter="integer">
+			<!-- Option Set. -->
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>
+			<option value="0">
+				COM_SERVICEDIRECTORY_CONFIG_NO</option>
+		</field>
+	</fieldset>
+	<fieldset
+		name="routing_custom_config"
+		label="COM_SERVICEDIRECTORY_CONFIG_ROUTING">
+
+		<!-- Sef_ids Field. Type: Radio. (joomla) -->
+		<field
+			type="radio"
+			name="sef_ids"
+			label="COM_SERVICEDIRECTORY_CONFIG_SEF_IDS_LABEL"
+			layout="joomla.form.field.radio.switcher"
+			default="1"
+			filter="integer">
+			<!-- Option Set. -->
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>
+			<option value="0">
+				COM_SERVICEDIRECTORY_CONFIG_NO</option>
+		</field>
+	</fieldset>
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC">
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			class="inputbox"
+			validate="rules"
+			filter="rules"
+			component="com_servicedirectory"
+			section="component"
+		/>
+	</fieldset>
+</config>
