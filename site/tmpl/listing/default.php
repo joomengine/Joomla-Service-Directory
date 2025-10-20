@@ -22,6 +22,8 @@ defined('_JEXEC') or die;
 
 ?>
 <?php echo $this->toolbar->render(); ?>
+
+<!--[JCBGUI.site_view.default.83.$$$$]-->
 <?php echo $this->item->event->onContentBeforeDisplay ?? ''; ?>
 
 <?php echo $this->loadTemplate('company'); ?>
@@ -34,4 +36,5 @@ defined('_JEXEC') or die;
 
 <?php echo $this->item->event->onContentAfterDisplay ?? ''; ?>
 
-<?php echo $this->loadTemplate('companydebug'); ?>
+<?php echo $this->loadTemplate('companydebug'); ?><!--[/JCBGUI$$$$]-->
+

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.755.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Service;
 
 
+
+/***[JCBGUI.power.head.755.$$$$]***/
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Joomla\DI\ServiceProviderInterface;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Data\Action\Load;
 use JoomService\Joomla\Data\Action\Insert;
 use JoomService\Joomla\Data\Action\Update;
@@ -33,6 +39,8 @@ use JoomService\Joomla\Data\Migrator\Guid;
  */
 class Data implements ServiceProviderInterface
 {
+
+/***[JCBGUI.power.main_class_code.755.$$$$]***/
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -235,6 +243,7 @@ class Data implements ServiceProviderInterface
 			$container->get('Load'),
 			$container->get('Update')
 		);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

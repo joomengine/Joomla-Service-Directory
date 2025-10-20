@@ -19,6 +19,8 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 defined('_JEXEC') or die;
 
 ?>
+
+<!--[JCBGUI.template.template.166.$$$$]-->
 <div class="container-xxl my-4">
 	<div class="row row-cols-1 g-4">
 		<?php foreach ($this->items as $item): ?>
@@ -86,4 +88,5 @@ document.addEventListener('DOMContentLoaded', function () {
 		return new bootstrap.Tooltip(el);
 	});
 });
-</script>
+</script><!--[/JCBGUI$$$$]-->
+

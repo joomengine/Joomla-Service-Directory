@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.14.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities\String;
 
@@ -22,6 +25,8 @@ use JoomService\Joomla\Utilities\StringHelper;
  */
 abstract class NamespaceHelper
 {
+
+/***[JCBGUI.power.main_class_code.14.$$$$]***/
 	/**
 	 * Making namespace safe
 	 *
@@ -73,6 +78,7 @@ abstract class NamespaceHelper
 
 		// Make sure segment only contains valid characters
 		return preg_replace("/[^A-Za-z0-9]/", '', $string);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

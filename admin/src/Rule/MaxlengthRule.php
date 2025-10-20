@@ -30,6 +30,8 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
  */
 class MaxlengthRule extends FormRule
 {
+
+/***[JCBGUI.validation_rule.php.16.$$$$]***/
 	/**
 	 * Method to test the url for a valid parts.
 	 *
@@ -65,5 +67,6 @@ class MaxlengthRule extends FormRule
 		}
 
 		return true;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }

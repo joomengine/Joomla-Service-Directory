@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.21.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
 
-use Joomla\CMS\Factory;
+
+/***[JCBGUI.power.head.21.$$$$]***/
+use Joomla\CMS\Factory;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\Component\Helper;
 
 
@@ -23,6 +29,8 @@ use JoomService\Joomla\Utilities\Component\Helper;
  */
 abstract class GuidHelper
 {
+
+/***[JCBGUI.power.main_class_code.21.$$$$]***/
 	/**
 	 * Returns a GUIDv4 string
 	 * 
@@ -210,6 +218,7 @@ abstract class GuidHelper
 		}
 		return false;
 	}
+/***[/JCBGUI$$$$]***/
 
 }
 

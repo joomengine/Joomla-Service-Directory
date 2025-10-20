@@ -19,10 +19,15 @@ use JoomService\Joomla\Utilities\ArrayHelper;
 // No direct access to this file
 defined('_JEXEC') or die;
 
+
+/***[JCBGUI.template.php_view.68.$$$$]***/
 // get the login module
-$this->modules = $this->getModules('servicedirectory-login', 'array');
+$this->modules = $this->getModules('servicedirectory-login', 'array');/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.template.template.68.$$$$]-->
 <?php if (ArrayHelper::check($this->modules)): ?>
 	<?php foreach($this->modules as $module): ?>
 		<?php echo LayoutHelper::render('panelbox', $module); ?>
@@ -32,4 +37,5 @@ $this->modules = $this->getModules('servicedirectory-login', 'array');
 		<h2><?php echo Text::_('COM_SERVICEDIRECTORY_LOGIN_MODULE_POSITION'); ?></h2>
 		<p><?php echo Text::sprintf('COM_SERVICEDIRECTORY_PLEASE_PUBLISH_A_LOGIN_MODULE_TO_THIS_CODESLOGINCODE_POSITION_AND_INSURE_THAT_YOU_TARGET_THESE_PAGES_THIS_IS_POSSIBLE_IF_YOU_ADD_THE_MODULE_TO_ALL_PAGES_SINCE_THIS_MODULE_POSITION_SHOULD_ONLY_BE_AVAILABLE_IN_THIS_COMPONENT', 'servicedirectory'); ?></p>
 	</div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

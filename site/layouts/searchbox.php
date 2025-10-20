@@ -22,11 +22,16 @@ use JoomService\Joomla\Utilities\StringHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.153.$$$$]***/
 $baseUrl = $displayData['url'] ?? null;
 $value   = $displayData['value'] ?? null;
-$random  = StringHelper::random(5);
+$random  = StringHelper::random(5);/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.153.$$$$]-->
 <?php if (!empty($baseUrl)): ?>
 <div class="container-fluid">
 	<div class="d-flex justify-content-end">
@@ -95,4 +100,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	<?php endif; ?>
 });
 </script>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

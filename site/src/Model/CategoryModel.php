@@ -183,7 +183,7 @@ class CategoryModel extends ListModel
 		$this->entity_type = 'category';
 		if ($id > 0)
 		{
-
+/***[INSERTED$$$$]***//**437**/
 			$search = $this->input->get('search', null, 'STRING');
 			if (!empty($search))
 			{
@@ -199,7 +199,7 @@ class CategoryModel extends ListModel
 					' OR a.companysize LIKE ' . $search .
 					' OR a.description LIKE ' . $search .
 				')');
-			}
+			}/***[/INSERTED$$$$]***/
 		}
 		// give us a random ordering here (new order every minute)
 		$query->order('RAND(' . $this->getTimeBasedRandomSeed() . ')');
@@ -292,7 +292,7 @@ class CategoryModel extends ListModel
 
 
 		$this->entity = array_values($items)[0]->category ?? 0;
-
+/***[INSERTED$$$$]***//**430**/
 		$db = $this->getDatabase();
 		$this->companies = [];
 		$this->mapper = [
@@ -328,7 +328,7 @@ class CategoryModel extends ListModel
 
 			// process the item
 			$_item = $this->processItem($_item);
-		}
+		}/***[/INSERTED$$$$]***/
 
 		// return items
 		return $items;
@@ -513,8 +513,10 @@ class CategoryModel extends ListModel
 
 		// Get the global params
 		$globalParams = ComponentHelper::getParams('com_servicedirectory', true);
+/***[JCBGUI.dynamic_get.php_getlistquery.147.$$$$]***/
 		$thumb = 'logo__%';
-		$category = 'company';
+		$category = 'company';/***[/JCBGUI$$$$]***/
+
 		// Get a db connection.
 		$db = $this->getDatabase();
 
@@ -558,6 +560,7 @@ class CategoryModel extends ListModel
 				$item->slug = ($item->id ?? '0') . (isset($item->alias) ? ':' . $item->alias : '');
 			}
 		}
+/***[JCBGUI.dynamic_get.php_after_getitems.147.$$$$]***/
 		$baseUrl = rtrim(Uri::root(), '/');
 
 		$queryParams = [
@@ -578,7 +581,8 @@ class CategoryModel extends ListModel
 			);
 		}
 
-		$items = $images;
+		$items = $images;/***[/JCBGUI$$$$]***/
+
 		// return items
 		return $items;
 	}
@@ -591,6 +595,7 @@ class CategoryModel extends ListModel
 	 */
 	public function getBanner()
 	{
+/***[JCBGUI.dynamic_get.php_before_getitem.148.$$$$]***/
 		$file_type = 'banner__%';
 
 		$baseUrl = rtrim(Uri::root(), '/');
@@ -599,7 +604,8 @@ class CategoryModel extends ListModel
 			'option'     => 'com_servicedirectory',
 			'controller' => 'download',
 			'task'       => 'download.image',
-		];
+		];/***[/JCBGUI$$$$]***/
+
 		// Get a db connection.
 		$db = $this->getDatabase();
 
@@ -633,6 +639,7 @@ class CategoryModel extends ListModel
 		$db->setQuery($query);
 		// Load the results as a stdClass object.
 		$data = $db->loadObject();
+/***[JCBGUI.dynamic_get.php_after_getitem.148.$$$$]***/
 		if (!empty($data) && !empty($data->file_name))
 		{
 			$queryParams['file'] = $data->guid;
@@ -646,7 +653,8 @@ class CategoryModel extends ListModel
 		if (!empty($data->description))
 		{
 			$data->description = $this->convertMarkdownToHtml($data->description);
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		if (empty($data))
 		{
@@ -657,7 +665,7 @@ class CategoryModel extends ListModel
 		return $data;
 	}
 
-
+/***[INSERTED$$$$]***//**435**/
 	/**
 	 * The entity value.
 	 *
@@ -1045,7 +1053,7 @@ class CategoryModel extends ListModel
 
 		return true;
 	}
-
+/***[INSERTED$$$$]***//**441**/
 	/**
 	 * Check whether the current user is allowed to edit a company record.
 	 *
@@ -1086,8 +1094,8 @@ class CategoryModel extends ListModel
 		}
 
 		return false;
-	}
-
+	}/***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**429**/
 	/**
 	 * Convert Markdown text to HTML.
 	 *
@@ -1145,7 +1153,7 @@ class CategoryModel extends ListModel
 			return '';
 		}
 	}
-
+/***[INSERTED$$$$]***//**432**/
 	/**
 	 * Escapes a value for output in a view script.
 	 *
@@ -1164,8 +1172,8 @@ class CategoryModel extends ListModel
 		}
 
 		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
-	}
-
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**442**/
 	/**
 	 * Get or regenerate a time-based random seed that stays stable for one minute.
 	 *
@@ -1203,5 +1211,5 @@ class CategoryModel extends ListModel
 
 		// Return existing active seed
 		return (int) $seedData['seed'];
-	}
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
 }

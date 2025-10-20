@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.833.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\File\Service;
 
 
+
+/***[JCBGUI.power.head.833.$$$$]***/
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Joomla\DI\ServiceProviderInterface;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Servicedirectory\File\Type;
 use JoomService\Joomla\Servicedirectory\File\Handler;
 use JoomService\Joomla\Servicedirectory\File\Manager;
@@ -28,6 +34,8 @@ use JoomService\Joomla\Servicedirectory\File\Image;
  */
 class File implements ServiceProviderInterface
 {
+
+/***[JCBGUI.power.main_class_code.833.$$$$]***/
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -128,6 +136,7 @@ class File implements ServiceProviderInterface
 	public function getImage(Container $container): Image
 	{
 		return new Image();
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

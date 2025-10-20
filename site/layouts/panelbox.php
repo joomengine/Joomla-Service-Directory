@@ -24,4 +24,7 @@ defined('JPATH_BASE') or die;
 
 
 ?>
-<div><?php echo $displayData; ?></div>
+
+<!--[JCBGUI.layout.layout.62.$$$$]-->
+<div><?php echo $displayData; ?></div><!--[/JCBGUI$$$$]-->
+

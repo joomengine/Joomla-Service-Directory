@@ -105,6 +105,8 @@ class CompaniesModel extends ListModel
 		$this->app ??= Factory::getApplication();
 	}
 
+
+/***[JCBGUI.admin_view.php_model_list.324.$$$$]***/
 	/**
 	 * Get the filter form - Override the parent method
 	 *
@@ -208,7 +210,8 @@ class CompaniesModel extends ListModel
 		}
 
 		return $form;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 
 	/**
 	 * Method to auto-populate the model state.
@@ -404,6 +407,8 @@ class CompaniesModel extends ListModel
 		// From the servicedirectory_item table
 		$query->from($db->quoteName('#__servicedirectory_company', 'a'));
 
+
+/***[JCBGUI.admin_view.php_getlistquery.324.$$$$]***/
 		// Define company-related filters
 		$filters = [
 			'company_tag' => 'tag',
@@ -432,7 +437,8 @@ class CompaniesModel extends ListModel
 					$query->where($db->quoteName('a.id') . ' = 0');
 				}
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		// From the servicedirectory_category table.
 		$query->select($db->quoteName(['g.name','g.id'],['category_name','category_id']));
@@ -582,7 +588,9 @@ class CompaniesModel extends ListModel
 				$query->where('a.id IN (' . implode(',',$pks) . ')');
 			}
 
-			// Define company-related filters
+	
+/***[JCBGUI.admin_view.php_getlistquery.324.$$$$]***/
+		// Define company-related filters
 		$filters = [
 			'company_tag' => 'tag',
 			'company_language' => 'language',
@@ -610,7 +618,8 @@ class CompaniesModel extends ListModel
 					$query->where($db->quoteName('a.id') . ' = 0');
 				}
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 			// Get global switch to activate text only export
 			$export_text_only = ComponentHelper::getParams('com_servicedirectory')->get('export_text_only', 0);
 			// Add these queries only if text only is required

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.104.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
@@ -25,6 +28,8 @@ use JoomService\Joomla\Interfaces\ModelInterface;
  */
 abstract class Model implements ModelInterface
 {
+
+/***[JCBGUI.power.main_class_code.104.$$$$]***/
 	/**
 	 * Last ID
 	 *
@@ -498,6 +503,7 @@ abstract class Model implements ModelInterface
 	 * @return  bool
 	 * @since 3.2.0
 	 */
-	abstract protected function validateAfter(&$value, ?string $field = null, ?string $table = null): bool;
+	abstract protected function validateAfter(&$value, ?string $field = null, ?string $table = null): bool;/***[/JCBGUI$$$$]***/
+
 }
 

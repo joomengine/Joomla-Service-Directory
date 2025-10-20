@@ -182,7 +182,7 @@ class TagModel extends ListModel
 		$this->entity_type = 'tag';
 		$guidKey = 'guid';
 		$joinTable = 'company_tag';
-
+/***[INSERTED$$$$]***//**431**/
 		$this->entity = '';
 		$pkg = (int) $this->input->getInt('id', 0);
 		$targeted = false;
@@ -200,7 +200,7 @@ class TagModel extends ListModel
 		}
 		if ($targeted)
 		{
-
+/***[INSERTED$$$$]***//**437**/
 			$search = $this->input->get('search', null, 'STRING');
 			if (!empty($search))
 			{
@@ -216,7 +216,7 @@ class TagModel extends ListModel
 					' OR a.companysize LIKE ' . $search .
 					' OR a.description LIKE ' . $search .
 				')');
-			}
+			}/***[/INSERTED$$$$]***/
 		}
 		else
 		{
@@ -224,7 +224,7 @@ class TagModel extends ListModel
 		}
 		unset($companies, $search);
 		// give us a random ordering here (new order every minute)
-		$query->order('RAND(' . $this->getTimeBasedRandomSeed() . ')');
+		$query->order('RAND(' . $this->getTimeBasedRandomSeed() . ')');/***[/INSERTED$$$$]***/
 		// Get where a.published is 1
 		$query->where('a.published = 1');
 		// Get where cc.published is 1
@@ -314,7 +314,7 @@ class TagModel extends ListModel
 		}
 
 
-
+/***[INSERTED$$$$]***//**430**/
 		$db = $this->getDatabase();
 		$this->companies = [];
 		$this->mapper = [
@@ -350,7 +350,7 @@ class TagModel extends ListModel
 
 			// process the item
 			$_item = $this->processItem($_item);
-		}
+		}/***[/INSERTED$$$$]***/
 
 		// return items
 		return $items;
@@ -535,8 +535,10 @@ class TagModel extends ListModel
 
 		// Get the global params
 		$globalParams = ComponentHelper::getParams('com_servicedirectory', true);
+/***[JCBGUI.dynamic_get.php_getlistquery.147.$$$$]***/
 		$thumb = 'logo__%';
-		$category = 'company';
+		$category = 'company';/***[/JCBGUI$$$$]***/
+
 		// Get a db connection.
 		$db = $this->getDatabase();
 
@@ -580,6 +582,7 @@ class TagModel extends ListModel
 				$item->slug = ($item->id ?? '0') . (isset($item->alias) ? ':' . $item->alias : '');
 			}
 		}
+/***[JCBGUI.dynamic_get.php_after_getitems.147.$$$$]***/
 		$baseUrl = rtrim(Uri::root(), '/');
 
 		$queryParams = [
@@ -600,7 +603,8 @@ class TagModel extends ListModel
 			);
 		}
 
-		$items = $images;
+		$items = $images;/***[/JCBGUI$$$$]***/
+
 		// return items
 		return $items;
 	}
@@ -613,6 +617,7 @@ class TagModel extends ListModel
 	 */
 	public function getBanner()
 	{
+/***[JCBGUI.dynamic_get.php_before_getitem.148.$$$$]***/
 		$file_type = 'banner__%';
 
 		$baseUrl = rtrim(Uri::root(), '/');
@@ -621,7 +626,8 @@ class TagModel extends ListModel
 			'option'     => 'com_servicedirectory',
 			'controller' => 'download',
 			'task'       => 'download.image',
-		];
+		];/***[/JCBGUI$$$$]***/
+
 		// Get a db connection.
 		$db = $this->getDatabase();
 
@@ -655,6 +661,7 @@ class TagModel extends ListModel
 		$db->setQuery($query);
 		// Load the results as a stdClass object.
 		$data = $db->loadObject();
+/***[JCBGUI.dynamic_get.php_after_getitem.148.$$$$]***/
 		if (!empty($data) && !empty($data->file_name))
 		{
 			$queryParams['file'] = $data->guid;
@@ -668,7 +675,8 @@ class TagModel extends ListModel
 		if (!empty($data->description))
 		{
 			$data->description = $this->convertMarkdownToHtml($data->description);
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		if (empty($data))
 		{
@@ -679,7 +687,7 @@ class TagModel extends ListModel
 		return $data;
 	}
 
-
+/***[INSERTED$$$$]***//**435**/
 	/**
 	 * The entity value.
 	 *
@@ -1067,7 +1075,7 @@ class TagModel extends ListModel
 
 		return true;
 	}
-
+/***[INSERTED$$$$]***//**441**/
 	/**
 	 * Check whether the current user is allowed to edit a company record.
 	 *
@@ -1108,8 +1116,8 @@ class TagModel extends ListModel
 		}
 
 		return false;
-	}
-
+	}/***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**429**/
 	/**
 	 * Convert Markdown text to HTML.
 	 *
@@ -1167,7 +1175,7 @@ class TagModel extends ListModel
 			return '';
 		}
 	}
-
+/***[INSERTED$$$$]***//**432**/
 	/**
 	 * Escapes a value for output in a view script.
 	 *
@@ -1186,8 +1194,8 @@ class TagModel extends ListModel
 		}
 
 		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
-	}
-
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**442**/
 	/**
 	 * Get or regenerate a time-based random seed that stays stable for one minute.
 	 *
@@ -1225,5 +1233,5 @@ class TagModel extends ListModel
 
 		// Return existing active seed
 		return (int) $seedData['seed'];
-	}
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
 }

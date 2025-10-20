@@ -18,14 +18,19 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 // No direct access to this file
 defined('_JEXEC') or die;
 
+
+/***[JCBGUI.template.php_view.169.$$$$]***/
 // Single entity view
 $item = $this->item ?? (object) [];
 
 $addresses = $item->addresses ?? [];
 $social_handles = $item->social_handles ?? [];
-$portfolios = $item->portfolios ?? [];
+$portfolios = $item->portfolios ?? [];/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.template.template.169.$$$$]-->
 <div class="container my-5">
 	<?php echo LayoutHelper::render('addresses', $addresses); ?>
 	<?php echo LayoutHelper::render('socialhandles', $social_handles); ?>
@@ -33,4 +38,5 @@ $portfolios = $item->portfolios ?? [];
 
 <?php if (!empty($portfolios)): ?>
 	<?php echo LayoutHelper::render('companyportfolios', $portfolios); ?>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

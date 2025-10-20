@@ -359,13 +359,13 @@ class TicketModel extends AdminModel
 				}
 			}
 		}
-
+/***[INSERTED$$$$]***//**362**/
 		// Only load the GUID if new item (or empty)
 		if (0 == $id || !($val = $form->getValue('guid')))
 		{
 			$form->setValue('guid', null, GuidHelper::get());
 		}
-
+/***[/INSERTED$$$$]***/
 		return $form;
 	}
 
@@ -972,6 +972,8 @@ class TicketModel extends AdminModel
 		}
 
 
+/***[JCBGUI.admin_view.php_before_save.359.$$$$]***/
+
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
 		{
@@ -984,7 +986,8 @@ class TicketModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
-		}
+		}/***[/JCBGUI$$$$]***/
+
 		if (!empty($data['comment']) && is_string($data['comment']))
 		{
 			$ticketGuid = $data['guid'] ?? 'error';

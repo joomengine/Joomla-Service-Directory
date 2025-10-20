@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.435.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
@@ -22,6 +25,8 @@ use JoomService\Joomla\Interfaces\TableInterface;
  */
 abstract class BaseTable implements TableInterface
 {
+
+/***[JCBGUI.power.main_class_code.435.$$$$]***/
 	/**
 	 * All areas/views/tables with their field details
 	 *
@@ -493,6 +498,7 @@ abstract class BaseTable implements TableInterface
 	protected function getDefaultKey(string $field, string $key)
 	{
 		return $this->defaults[$field][$key] ?? null;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

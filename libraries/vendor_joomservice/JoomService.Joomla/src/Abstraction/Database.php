@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.126.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
+
+/***[JCBGUI.power.head.126.$$$$]***/
 use Joomla\CMS\Factory;
-use Joomla\Database\DatabaseInterface as JoomlaDatabase;
+use Joomla\Database\DatabaseInterface as JoomlaDatabase;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\Component\Helper;
 
 
@@ -24,6 +30,8 @@ use JoomService\Joomla\Utilities\Component\Helper;
  */
 abstract class Database
 {
+
+/***[JCBGUI.power.main_class_code.126.$$$$]***/
 	/**
 	 * Database object to query local DB
 	 *
@@ -163,6 +171,7 @@ abstract class Database
 		}
 
 		return $table;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

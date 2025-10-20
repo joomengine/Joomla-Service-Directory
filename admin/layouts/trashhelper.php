@@ -24,6 +24,8 @@ defined('JPATH_BASE') or die;
 
 
 ?>
+
+<!--[JCBGUI.layout.layout.97.$$$$]-->
 <?php if ($displayData->state->get('filter.published') == -2 && ($displayData->canState && $displayData->canDelete)) : ?>
 	<script>
 		// change the class of the delete button
@@ -79,4 +81,5 @@ defined('JPATH_BASE') or die;
 			<?php echo Text::_("COM_SERVICEDIRECTORY_EXIT_TRASH") ?>
 		</button>
 	</div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

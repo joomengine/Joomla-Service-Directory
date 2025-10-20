@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.763.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
-use Joomla\DI\Container;
+
+/***[JCBGUI.power.head.763.$$$$]***/
+use Joomla\DI\Container;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\FactoryInterface;
 
 
@@ -35,6 +41,8 @@ use JoomService\Joomla\Interfaces\FactoryInterface;
  **/
 abstract class Factory implements FactoryInterface
 {
+
+/***[JCBGUI.power.main_class_code.763.$$$$]***/
 	/**
 	 * Get any class from the package container
 	 *
@@ -70,6 +78,7 @@ abstract class Factory implements FactoryInterface
 	 * @return  Container
 	 * @since 0.0.0
 	 */
-	abstract protected static function createContainer(): Container;
+	abstract protected static function createContainer(): Container;/***[/JCBGUI$$$$]***/
+
 }
 

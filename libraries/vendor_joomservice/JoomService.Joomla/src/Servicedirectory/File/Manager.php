@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.835.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,14 +10,18 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\File;
 
 
+
+/***[JCBGUI.power.head.835.$$$$]***/
 use Joomla\CMS\Factory;
 use Joomla\CMS\User\User;
 use Joomla\CMS\Language\Text;
-use Joomla\Filesystem\File;
+use Joomla\Filesystem\File;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\Data\ItemInterface as Item;
 use JoomService\Joomla\Interfaces\Data\ItemsInterface as Items;
 use JoomService\Joomla\Data\Guid;
@@ -32,6 +38,8 @@ use JoomService\Joomla\Utilities\MimeHelper;
  */
 class Manager
 {
+
+/***[JCBGUI.power.main_class_code.835.$$$$]***/
 	/**
 	 * The Globally Unique Identifier.
 	 *
@@ -624,6 +632,7 @@ class Manager
 		}
 
 		return $oldest;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

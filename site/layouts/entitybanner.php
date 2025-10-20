@@ -21,9 +21,14 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
-$data = $displayData ?? null;
+
+/***[JCBGUI.layout.php_view.141.$$$$]***/
+$data = $displayData ?? null;/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.141.$$$$]-->
 <?php if ($data && !empty($data->name)) : ?>
 <div class="container my-4">
 	<div class="card border-0 shadow-sm overflow-hidden">
@@ -72,4 +77,5 @@ $data = $displayData ?? null;
 		<?php endif; ?>
 	</div>
 </div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

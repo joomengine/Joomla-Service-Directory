@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.723.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -19,12 +22,15 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface PHPConfigurationCheckerInterface
 {
+
+/***[JCBGUI.power.main_class_code.723.$$$$]***/
 	/**
 	 * Check that the required configurations are set for PHP
 	 *
 	 * @return void
 	 * @since  5.0.2
 	 **/
-	public function run(): void;
+	public function run(): void;/***[/JCBGUI$$$$]***/
+
 }
 

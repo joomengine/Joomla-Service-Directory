@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.748.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data\Action;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Interfaces\Data\UpdateInterface;
  */
 class Update implements UpdateInterface
 {
+
+/***[JCBGUI.power.main_class_code.748.$$$$]***/
 	/**
 	 * Model
 	 *
@@ -201,6 +206,7 @@ class Update implements UpdateInterface
 	public function getTable(): string
 	{
 		return $this->table;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

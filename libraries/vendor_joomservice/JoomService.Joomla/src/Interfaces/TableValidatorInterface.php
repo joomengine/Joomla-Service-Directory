@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.855.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -17,6 +20,8 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface TableValidatorInterface
 {
+
+/***[JCBGUI.power.main_class_code.855.$$$$]***/
 	/**
 	 * Returns the valid value based on datatype definition.
 	 * If the value is valid, return it. If not, return the default value,
@@ -29,6 +34,7 @@ interface TableValidatorInterface
 	 * @return mixed Returns the valid value, or the default, NULL, or empty string based on validation.
 	 * @since 5.3.0
 	 */
-	public function getValid($value, string $field, string $table);
+	public function getValid($value, string $field, string $table);/***[/JCBGUI$$$$]***/
+
 }
 

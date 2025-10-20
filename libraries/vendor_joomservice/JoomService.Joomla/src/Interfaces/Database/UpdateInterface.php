@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.383.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Database;
 
@@ -23,6 +26,8 @@ use JoomService\Joomla\Interfaces\Database\DefaultInterface;
  */
 interface UpdateInterface extends VersioningInterface, DefaultInterface
 {
+
+/***[JCBGUI.power.main_class_code.383.$$$$]***/
 	/**
 	 * Update rows in the database (with remapping and filtering columns option)
 	 *
@@ -83,6 +88,7 @@ interface UpdateInterface extends VersioningInterface, DefaultInterface
 	 * @return  bool  True on success, false on failure
 	 * @since   5.1.1
 	 */
-	public function column(mixed $value, string $key, string $table): bool;
+	public function column(mixed $value, string $key, string $table): bool;/***[/JCBGUI$$$$]***/
+
 }
 

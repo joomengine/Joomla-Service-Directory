@@ -114,6 +114,7 @@ $tmpl    = $tmpl ? '&tmpl=' . $tmpl : '';
 
 
 
+/***[JCBGUI.field.javascript_view_footer.3596.$$$$]***/
     jQuery(function($){
 
         function updateIconClass(select) {
@@ -147,5 +148,6 @@ $tmpl    = $tmpl ? '&tmpl=' . $tmpl : '';
                 updateIconClass(this);
             });
         });
-    });
+    });/***[/JCBGUI$$$$]***/
+
 </script>

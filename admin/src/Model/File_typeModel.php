@@ -341,13 +341,13 @@ class File_typeModel extends AdminModel
 				}
 			}
 		}
-
+/***[INSERTED$$$$]***//**362**/
 		// Only load the GUID if new item (or empty)
 		if (0 == $id || !($val = $form->getValue('guid')))
 		{
 			$form->setValue('guid', null, GuidHelper::get());
 		}
-
+/***[/INSERTED$$$$]***/
 		return $form;
 	}
 
@@ -954,6 +954,8 @@ class File_typeModel extends AdminModel
 		}
 
 
+/***[JCBGUI.admin_view.php_before_save.283.$$$$]***/
+
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
 		{
@@ -966,7 +968,8 @@ class File_typeModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		// Set the target items to data.
 		if (isset($data['target']) && is_array($data['target']))

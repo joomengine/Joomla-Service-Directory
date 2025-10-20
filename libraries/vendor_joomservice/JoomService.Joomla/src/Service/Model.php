@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.756.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Service;
 
 
+
+/***[JCBGUI.power.head.756.$$$$]***/
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Joomla\DI\ServiceProviderInterface;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Model\Load;
 use JoomService\Joomla\Model\Upsert;
 
@@ -25,6 +31,8 @@ use JoomService\Joomla\Model\Upsert;
  */
 class Model implements ServiceProviderInterface
 {
+
+/***[JCBGUI.power.main_class_code.756.$$$$]***/
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -70,6 +78,7 @@ class Model implements ServiceProviderInterface
 		return new Upsert(
 			$container->get('Table')
 		);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

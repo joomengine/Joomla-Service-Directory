@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.1036.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,10 +10,13 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
+
+/***[JCBGUI.power.head.1036.$$$$]***/
 use Joomla\CMS\Application\CMSApplicationInterface as CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
@@ -21,7 +26,8 @@ use Joomla\CMS\Table\ContentType;
 use Joomla\CMS\Table\TableInterface;
 use Joomla\CMS\User\User;
 use Joomla\Database\DatabaseInterface as JoomlaDatabase;
-use Joomla\Registry\Registry;
+use Joomla\Registry\Registry;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Interfaces\Database\VersioningInterface;
 use JoomService\Joomla\Abstraction\Database;
@@ -34,6 +40,8 @@ use JoomService\Joomla\Abstraction\Database;
  */
 abstract class Versioning extends Database implements VersioningInterface
 {
+
+/***[JCBGUI.power.main_class_code.1036.$$$$]***/
 	/**
 	 * CMS Application
 	 *
@@ -365,6 +373,7 @@ abstract class Versioning extends Database implements VersioningInterface
 		}
 
 		return null;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

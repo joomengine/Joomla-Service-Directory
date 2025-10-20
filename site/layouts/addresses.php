@@ -21,6 +21,8 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.145.$$$$]***/
 $items = $displayData ?? [];
 $count = is_array($items) ? count($items) : 0;
 
@@ -30,9 +32,12 @@ $uid = 'bs-carousel-' . substr(md5(uniqid('', true)), 0, 8);
 $perSlide = 4;
 
 // Chunk items into slides (only used if we actually show the carousel)
-$slides = $count > 3 ? array_chunk($items, $perSlide) : [];
+$slides = $count > 3 ? array_chunk($items, $perSlide) : [];/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.145.$$$$]-->
 <?php if ($count === 0) : ?>
 	<!-- nothing to render -->
 <?php elseif ($count <= $perSlide) : ?>
@@ -61,4 +66,5 @@ $slides = $count > 3 ? array_chunk($items, $perSlide) : [];
 			<?php endforeach; ?>
 		</div>
 	</div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.834.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\File;
 
@@ -22,6 +25,8 @@ use JoomService\Joomla\Utilities\UploadHelper;
  */
 final class Handler extends UploadHelper
 {
+
+/***[JCBGUI.power.main_class_code.834.$$$$]***/
 	/**
 	 * Set the $useStreams property to use streams for file handling
 	 *
@@ -124,6 +129,7 @@ final class Handler extends UploadHelper
 	public function getErrors(bool $toString = true): string|array
 	{
 		return static::getError($toString);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

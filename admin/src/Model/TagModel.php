@@ -361,13 +361,13 @@ class TagModel extends AdminModel
 				}
 			}
 		}
-
+/***[INSERTED$$$$]***//**362**/
 		// Only load the GUID if new item (or empty)
 		if (0 == $id || !($val = $form->getValue('guid')))
 		{
 			$form->setValue('guid', null, GuidHelper::get());
 		}
-
+/***[/INSERTED$$$$]***/
 		return $form;
 	}
 
@@ -969,6 +969,8 @@ class TagModel extends AdminModel
 		}
 
 
+/***[JCBGUI.admin_view.php_before_save.329.$$$$]***/
+
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
 		{
@@ -981,7 +983,8 @@ class TagModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		// Set the parent_guid items to data.
 		if (isset($data['parent_guid']) && is_array($data['parent_guid']))

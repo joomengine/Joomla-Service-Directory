@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.11.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Utilities;
  */
 abstract class JsonHelper
 {
+
+/***[JCBGUI.power.main_class_code.11.$$$$]***/
 	/**
 	 * Check if you have a json string
 	 *
@@ -96,6 +101,7 @@ abstract class JsonHelper
 		}
 		return $value;
 	}
+/***[/JCBGUI$$$$]***/
 
 }
 

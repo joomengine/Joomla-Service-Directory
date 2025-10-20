@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.154.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Service;
 
 
+
+/***[JCBGUI.power.head.154.$$$$]***/
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Joomla\DI\ServiceProviderInterface;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Database\Load;
 use JoomService\Joomla\Database\Insert;
 use JoomService\Joomla\Database\Update;
@@ -27,6 +33,8 @@ use JoomService\Joomla\Database\Delete;
  */
 class Database implements ServiceProviderInterface
 {
+
+/***[JCBGUI.power.main_class_code.154.$$$$]***/
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -100,6 +108,7 @@ class Database implements ServiceProviderInterface
 	public function getDelete(Container $container): Delete
 	{
 		return new Delete();
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

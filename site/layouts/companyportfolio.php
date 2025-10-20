@@ -21,14 +21,19 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.152.$$$$]***/
 $client_name = $displayData->client_name ?? '';
 $project_title = $displayData->project_title ?? '';
 $target_industry = $displayData->target_industry ?? '';
 $services_provided = $displayData->services_provided ?? '';
 $project_url = $displayData->project_url ?? '';
-$portfolio_desc = $displayData->description ?? '';
+$portfolio_desc = $displayData->description ?? '';/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.152.$$$$]-->
 <div class="row g-4">
 	<div class="col-12 col-lg-8">
 		<?php if (!empty($project_title)): ?>
@@ -56,4 +61,5 @@ $portfolio_desc = $displayData->description ?? '';
 			</div>
 		<?php endif; ?>
 	</div>
-</div>
+</div><!--[/JCBGUI$$$$]-->
+

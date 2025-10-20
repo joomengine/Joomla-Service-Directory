@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.823.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Data;
  */
 trait Guid
 {
+
+/***[JCBGUI.power.main_class_code.823.$$$$]***/
 	/**
 	 * Returns a GUIDv4 string.
 	 * 
@@ -123,6 +128,7 @@ trait Guid
 		}
 
 		return $guid;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

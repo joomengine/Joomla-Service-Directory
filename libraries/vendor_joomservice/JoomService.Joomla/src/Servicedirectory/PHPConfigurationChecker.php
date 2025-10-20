@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.782.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory;
 
@@ -23,6 +26,8 @@ use JoomService\Joomla\Abstraction\PHPConfigurationChecker as ExtendingPHPConfig
  */
 final class PHPConfigurationChecker extends ExtendingPHPConfigurationChecker implements PHPConfigurationCheckerInterface
 {
+
+/***[JCBGUI.power.main_class_code.782.$$$$]***/
 	/**
 	 * The upload max filesize value
 	 *
@@ -83,6 +88,7 @@ final class PHPConfigurationChecker extends ExtendingPHPConfigurationChecker imp
 		// set the required PHP Configures
 		$this->set('environment.name', 'Servicedirectory environment');
 		$this->set('environment.wiki_url', 'git.vdm.dev/joomla/Component-Builder/wiki/PHP-Settings');
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

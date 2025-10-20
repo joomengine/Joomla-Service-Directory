@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.877.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data\Migrator;
 
 
-use Joomla\Registry\Registry;
+
+/***[JCBGUI.power.head.877.$$$$]***/
+use Joomla\Registry\Registry;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Data\Items;
 use JoomService\Joomla\Database\Load;
 use JoomService\Joomla\Database\Update;
@@ -27,6 +33,8 @@ use JoomService\Joomla\Utilities\GetHelper;
  */
 final class Guid
 {
+
+/***[JCBGUI.power.main_class_code.877.$$$$]***/
 	/**
 	 * The Globally Unique Identifier.
 	 *
@@ -766,6 +774,7 @@ final class Guid
 	private function getTable(): string
 	{
 		return $this->table;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

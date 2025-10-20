@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.25.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,15 +10,19 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
 
+
+/***[JCBGUI.power.head.25.$$$$]***/
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
-use Joomla\Filesystem\Path;
+use Joomla\Filesystem\Path;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Utilities\MimeHelper;
 use JoomService\Joomla\Utilities\StringHelper;
@@ -29,6 +35,8 @@ use JoomService\Joomla\Utilities\StringHelper;
  */
 abstract class UploadHelper
 {
+
+/***[JCBGUI.power.main_class_code.25.$$$$]***/
 	/**
 	 * True to use streams
 	 *
@@ -326,6 +334,7 @@ abstract class UploadHelper
 		{
 			static::$errors[] = $message;
 		}
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

@@ -21,6 +21,8 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.142.$$$$]***/
 $areas = [
 	'tags' => 'COM_SERVICEDIRECTORY_TAGS',
 	'areas_of_expertise' => 'COM_SERVICEDIRECTORY_AREA_OF_EXPERTISE',
@@ -30,9 +32,12 @@ $areas = [
 $category = (object) [
 	'name' => $displayData->category_name,
 	'link' =>  $displayData->category_link ?? '#'
-];
+];/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.142.$$$$]-->
 <div class="position-relative z-2">
 <ul class="list-unstyled small mb-0">
 <?php echo LayoutHelper::render('companyrelationship', ['items' => [$category], 'label' => 'COM_SERVICEDIRECTORY_CATEGORY']); ?>
@@ -43,4 +48,5 @@ $category = (object) [
 <?php endforeach; ?>
 </ul>
 </div>
-<br>
+<br><!--[/JCBGUI$$$$]-->
+

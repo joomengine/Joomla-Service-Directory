@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.23.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,16 +10,20 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities\Component;
 
 
+
+/***[JCBGUI.power.head.23.$$$$]***/
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Input\Input;
-use Joomla\Registry\Registry;
+use Joomla\Registry\Registry;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\String\NamespaceHelper;
 use JoomService\Joomla\Utilities\StringHelper;
 
@@ -29,6 +35,8 @@ use JoomService\Joomla\Utilities\StringHelper;
  */
 abstract class Helper
 {
+
+/***[JCBGUI.power.main_class_code.23.$$$$]***/
 	/**
 	 * The current option
 	 *
@@ -416,6 +424,7 @@ abstract class Helper
 			return 'Site';
 		}
 		return 'Administrator';
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

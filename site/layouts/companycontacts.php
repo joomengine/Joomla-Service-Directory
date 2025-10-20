@@ -21,13 +21,18 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.150.$$$$]***/
 $areas = [
 	'email' => (object) ['label' => 'COM_SERVICEDIRECTORY_EMAIL', 'href' => 'mailto:'],
 	'phone' => (object) ['label' => 'COM_SERVICEDIRECTORY_PHONE', 'href' => 'tel:'],
 	'website' => (object) ['label' => 'COM_SERVICEDIRECTORY_WEBSITE', 'href' => ''],
-];
+];/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.150.$$$$]-->
 <ul class="list-unstyled small mb-0">
 <?php foreach ($areas as $area => $target): ?>
 	<?php if (!empty($displayData->{$area})): ?>
@@ -43,4 +48,5 @@ $areas = [
 		</li>
 	<?php endif; ?>
 <?php endforeach; ?>
-</ul>
+</ul><!--[/JCBGUI$$$$]-->
+

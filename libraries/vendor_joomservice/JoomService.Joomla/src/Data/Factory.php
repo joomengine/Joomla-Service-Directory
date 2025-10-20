@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.761.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data;
 
 
-use Joomla\DI\Container;
+
+/***[JCBGUI.power.head.761.$$$$]***/
+use Joomla\DI\Container;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Service\Table;
 use JoomService\Joomla\Service\Database;
 use JoomService\Joomla\Service\Model;
@@ -28,6 +34,8 @@ use JoomService\Joomla\Abstraction\Factory as ExtendingFactory;
  */
 abstract class Factory extends ExtendingFactory implements FactoryInterface
 {
+
+/***[JCBGUI.power.main_class_code.761.$$$$]***/
 	/**
 	 * Package Container
 	 *
@@ -49,6 +57,7 @@ abstract class Factory extends ExtendingFactory implements FactoryInterface
 			->registerServiceProvider(new Database())
 			->registerServiceProvider(new Model())
 			->registerServiceProvider(new Data());
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

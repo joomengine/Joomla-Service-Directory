@@ -21,6 +21,8 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.132.$$$$]***/
 // Initialize
 $data   = $displayData['data'] ?? [];
 $removeDelete = $displayData['remove_delete'] ?? false;
@@ -41,9 +43,12 @@ foreach ($data as $file)
 }
 
 // Extract grouped images for display
-$images = !empty($bucket) ? array_values($bucket) : [];
+$images = !empty($bucket) ? array_values($bucket) : [];/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.132.$$$$]-->
 <?php if (!empty($data)) : ?>
 <?php if (!empty($files)) : ?>
 <ul class="uk-list uk-list-divider">
@@ -146,4 +151,5 @@ $images = !empty($bucket) ? array_values($bucket) : [];
 	</div>
 </div>
 <?php endif; ?>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

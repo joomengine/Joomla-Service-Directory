@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.980.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,14 +10,18 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\File;
 
 
+
+/***[JCBGUI.power.head.980.$$$$]***/
 use Joomla\CMS\Image\Image as JoomlaImage;
 use Joomla\CMS\Log\Log;
 use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Folder;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\MimeHelper;
 
 
@@ -26,6 +32,8 @@ use JoomService\Joomla\Utilities\MimeHelper;
  */
 final class Image
 {
+
+/***[JCBGUI.power.main_class_code.980.$$$$]***/
 	/**
 	 * Process one image into multiple dimensioned versions.
 	 *
@@ -143,6 +151,7 @@ final class Image
 
 		// Validate it's a known IMAGETYPE
 		return is_int($type) ? $type : null;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

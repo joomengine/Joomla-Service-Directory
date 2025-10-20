@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.26.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Utilities;
  */
 abstract class MimeHelper
 {
+
+/***[JCBGUI.power.main_class_code.26.$$$$]***/
 	/**
 	 * File Extensions to Mimetypes
 	 * https://gist.github.com/Llewellynvdm/74be373357e131b8775a7582c3de508b
@@ -1169,6 +1174,7 @@ abstract class MimeHelper
 
 		// Fallback to application/octet-stream if extension is unknown
 		return 'application/octet-stream';
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

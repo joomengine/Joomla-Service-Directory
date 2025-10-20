@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.384.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Database;
 
 
-use Joomla\CMS\Date\Date;
+
+/***[JCBGUI.power.head.384.$$$$]***/
+use Joomla\CMS\Date\Date;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Database\DefaultTrait;
 use JoomService\Joomla\Interfaces\Database\UpdateInterface;
 use JoomService\Joomla\Abstraction\Versioning;
@@ -25,6 +31,8 @@ use JoomService\Joomla\Abstraction\Versioning;
  */
 final class Update extends Versioning implements UpdateInterface
 {
+
+/***[JCBGUI.power.main_class_code.384.$$$$]***/
 	/**
 	 * Default Switch
 	 *
@@ -336,6 +344,7 @@ final class Update extends Versioning implements UpdateInterface
 		{
 			// Silently ignore all errors
 		}
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

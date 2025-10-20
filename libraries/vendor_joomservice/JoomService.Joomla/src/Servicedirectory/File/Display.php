@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.836.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,13 +10,17 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\File;
 
 
+
+/***[JCBGUI.power.head.836.$$$$]***/
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\Router\Route;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\Data\ItemInterface as Item;
 use JoomService\Joomla\Interfaces\Data\ItemsInterface as Items;
 
@@ -26,6 +32,8 @@ use JoomService\Joomla\Interfaces\Data\ItemsInterface as Items;
  */
 final class Display
 {
+
+/***[JCBGUI.power.main_class_code.836.$$$$]***/
 	/**
 	 * The Item Class.
 	 *
@@ -228,6 +236,7 @@ final class Display
 		$this->fileTypes[$guid] =  $this->item->table('file_type')->get($guid);
 
 		return $this->fileTypes[$guid];
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

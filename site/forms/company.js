@@ -12,7 +12,7 @@
 
 
 
-
+/***[INSERTED$$$$]***//**438**/
 /**
  * CascadingSelectManager
  *
@@ -513,4 +513,4 @@ class CascadingSelectManager {
 		if (mode === 3 || mode === 'startsWith') return 'startsWith';
 		return 'endsWith';
 	}
-}
+}/***[/INSERTED$$$$]***/

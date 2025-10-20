@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.485.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Interfaces\Activeregistryinterface;
  */
 abstract class ActiveRegistry implements Activeregistryinterface
 {
+
+/***[JCBGUI.power.main_class_code.485.$$$$]***/
 	/**
 	 * The registry array.
 	 *
@@ -300,6 +305,7 @@ abstract class ActiveRegistry implements Activeregistryinterface
 		}
 
 		return true;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

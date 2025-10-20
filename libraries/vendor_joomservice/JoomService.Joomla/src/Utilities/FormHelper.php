@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.379.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
 
+
+/***[JCBGUI.power.head.379.$$$$]***/
 use Joomla\CMS\Form\FormHelper as JoomlaFormHelper;
-use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Form\FormField;/***[/JCBGUI$$$$]***/
+
 
 
 /**
@@ -23,6 +29,8 @@ use Joomla\CMS\Form\FormField;
  */
 abstract class FormHelper
 {
+
+/***[JCBGUI.power.main_class_code.379.$$$$]***/
 	/**
 	 * get the field xml
 	 *
@@ -182,6 +190,7 @@ abstract class FormHelper
 		}
 
 		return null;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

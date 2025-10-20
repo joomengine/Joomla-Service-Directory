@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.463.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Database;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Abstraction\Database;
  */
 final class Delete extends Database implements DeleteInterface
 {
+
+/***[JCBGUI.power.main_class_code.463.$$$$]***/
 	/**
 	 * Delete all items in the database that match these conditions
 	 *
@@ -127,6 +132,7 @@ final class Delete extends Database implements DeleteInterface
 	public function truncate(string $table): void
 	{
 		$this->db->truncateTable($this->getTable($table));
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

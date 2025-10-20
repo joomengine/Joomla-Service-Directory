@@ -80,7 +80,7 @@ class Ticket_commentController extends FormController
 	 */
 	protected int $refid;
 
-
+/***[INSERTED$$$$]***//**412**/
 	/**
 	 * Method to edit an existing record.
 	 *
@@ -123,7 +123,7 @@ class Ticket_commentController extends FormController
 		}
 
 		return parent::edit($key, $urlVar);
-	}
+	}/***[/INSERTED$$$$]***/
 
 	/**
 	 * Method override to check if you can add a new record.

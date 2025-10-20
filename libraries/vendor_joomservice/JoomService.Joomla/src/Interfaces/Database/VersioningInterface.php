@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.1035.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Database;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces\Database;
  */
 interface VersioningInterface
 {
+
+/***[JCBGUI.power.main_class_code.1035.$$$$]***/
 	/**
 	 * Switch to prevent/allow history from being set.
 	 *
@@ -27,6 +32,7 @@ interface VersioningInterface
 	 * @return  self
 	 * @since   5.1.1
 	 **/
-	public function history(?int $trigger = null): self;
+	public function history(?int $trigger = null): self;/***[/JCBGUI$$$$]***/
+
 }
 

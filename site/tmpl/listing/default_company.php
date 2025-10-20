@@ -18,15 +18,20 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 // No direct access to this file
 defined('_JEXEC') or die;
 
+
+/***[JCBGUI.template.php_view.167.$$$$]***/
 // Single entity view
 $item = $this->item ?? (object) [];
 
 $name = $item->name ?? '';
 $description = $item->description ?? null;
 $logo = $item->logo ?? '';
-$banner = $item->banner ?? '';
+$banner = $item->banner ?? '';/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.template.template.167.$$$$]-->
 <div class="container my-5">
 	<?php if (!empty($banner)): ?>
 		<div class="mb-4">
@@ -80,4 +85,5 @@ $banner = $item->banner ?? '';
 			</div>
 		</div>
 	</div>
-</div>
+</div><!--[/JCBGUI$$$$]-->
+

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.732.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\Table;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Abstraction\Schema as ExtendingSchema;
  */
 final class Schema extends ExtendingSchema implements SchemaInterface
 {
+
+/***[JCBGUI.power.main_class_code.732.$$$$]***/
 	/**
 	 * Constructor.
 	 *
@@ -47,6 +52,7 @@ final class Schema extends ExtendingSchema implements SchemaInterface
 	protected function getCode(): string
 	{
 		return 'servicedirectory';
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

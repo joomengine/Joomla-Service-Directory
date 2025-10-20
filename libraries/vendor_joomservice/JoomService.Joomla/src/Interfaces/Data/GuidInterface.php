@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.824.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Data;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces\Data;
  */
 interface GuidInterface
 {
+
+/***[JCBGUI.power.main_class_code.824.$$$$]***/
 	/**
 	 * Returns a GUIDv4 string.
 	 * 
@@ -31,6 +36,7 @@ interface GuidInterface
 	 *
 	 * @since 5.0.2
 	 */
-	public function getGuid(string $key): string;
+	public function getGuid(string $key): string;/***[/JCBGUI$$$$]***/
+
 }
 

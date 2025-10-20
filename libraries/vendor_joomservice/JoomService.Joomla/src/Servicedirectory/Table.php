@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.136.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory;
 
@@ -30,6 +33,8 @@ use JoomService\Joomla\Abstraction\BaseTable;
  */
 class Table extends BaseTable implements TableInterface
 {
+
+/***[JCBGUI.power.main_class_code.136.$$$$]***/
 	/**
 	 * Table Schema and Field Metadata Map.
 	 *
@@ -3548,6 +3553,7 @@ class Table extends BaseTable implements TableInterface
 				],
 			],
 		],
-	];
+	];/***[/JCBGUI$$$$]***/
+
 }
 

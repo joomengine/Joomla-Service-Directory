@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.767.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
-use Joomla\CMS\Factory;
+
+/***[JCBGUI.power.head.767.$$$$]***/
+use Joomla\CMS\Factory;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\SchemaInterface as Schema;
 use JoomService\Joomla\Interfaces\TableInterface as Table;
 use JoomService\Joomla\Utilities\ClassHelper;
@@ -26,6 +32,8 @@ use JoomService\Joomla\Interfaces\SchemaCheckerInterface;
  */
 abstract class SchemaChecker implements SchemaCheckerInterface
 {
+
+/***[JCBGUI.power.main_class_code.767.$$$$]***/
 	/**
 	 * The Table Class.
 	 *
@@ -189,6 +197,7 @@ abstract class SchemaChecker implements SchemaCheckerInterface
 	 * @return string
 	 * @since 3.2.2
 	 */
-	abstract protected function getTableClass(): string;
+	abstract protected function getTableClass(): string;/***[/JCBGUI$$$$]***/
+
 }
 

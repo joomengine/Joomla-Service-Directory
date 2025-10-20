@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.489.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
-use Joomla\Registry\Factory as FormatFactory;
+
+/***[JCBGUI.power.head.489.$$$$]***/
+use Joomla\Registry\Factory as FormatFactory;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\Registryinterface;
 use JoomService\Joomla\Abstraction\ActiveRegistry;
 
@@ -27,6 +33,8 @@ use JoomService\Joomla\Abstraction\ActiveRegistry;
  */
 abstract class Registry extends ActiveRegistry implements Registryinterface,  \JsonSerializable, \ArrayAccess, \IteratorAggregate, \Countable
 {
+
+/***[JCBGUI.power.main_class_code.489.$$$$]***/
 	/**
 	 * Path separator
 	 *
@@ -829,6 +837,7 @@ abstract class Registry extends ActiveRegistry implements Registryinterface,  \J
 		}
 
 		return $keys;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

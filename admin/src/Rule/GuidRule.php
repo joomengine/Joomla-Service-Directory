@@ -30,6 +30,8 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
  */
 class GuidRule extends FormRule
 {
+
+/***[JCBGUI.validation_rule.php.9.$$$$]***/
 	/**
 	 * Method to test for a Globally Unique Identifier.
 	 *
@@ -59,5 +61,6 @@ class GuidRule extends FormRule
 		// thanks to Lewie https://stackoverflow.com/a/1515456/1429677
 		return preg_match("/^(\{)?[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}(?(1)\})$/i", $value);
 	}
+/***[/JCBGUI$$$$]***/
 
 }

@@ -81,7 +81,7 @@ class CompanyController extends FormController
 	 */
 	protected int $refid;
 
-
+/***[INSERTED$$$$]***//**412**/
 	/**
 	 * Method to edit an existing record.
 	 *
@@ -124,7 +124,7 @@ class CompanyController extends FormController
 		}
 
 		return parent::edit($key, $urlVar);
-	}
+	}/***[/INSERTED$$$$]***/
 
 	/**
 	 * Method override to check if you can add a new record.
@@ -422,6 +422,8 @@ class CompanyController extends FormController
 
 			$this->setRedirect(Route::_($return, false));
 		}
+
+/***[JCBGUI.admin_view.php_postsavehook.324.$$$$]***/
 		$user = $this->app->getIdentity();
 		if (!$user->authorise('core.edit.state', 'com_servicedirectory.company'))
 		{
@@ -433,7 +435,8 @@ class CompanyController extends FormController
 					->table('company')
 					->set((object) ['id' => $id, 'published' => 0], 'id', 'update');
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		return;
 	}

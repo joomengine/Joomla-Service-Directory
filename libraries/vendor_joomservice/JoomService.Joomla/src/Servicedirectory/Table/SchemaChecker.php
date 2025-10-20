@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.769.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\Table;
 
@@ -25,6 +28,8 @@ use JoomService\Joomla\Abstraction\SchemaChecker as ExtendingSchemaChecker;
  */
 final class SchemaChecker extends ExtendingSchemaChecker implements SchemaCheckerInterface
 {
+
+/***[JCBGUI.power.main_class_code.769.$$$$]***/
 	/**
 	 * Get the targeted component code
 	 *
@@ -67,6 +72,7 @@ final class SchemaChecker extends ExtendingSchemaChecker implements SchemaChecke
 	protected function getTableClass(): string
 	{
 		return Table::class;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

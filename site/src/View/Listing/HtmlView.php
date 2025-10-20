@@ -194,7 +194,10 @@ class HtmlView extends BaseHtmlView
 		parent::display($tpl);
 	}
 
-// LayoutHelper::render('filedisplay', $displayData);
+
+/***[JCBGUI.site_view.php_jview.83.$$$$]***/
+// LayoutHelper::render('filedisplay', $displayData);/***[/JCBGUI$$$$]***/
+
 
 	/**
 	 * Add the page title and toolbar.

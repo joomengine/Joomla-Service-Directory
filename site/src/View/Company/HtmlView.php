@@ -451,11 +451,11 @@ class HtmlView extends BaseHtmlView
 		{
 			 $document -> addScriptDeclaration($script);
 		}
-
+/***[INSERTED$$$$]***//**398**/
 		Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit.min.js', ['version' => 'auto']);
 		Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit-icons.min.js', ['version' => 'auto']);
 		Html::_('script', 'https://cdn.jsdelivr.net/gh/vdm-io/uikit@3.0.2/dist/js/vdm.min.js', ['version' => 'auto']);
-		Html::_('stylesheet', 'media/com_servicedirectory/uikit-v3/css/uikit.min.css', ['version' => 'auto']);
+		Html::_('stylesheet', 'media/com_servicedirectory/uikit-v3/css/uikit.min.css', ['version' => 'auto']);/***[/INSERTED$$$$]***/
 	}
 
 	/**

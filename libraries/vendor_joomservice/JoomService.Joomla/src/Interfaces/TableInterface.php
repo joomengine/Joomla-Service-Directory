@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.137.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -17,6 +20,8 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface TableInterface
 {
+
+/***[JCBGUI.power.main_class_code.137.$$$$]***/
 	/**
 	 * Get any value from a item/field/column of an area/view/table
 	 *          Example: $this->get('table_name', 'field_name', 'value_key');
@@ -86,6 +91,7 @@ interface TableInterface
 	 * @return  array|null   On success an array of fields
 	 * @since 3.2.0
 	 */
-	public function fields(string $table, bool $default = false, bool $details = false): ?array;
+	public function fields(string $table, bool $default = false, bool $details = false): ?array;/***[/JCBGUI$$$$]***/
+
 }
 

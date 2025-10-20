@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.749.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data\Action;
 
@@ -23,6 +26,8 @@ use JoomService\Joomla\Interfaces\Data\DeleteInterface;
  */
 class Delete implements DeleteInterface
 {
+
+/***[JCBGUI.power.main_class_code.749.$$$$]***/
 	/**
 	 * The Delete Class.
 	 *
@@ -107,6 +112,7 @@ class Delete implements DeleteInterface
 	public function getTable(): string
 	{
 		return $this->table;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

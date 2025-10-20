@@ -19,6 +19,8 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 defined('_JEXEC') or die;
 
 ?>
+
+<!--[JCBGUI.template.template.171.$$$$]-->
 <div class="container my-4">
 	<div class="alert alert-secondary mb-4" role="alert">
 		<?php echo Text::sprintf('COM_SERVICEDIRECTORY_WELCOME_BACK_S', $this->escape($this->user->name, false)); ?>
@@ -106,4 +108,5 @@ defined('_JEXEC') or die;
 			<?php echo Text::_('COM_SERVICEDIRECTORY_YOU_CURRENTLY_HAVE_NO_COMPANY_LISTINGS_ADD_YOUR_FIRST_COMPANY_TODAY'); ?>
 		</div>
 	<?php endif; ?>
-</div>
+</div><!--[/JCBGUI$$$$]-->
+

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.831.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\File;
 
 
-use Joomla\Filesystem\Path;
+
+/***[JCBGUI.power.head.831.$$$$]***/
+use Joomla\Filesystem\Path;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\Data\ItemInterface as Item;
 
 
@@ -23,6 +29,8 @@ use JoomService\Joomla\Interfaces\Data\ItemInterface as Item;
  */
 final class Type
 {
+
+/***[JCBGUI.power.main_class_code.831.$$$$]***/
 	/**
 	 * The Item Class.
 	 *
@@ -323,6 +331,7 @@ final class Type
 
 		// Return the last folder name (if it's valid and not a file)
 		return $lastPart;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

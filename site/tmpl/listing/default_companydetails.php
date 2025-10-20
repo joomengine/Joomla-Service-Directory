@@ -18,10 +18,15 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 // No direct access to this file
 defined('_JEXEC') or die;
 
+
+/***[JCBGUI.template.php_view.168.$$$$]***/
 // Single entity view
-$item = $this->item ?? (object) [];
+$item = $this->item ?? (object) [];/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.template.template.168.$$$$]-->
 <div class="container my-5">
 	<div class="row g-2">
 		<div class="col-12 col-md-6">
@@ -31,4 +36,5 @@ $item = $this->item ?? (object) [];
 			<?php echo LayoutHelper::render('companycontacts', $item); ?>
 		</div>
 	</div>
-</div>
+</div><!--[/JCBGUI$$$$]-->
+

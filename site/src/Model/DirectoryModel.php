@@ -214,6 +214,7 @@ class DirectoryModel extends ListModel
 		}
 
 
+/***[JCBGUI.dynamic_get.php_after_getitems.145.$$$$]***/
 		// add the category link
 		if (!empty($items))
 		{
@@ -226,7 +227,8 @@ class DirectoryModel extends ListModel
 					$_item->description = $this->convertMarkdownToHtml($_item->description);
 				}
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		// return items
 		return $items;
@@ -287,8 +289,10 @@ class DirectoryModel extends ListModel
 
 		// Get the global params
 		$globalParams = ComponentHelper::getParams('com_servicedirectory', true);
+/***[JCBGUI.dynamic_get.php_getlistquery.146.$$$$]***/
 		$thumb = 'thumb__%';
-		$category = 'category';
+		$category = 'category';/***[/JCBGUI$$$$]***/
+
 		// Get a db connection.
 		$db = $this->getDatabase();
 
@@ -323,6 +327,7 @@ class DirectoryModel extends ListModel
 				$item->slug = ($item->id ?? '0') . (isset($item->alias) ? ':' . $item->alias : '');
 			}
 		}
+/***[JCBGUI.dynamic_get.php_after_getitems.146.$$$$]***/
 		$baseUrl = rtrim(Uri::root(), '/');
 
 		$queryParams = [
@@ -343,7 +348,8 @@ class DirectoryModel extends ListModel
 			);
 		}
 
-		$items = $images;
+		$items = $images;/***[/JCBGUI$$$$]***/
+
 		// return items
 		return $items;
 	}
@@ -412,6 +418,7 @@ class DirectoryModel extends ListModel
 				);
 			}
 		}
+/***[JCBGUI.dynamic_get.php_after_getitems.157.$$$$]***/
 		if (!empty($items))
 		{
 			$this->returnUrl = urlencode(base64_encode((string) Uri::getInstance()));
@@ -423,12 +430,13 @@ class DirectoryModel extends ListModel
 			{
 				$_item = $this->processItem($_item);
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 		// return items
 		return $items;
 	}
 
-
+/***[INSERTED$$$$]***//**435**/
 	/**
 	 * The entity value.
 	 *
@@ -816,7 +824,7 @@ class DirectoryModel extends ListModel
 
 		return true;
 	}
-
+/***[INSERTED$$$$]***//**441**/
 	/**
 	 * Check whether the current user is allowed to edit a company record.
 	 *
@@ -857,8 +865,8 @@ class DirectoryModel extends ListModel
 		}
 
 		return false;
-	}
-
+	}/***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**429**/
 	/**
 	 * Convert Markdown text to HTML.
 	 *
@@ -916,7 +924,7 @@ class DirectoryModel extends ListModel
 			return '';
 		}
 	}
-
+/***[INSERTED$$$$]***//**432**/
 	/**
 	 * Escapes a value for output in a view script.
 	 *
@@ -935,8 +943,8 @@ class DirectoryModel extends ListModel
 		}
 
 		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
-	}
-
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**442**/
 	/**
 	 * Get or regenerate a time-based random seed that stays stable for one minute.
 	 *
@@ -974,5 +982,5 @@ class DirectoryModel extends ListModel
 
 		// Return existing active seed
 		return (int) $seedData['seed'];
-	}
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
 }

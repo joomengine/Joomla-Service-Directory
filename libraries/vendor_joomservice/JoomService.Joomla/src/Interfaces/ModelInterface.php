@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.103.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface ModelInterface
 {
+
+/***[JCBGUI.power.main_class_code.103.$$$$]***/
 	/**
 	 * Set the current active table
 	 *
@@ -132,6 +137,7 @@ interface ModelInterface
 	 * @return  void
 	 * @since 3.2.2
 	 */
-	public function setAllowEmpty(bool $allowEmpty): void;
+	public function setAllowEmpty(bool $allowEmpty): void;/***[/JCBGUI$$$$]***/
+
 }
 

@@ -21,10 +21,15 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.147.$$$$]***/
 $items = $displayData ?? [];
-$count = is_array($items) ? count($items) : 0;
+$count = is_array($items) ? count($items) : 0;/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.147.$$$$]-->
 <?php if (!empty($items)) : ?>
     <div class="container px-0">
         <!-- Horizontal scrollable ribbon -->
@@ -41,4 +46,5 @@ $count = is_array($items) ? count($items) : 0;
 			?>
         </div>
     </div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

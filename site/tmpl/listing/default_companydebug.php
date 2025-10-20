@@ -18,9 +18,14 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 // No direct access to this file
 defined('_JEXEC') or die;
 
-Html::_('bootstrap.collapse');
+
+/***[JCBGUI.template.php_view.170.$$$$]***/
+Html::_('bootstrap.collapse');/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.template.template.170.$$$$]-->
 <?php if ($this->params->get('show_listing_object', 0) === 1): ?>
 <div class="container my-5">
 	<div class="accordion accordion-flush" id="Service-Directory-Listing-Debug">
@@ -38,4 +43,5 @@ Html::_('bootstrap.collapse');
 		</div>
 	</div>
 </div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

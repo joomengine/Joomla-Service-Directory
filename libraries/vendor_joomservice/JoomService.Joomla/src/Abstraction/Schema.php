@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.733.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
+
+/***[JCBGUI.power.head.733.$$$$]***/
 use Joomla\CMS\Factory;
-use Joomla\CMS\Version;
+use Joomla\CMS\Version;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\TableInterface as Table;
 use JoomService\Joomla\Interfaces\SchemaInterface;
 
@@ -25,6 +31,8 @@ use JoomService\Joomla\Interfaces\SchemaInterface;
  */
 abstract class Schema implements SchemaInterface
 {
+
+/***[JCBGUI.power.main_class_code.733.$$$$]***/
 	/**
 	 * The Table Class.
 	 *
@@ -901,6 +909,7 @@ abstract class Schema implements SchemaInterface
 
 		// For other data types, just escape it
 		return $this->db->quote($value);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

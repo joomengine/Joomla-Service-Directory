@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.822.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data;
 
 
+
+/***[JCBGUI.power.head.822.$$$$]***/
 use Joomla\CMS\Factory;
-use Joomla\CMS\User\User;
+use Joomla\CMS\User\User;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\Data\ItemsInterface as Items;
 use JoomService\Joomla\Data\Guid;
 use JoomService\Joomla\Servicedirectory\Utilities\UserHelper;
@@ -30,6 +36,8 @@ use JoomService\Joomla\Interfaces\Data\SubformInterface;
  */
 final class UsersSubform implements GuidInterface, SubformInterface
 {
+
+/***[JCBGUI.power.main_class_code.822.$$$$]***/
 	/**
 	 * The Globally Unique Identifier.
 	 *
@@ -609,6 +617,7 @@ final class UsersSubform implements GuidInterface, SubformInterface
 
 		// If all elements are arrays, return true
 		return true;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

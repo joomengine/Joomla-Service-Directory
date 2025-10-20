@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.486.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface Activeregistryinterface
 {
+
+/***[JCBGUI.power.main_class_code.486.$$$$]***/
 	/**
 	 * Check if the registry has any content.
 	 *
@@ -95,6 +100,7 @@ interface Activeregistryinterface
 	 * @return bool True if the location exists, false otherwise.
 	 * @since 3.2.0
 	 */
-	public function existsActive(string ...$keys): bool;
+	public function existsActive(string ...$keys): bool;/***[/JCBGUI$$$$]***/
+
 }
 

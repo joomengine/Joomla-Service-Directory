@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.133.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Database;
 
 
-use Joomla\CMS\Date\Date;
+
+/***[JCBGUI.power.head.133.$$$$]***/
+use Joomla\CMS\Date\Date;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Database\DefaultTrait;
 use JoomService\Joomla\Utilities\ArrayHelper;
 use JoomService\Joomla\Interfaces\Database\InsertInterface;
@@ -26,6 +32,8 @@ use JoomService\Joomla\Abstraction\Versioning;
  */
 final class Insert extends Versioning implements InsertInterface
 {
+
+/***[JCBGUI.power.main_class_code.133.$$$$]***/
 	/**
 	 * Default Switch
 	 *
@@ -357,6 +365,7 @@ final class Insert extends Versioning implements InsertInterface
 		{
 			// Silently ignore all errors
 		}
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

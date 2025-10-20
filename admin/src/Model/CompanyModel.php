@@ -775,13 +775,13 @@ class CompanyModel extends AdminModel
 				}
 			}
 		}
-
+/***[INSERTED$$$$]***//**362**/
 		// Only load the GUID if new item (or empty)
 		if (0 == $id || !($val = $form->getValue('guid')))
 		{
 			$form->setValue('guid', null, GuidHelper::get());
 		}
-
+/***[/INSERTED$$$$]***/
 		return $form;
 	}
 
@@ -996,6 +996,8 @@ class CompanyModel extends AdminModel
 			return false;
 		}
 
+
+/***[JCBGUI.admin_view.php_after_delete.324.$$$$]***/
 		// linked tables to update
 		$_tables_array = [
 			'file' => 'entity',
@@ -1043,7 +1045,8 @@ class CompanyModel extends AdminModel
 					$_Model->delete($_pks);
 				}
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		return true;
 	}
@@ -1064,6 +1067,8 @@ class CompanyModel extends AdminModel
 			return false;
 		}
 
+
+/***[JCBGUI.admin_view.php_after_publish.324.$$$$]***/
 		// linked tables to update
 		$_tables_array = [
 			'file' => 'entity',
@@ -1108,7 +1113,8 @@ class CompanyModel extends AdminModel
 					$_Model->publish($_pks, $value);
 				}
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		return true;
 	}
@@ -1477,6 +1483,8 @@ class CompanyModel extends AdminModel
 		}
 
 
+/***[JCBGUI.admin_view.php_before_save.324.$$$$]***/
+
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
 		{
@@ -1489,7 +1497,8 @@ class CompanyModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
-		}
+		}/***[/JCBGUI$$$$]***/
+
 		if (isset($data['addresses']))
 		{
 			DataFactory::_('Data.Subform')->table('address')->set($data['addresses'] ?? [], 'guid', 'company', $data['guid'] ?? '');

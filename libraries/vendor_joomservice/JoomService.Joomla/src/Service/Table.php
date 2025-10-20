@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.762.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,12 +10,16 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Service;
 
 
+
+/***[JCBGUI.power.head.762.$$$$]***/
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Joomla\DI\ServiceProviderInterface;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Servicedirectory\Table as DataTable;
 use JoomService\Joomla\Servicedirectory\Table\Schema;
 use JoomService\Joomla\Servicedirectory\Table\Validator;
@@ -26,6 +32,8 @@ use JoomService\Joomla\Servicedirectory\Table\Validator;
  */
 class Table implements ServiceProviderInterface
 {
+
+/***[JCBGUI.power.main_class_code.762.$$$$]***/
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -87,6 +95,7 @@ class Table implements ServiceProviderInterface
 		return new Validator(
 			$container->get('Table')
 		);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

@@ -76,6 +76,8 @@ class AjaxModel extends ListModel
 	}
 
 	// Used in company
+
+/***[JCBGUI.admin_view.php_ajaxmethod.324.$$$$]***/
 	/**
 	 * Get the country states if they exist.
 	 *
@@ -142,10 +144,11 @@ class AjaxModel extends ListModel
 		}
 
 		return ['error' => Text::_('COM_SERVICEDIRECTORY_THE_STATE_CITIES_COULD_NOT_BE_FOUND')];
-	}
+	}/***[/JCBGUI$$$$]***/
+
 
 	// Used in file_type
-
+/***[INSERTED$$$$]***//**440**/
 	/**
 	 * Get the file type details, if it exists.
 	 *
@@ -278,5 +281,5 @@ class AjaxModel extends ListModel
 		}
 
 		return ['error' => Text::_('COM_SERVICEDIRECTORY_THE_FILE_DISPLAY_COULD_NOT_BE_LOADED')];
-	}
+	}/***[/INSERTED$$$$]***/
 }

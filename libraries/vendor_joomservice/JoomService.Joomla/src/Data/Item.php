@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.712.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data;
 
@@ -27,6 +30,8 @@ use JoomService\Joomla\Interfaces\Data\ItemInterface;
  */
 final class Item implements ItemInterface
 {
+
+/***[JCBGUI.power.main_class_code.712.$$$$]***/
 	/**
 	 * The Load Class.
 	 *
@@ -240,6 +245,7 @@ final class Item implements ItemInterface
 		}
 
 		return 'insert';
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.764.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data;
 
@@ -23,6 +26,8 @@ use JoomService\Joomla\Interfaces\Data\MultiSubformInterface;
  */
 final class MultiSubform implements MultiSubformInterface
 {
+
+/***[JCBGUI.power.main_class_code.764.$$$$]***/
 	/**
 	 * The Subform Class.
 	 *
@@ -561,6 +566,7 @@ final class MultiSubform implements MultiSubformInterface
 				}
 			}
 		}
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

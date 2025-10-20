@@ -17,25 +17,25 @@ Designed for flexibility and ease of use, Service Directory helps you organize a
 
 ## Build Time
 
-**915 Hours** or **114 Eight Hour Days**  (actual time the author saved - 
+**917 Hours** or **115 Eight Hour Days**  (actual time the author saved - 
 due to [Automated Component Builder](https://www.joomlacomponentbuilder.com))
 
 > (if creating a folder and file took **5 seconds** and writing one line of code took **10 seconds**,
 > never making one mistake or taking any coffee break.)
 
-+ *Line count*: **328660**
-+ *File count*: **1126**
++ *Line count*: **329578**
++ *File count*: **1125**
 + *Folder count*: **220**
 
-**603 Hours** or **76 Eight Hour Days** (the actual time the author spent)
+**605 Hours** or **75 Eight Hour Days** (the actual time the author spent)
 
 > (with the following break down:
 > **debugging @229hours** = codingtime / 4;
 > **planning @131hours** = codingtime / 7;
-> **mapping @91hours** = codingtime / 10;
-> **office @152hours** = codingtime / 6;)
+> **mapping @92hours** = codingtime / 10;
+> **office @153hours** = codingtime / 6;)
 
-**1518 Hours** or **190 Eight Hour Days**
+**1522 Hours** or **190 Eight Hour Days**
 (a total of the realistic time frame for this project)
 
 > (if creating a folder and file took **5 seconds** and writing one line of code took **10 seconds**,

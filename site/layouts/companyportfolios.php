@@ -21,11 +21,16 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.151.$$$$]***/
 $tabId = 'portfolios-tabs-' . substr(md5(uniqid('', true)), 0, 8);
 $activeId = $tabId . '-0';
-$count = !empty($displayData) ? count((array) $displayData) : 0;
+$count = !empty($displayData) ? count((array) $displayData) : 0;/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.151.$$$$]-->
 <?php if ($count > 0): ?>
 <div class="container my-5">
 	<?php if ($count == 1): ?>
@@ -52,4 +57,5 @@ $count = !empty($displayData) ? count((array) $displayData) : 0;
 		<?php echo Html::_('uitab.endTabSet'); ?>
 	<?php endif; ?>
 </div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

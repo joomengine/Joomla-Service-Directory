@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.382.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Model;
 
@@ -26,6 +29,8 @@ use JoomService\Joomla\Abstraction\Model;
  */
 final class Upsert extends Model implements ModelInterface
 {
+
+/***[JCBGUI.power.main_class_code.382.$$$$]***/
 	/**
 	 * Model the value
 	 *          Example: $this->value(value, 'field_key', 'table_name');
@@ -113,6 +118,7 @@ final class Upsert extends Model implements ModelInterface
 		}
 		// remove empty values
 		return false;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

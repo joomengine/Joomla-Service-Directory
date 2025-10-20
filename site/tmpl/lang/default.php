@@ -22,6 +22,8 @@ defined('_JEXEC') or die;
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_servicedirectory'); ?>" method="post" name="adminForm" id="adminForm">
+
+<!--[JCBGUI.site_view.default.88.$$$$]-->
 <h1><?php echo $this->lang->name ?? Text::_('COM_SERVICEDIRECTORY_LANGUAGE'); ?></h1>
 <?php if (!empty($this->items)): ?>
 	<?php echo $this->loadTemplate('companies'); ?>
@@ -52,7 +54,8 @@ if (!empty($this->items) && isset($this->pagination)) :
 			</div>
 		<?php endif; ?>
 	</div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+
 <input type="hidden" name="task" value="" />
 <?php echo Html::_('form.token'); ?>
 </form>

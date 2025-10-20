@@ -21,6 +21,8 @@ use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 // No direct access to this file
 defined('JPATH_BASE') or die;
 
+
+/***[JCBGUI.layout.php_view.143.$$$$]***/
 // Extract all keys from $displayData as individual variables.
 extract($displayData);
 
@@ -36,9 +38,13 @@ foreach ($items as $item)
 	{
 		$bucket[] = LayoutHelper::render('basicitemlink', (object) ['name' => $name, 'link' => $link]);
 	}
-}
+}/***[/JCBGUI$$$$]***/
+
 
 ?>
+
+<!--[JCBGUI.layout.layout.143.$$$$]-->
 <?php if (!empty($bucket)): ?>
 <li><strong><?php echo Text::_($label); ?>:</strong> <?php echo implode(' ', $bucket); ?></li>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

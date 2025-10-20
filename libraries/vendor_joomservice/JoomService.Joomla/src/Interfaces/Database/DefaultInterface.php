@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.1037.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Database;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces\Database;
  */
 interface DefaultInterface
 {
+
+/***[JCBGUI.power.main_class_code.1037.$$$$]***/
 	/**
 	 * Switch to prevent/allow defaults from being added.
 	 *
@@ -27,6 +32,7 @@ interface DefaultInterface
 	 * @return  self
 	 * @since   5.1.1
 	 **/
-	public function defaults(bool $trigger = true): self;
+	public function defaults(bool $trigger = true): self;/***[/JCBGUI$$$$]***/
+
 }
 

@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.135.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
 
-use Joomla\DI\Container;
+
+/***[JCBGUI.power.head.135.$$$$]***/
+use Joomla\DI\Container;/***[/JCBGUI$$$$]***/
+
 
 
 /**
@@ -22,6 +28,8 @@ use Joomla\DI\Container;
  */
 interface FactoryInterface
 {
+
+/***[JCBGUI.power.main_class_code.135.$$$$]***/
 	/**
 	 * Get any class from the container
 	 *
@@ -38,6 +46,7 @@ interface FactoryInterface
 	 * @return  Container
 	 * @since 0.0.0
 	 */
-	public static function getContainer(): Container;
+	public static function getContainer(): Container;/***[/JCBGUI$$$$]***/
+
 }
 

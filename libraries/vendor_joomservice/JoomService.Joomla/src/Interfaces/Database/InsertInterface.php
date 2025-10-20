@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.134.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Database;
 
@@ -23,6 +26,8 @@ use JoomService\Joomla\Interfaces\Database\VersioningInterface;
  */
 interface InsertInterface extends DefaultInterface, VersioningInterface
 {
+
+/***[JCBGUI.power.main_class_code.134.$$$$]***/
 	/**
 	 * Insert rows to the database (with remapping and filtering columns option)
 	 *
@@ -67,6 +72,7 @@ interface InsertInterface extends DefaultInterface, VersioningInterface
 	 * @return  bool
 	 * @since   3.2.0
 	 **/
-	public function item(object $data, string $table): bool;
+	public function item(object $data, string $table): bool;/***[/JCBGUI$$$$]***/
+
 }
 

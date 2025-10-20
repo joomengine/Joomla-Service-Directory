@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.124.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Database;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Abstraction\Database;
  */
 final class Load extends Database implements LoadInterface
 {
+
+/***[JCBGUI.power.main_class_code.124.$$$$]***/
 	/**
 	 * Load data rows as an array of associated arrays
 	 *
@@ -1036,6 +1041,7 @@ final class Load extends Database implements LoadInterface
 		return (strpos($column, '.') !== false)
 			? $column
 			: "{$alias}.{$column}";
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

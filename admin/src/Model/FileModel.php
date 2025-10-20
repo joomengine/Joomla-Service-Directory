@@ -498,19 +498,25 @@ class FileModel extends AdminModel
 	 */
 	public function delete(&$pks)
 	{
-		$filePaths = DataFactory::_('Data.Items')->table('file')->values($pks, 'id', 'file_path') ?? [];
+
+/***[JCBGUI.admin_view.php_before_delete.331.$$$$]***/
+		$filePaths = DataFactory::_('Data.Items')->table('file')->values($pks, 'id', 'file_path') ?? [];/***[/JCBGUI$$$$]***/
+
 		if (!parent::delete($pks))
 		{
 			return false;
 		}
 
+
+/***[JCBGUI.admin_view.php_after_delete.331.$$$$]***/
 		foreach ($filePaths as $filePath)
 		{
 			if (is_file($filePath) && is_writable($filePath))
 			{
 				File::delete($filePath); // remove from file system
 			}
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		return true;
 	}

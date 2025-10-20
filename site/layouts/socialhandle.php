@@ -24,6 +24,8 @@ defined('JPATH_BASE') or die;
 
 
 ?>
+
+<!--[JCBGUI.layout.layout.148.$$$$]-->
 <?php if (!empty($displayData->name) && !empty($displayData->handle) && !empty($displayData->link)) : ?>
     <span class="d-inline-flex align-items-center">
 		<span class="fw-semibold me-1"><?php echo $displayData->name; ?></span>
@@ -31,4 +33,5 @@ defined('JPATH_BASE') or die;
 			<?php echo $displayData->handle; ?>
 		</a>
 	</span>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

@@ -24,6 +24,8 @@ defined('JPATH_BASE') or die;
 
 
 ?>
+
+<!--[JCBGUI.layout.layout.146.$$$$]-->
 <?php if (!empty($displayData)): ?>
 	<?php if (!empty($displayData->type)): ?>
 		<h5 class="card-title mb-1"><?php echo $displayData->type; ?></h5>
@@ -48,4 +50,5 @@ defined('JPATH_BASE') or die;
 			<?php endif; ?>
 		</div>
 	</address>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+

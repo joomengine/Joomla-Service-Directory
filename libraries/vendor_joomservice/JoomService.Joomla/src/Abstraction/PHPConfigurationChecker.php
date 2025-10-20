@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.781.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,11 +10,15 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Abstraction;
 
 
-use Joomla\CMS\Factory;
+
+/***[JCBGUI.power.head.781.$$$$]***/
+use Joomla\CMS\Factory;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Interfaces\PHPConfigurationCheckerInterface;
 use JoomService\Joomla\Abstraction\Registry;
 
@@ -24,6 +30,8 @@ use JoomService\Joomla\Abstraction\Registry;
  */
 abstract class PHPConfigurationChecker extends Registry implements PHPConfigurationCheckerInterface
 {
+
+/***[JCBGUI.power.main_class_code.781.$$$$]***/
 	/**
 	 * The upload max filesize value
 	 *
@@ -209,6 +217,7 @@ abstract class PHPConfigurationChecker extends Registry implements PHPConfigurat
 			default:
 				return (int) $value;
 		}
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

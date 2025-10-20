@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.821.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,21 +10,25 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\Utilities;
 
 
+
+/***[JCBGUI.power.head.821.$$$$]***/
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserHelper as JoomlaUserHelper;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;/***[/JCBGUI$$$$]***/
+use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+
 use JoomService\Joomla\Utilities\Component\Helper as Component;
 use JoomService\Joomla\Utilities\ArrayHelper;
 use JoomService\Joomla\Utilities\StringHelper;
 use JoomService\Joomla\Servicedirectory\Utilities\Exception\NoUserIdFoundException;
-use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 
 
 /**
@@ -32,6 +38,8 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
  */
 abstract class UserHelper
 {
+
+/***[JCBGUI.power.main_class_code.821.$$$$]***/
 	/**
 	 * Save user details by either creating a new user or updating an existing user.
 	 *
@@ -476,6 +484,7 @@ abstract class UserHelper
 			// Get the form.
 			Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
 		}
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

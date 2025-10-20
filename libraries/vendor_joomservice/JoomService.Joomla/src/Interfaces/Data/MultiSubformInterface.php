@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.765.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Data;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces\Data;
  */
 interface MultiSubformInterface
 {
+
+/***[JCBGUI.power.main_class_code.765.$$$$]***/
 	/**
 	 * Get a subform items
 	 *
@@ -72,6 +77,7 @@ interface MultiSubformInterface
 	 * @return bool
 	 * @since 3.2.2
 	 */
-	public function set(mixed $items, array $setMap): bool;
+	public function set(mixed $items, array $setMap): bool;/***[/JCBGUI$$$$]***/
+
 }
 

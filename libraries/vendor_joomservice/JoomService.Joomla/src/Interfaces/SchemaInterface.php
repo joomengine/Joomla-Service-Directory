@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.734.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface SchemaInterface
 {
+
+/***[JCBGUI.power.main_class_code.734.$$$$]***/
 	/**
 	 * Check and update database schema for missing fields or tables.
 	 *
@@ -48,6 +53,7 @@ interface SchemaInterface
 	 * @since  3.2.1
 	 * @throws \Exception If there is an error while updating the schema.
 	 */
-	public function updateSchema(string $table): void;
+	public function updateSchema(string $table): void;/***[/JCBGUI$$$$]***/
+
 }
 

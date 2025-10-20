@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.768.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces;
 
@@ -19,12 +22,15 @@ namespace JoomService\Joomla\Interfaces;
  */
 interface SchemaCheckerInterface
 {
+
+/***[JCBGUI.power.main_class_code.768.$$$$]***/
 	/**
 	 * Make sure that the database schema is up-to-date.
 	 *
 	 * @return void
 	 * @since 3.2.2
 	 */
-	public function run(): void;
+	public function run(): void;/***[/JCBGUI$$$$]***/
+
 }
 

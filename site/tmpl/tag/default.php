@@ -22,12 +22,17 @@ use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
 defined('_JEXEC') or die;
 
 
+/***[JCBGUI.site_view.php_view.86.$$$$]***/
+
 $id = $this->input->getInt('id', 0);
 $search_link = Route::_(RouteHelper::getTagRoute($id)) . '/';
-$search_value = $this->input->get('search', null, 'STRING');
+$search_value = $this->input->get('search', null, 'STRING');/***[/JCBGUI$$$$]***/
+
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_servicedirectory'); ?>" method="post" name="adminForm" id="adminForm">
+
+<!--[JCBGUI.site_view.default.86.$$$$]-->
 <?php echo LayoutHelper::render('entitybanner', $this->banner ?? null); ?>
 <?php if (!empty($this->items)): ?>
 	<?php echo LayoutHelper::render('searchbox', ['url' => $search_link, 'value' => $search_value]); ?>
@@ -59,7 +64,8 @@ if (!empty($this->items) && isset($this->pagination)) :
 			</div>
 		<?php endif; ?>
 	</div>
-<?php endif; ?>
+<?php endif; ?><!--[/JCBGUI$$$$]-->
+
 <input type="hidden" name="task" value="" />
 <?php echo Html::_('form.token'); ?>
 </form>

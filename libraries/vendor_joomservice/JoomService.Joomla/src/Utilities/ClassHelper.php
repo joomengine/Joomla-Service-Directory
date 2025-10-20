@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.770.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Utilities;
  */
 abstract class ClassHelper
 {
+
+/***[JCBGUI.power.main_class_code.770.$$$$]***/
 	/**
 	 * Ensures that a class in the namespace is available.
 	 * If the class is not already loaded, it attempts to load it via the specified autoloader.
@@ -50,6 +55,7 @@ abstract class ClassHelper
 		}
 		return true;
 	}
+/***[/JCBGUI$$$$]***/
 
 }
 

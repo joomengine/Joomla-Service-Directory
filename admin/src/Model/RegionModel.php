@@ -368,13 +368,13 @@ class RegionModel extends AdminModel
 				}
 			}
 		}
-
+/***[INSERTED$$$$]***//**362**/
 		// Only load the GUID if new item (or empty)
 		if (0 == $id || !($val = $form->getValue('guid')))
 		{
 			$form->setValue('guid', null, GuidHelper::get());
 		}
-
+/***[/INSERTED$$$$]***/
 		return $form;
 	}
 
@@ -981,6 +981,8 @@ class RegionModel extends AdminModel
 		}
 
 
+/***[JCBGUI.admin_view.php_before_save.301.$$$$]***/
+
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
 		{
@@ -993,7 +995,8 @@ class RegionModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
-		}
+		}/***[/JCBGUI$$$$]***/
+
 		if (isset($data['subregions']))
 		{
 			DataFactory::_('Data.Subform')->table('subregion')->set($data['subregions'] ?? [], 'guid', 'region', $data['guid'] ?? '');

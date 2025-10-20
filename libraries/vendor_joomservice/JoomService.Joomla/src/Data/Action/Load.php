@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.746.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data\Action;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Interfaces\Data\LoadInterface;
  */
 class Load implements LoadInterface
 {
+
+/***[JCBGUI.power.main_class_code.746.$$$$]***/
 	/**
 	 * Model Load
 	 *
@@ -219,6 +224,7 @@ class Load implements LoadInterface
 			$bucket['a.' . $k] = $v;
 		}
 		return $bucket;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

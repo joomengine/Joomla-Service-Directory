@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.125.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Database;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces\Database;
  */
 interface LoadInterface
 {
+
+/***[JCBGUI.power.main_class_code.125.$$$$]***/
 	/**
 	 * Load data rows as an array of associated arrays
 	 *
@@ -124,6 +129,7 @@ interface LoadInterface
 	 * @since   3.2.2
 	 **/
 	public function values(array $select, array $tables, ?array $where = null,
-		?array $order = null, ?int $limit = null): ?array;
+		?array $order = null, ?int $limit = null): ?array;/***[/JCBGUI$$$$]***/
+
 }
 

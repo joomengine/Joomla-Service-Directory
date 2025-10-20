@@ -24,4 +24,7 @@ defined('JPATH_BASE') or die;
 
 
 ?>
-<a href="<?php echo $displayData->link ?? '#'; ?>"><?php echo $displayData->name ?? Text::_('COM_SERVICEDIRECTORY_MISSING_NAME'); ?></a>
+
+<!--[JCBGUI.layout.layout.144.$$$$]-->
+<a href="<?php echo $displayData->link ?? '#'; ?>"><?php echo $displayData->name ?? Text::_('COM_SERVICEDIRECTORY_MISSING_NAME'); ?></a><!--[/JCBGUI$$$$]-->
+

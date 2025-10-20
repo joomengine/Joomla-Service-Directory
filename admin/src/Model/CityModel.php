@@ -492,13 +492,13 @@ class CityModel extends AdminModel
 				}
 			}
 		}
-
+/***[INSERTED$$$$]***//**362**/
 		// Only load the GUID if new item (or empty)
 		if (0 == $id || !($val = $form->getValue('guid')))
 		{
 			$form->setValue('guid', null, GuidHelper::get());
 		}
-
+/***[/INSERTED$$$$]***/
 		return $form;
 	}
 
@@ -1105,6 +1105,8 @@ class CityModel extends AdminModel
 		}
 
 
+/***[JCBGUI.admin_view.php_before_save.297.$$$$]***/
+
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
 		{
@@ -1117,7 +1119,8 @@ class CityModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		// Set the Params Items to data
 		if (isset($data['params']) && is_array($data['params']))

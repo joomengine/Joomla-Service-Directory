@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.1038.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Database;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Database;
  */
 trait DefaultTrait
 {
+
+/***[JCBGUI.power.main_class_code.1038.$$$$]***/
 	/**
 	 * Switch to set the defaults
 	 *
@@ -40,6 +45,7 @@ trait DefaultTrait
 		$this->defaults = $trigger;
 
 		return $this;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

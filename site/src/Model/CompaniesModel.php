@@ -178,7 +178,7 @@ class CompaniesModel extends ListModel
 
 		// Filtering.
 
-
+/***[INSERTED$$$$]***//**437**/
 			$search = $this->input->get('search', null, 'STRING');
 			if (!empty($search))
 			{
@@ -194,7 +194,7 @@ class CompaniesModel extends ListModel
 					' OR a.companysize LIKE ' . $search .
 					' OR a.description LIKE ' . $search .
 				')');
-			}
+			}/***[/INSERTED$$$$]***/
 		// Get where a.published is 1
 		$query->where('a.published = 1');
 		// Get where cc.published is 1
@@ -284,7 +284,7 @@ class CompaniesModel extends ListModel
 		}
 
 
-
+/***[INSERTED$$$$]***//**430**/
 		$db = $this->getDatabase();
 		$this->companies = [];
 		$this->mapper = [
@@ -320,7 +320,7 @@ class CompaniesModel extends ListModel
 
 			// process the item
 			$_item = $this->processItem($_item);
-		}
+		}/***[/INSERTED$$$$]***/
 
 		// return items
 		return $items;
@@ -505,8 +505,10 @@ class CompaniesModel extends ListModel
 
 		// Get the global params
 		$globalParams = ComponentHelper::getParams('com_servicedirectory', true);
+/***[JCBGUI.dynamic_get.php_getlistquery.147.$$$$]***/
 		$thumb = 'logo__%';
-		$category = 'company';
+		$category = 'company';/***[/JCBGUI$$$$]***/
+
 		// Get a db connection.
 		$db = $this->getDatabase();
 
@@ -550,6 +552,7 @@ class CompaniesModel extends ListModel
 				$item->slug = ($item->id ?? '0') . (isset($item->alias) ? ':' . $item->alias : '');
 			}
 		}
+/***[JCBGUI.dynamic_get.php_after_getitems.147.$$$$]***/
 		$baseUrl = rtrim(Uri::root(), '/');
 
 		$queryParams = [
@@ -570,12 +573,13 @@ class CompaniesModel extends ListModel
 			);
 		}
 
-		$items = $images;
+		$items = $images;/***[/JCBGUI$$$$]***/
+
 		// return items
 		return $items;
 	}
 
-
+/***[INSERTED$$$$]***//**435**/
 	/**
 	 * The entity value.
 	 *
@@ -963,7 +967,7 @@ class CompaniesModel extends ListModel
 
 		return true;
 	}
-
+/***[INSERTED$$$$]***//**441**/
 	/**
 	 * Check whether the current user is allowed to edit a company record.
 	 *
@@ -1004,8 +1008,8 @@ class CompaniesModel extends ListModel
 		}
 
 		return false;
-	}
-
+	}/***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**429**/
 	/**
 	 * Convert Markdown text to HTML.
 	 *
@@ -1063,7 +1067,7 @@ class CompaniesModel extends ListModel
 			return '';
 		}
 	}
-
+/***[INSERTED$$$$]***//**432**/
 	/**
 	 * Escapes a value for output in a view script.
 	 *
@@ -1082,8 +1086,8 @@ class CompaniesModel extends ListModel
 		}
 
 		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
-	}
-
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**442**/
 	/**
 	 * Get or regenerate a time-based random seed that stays stable for one minute.
 	 *
@@ -1121,5 +1125,5 @@ class CompaniesModel extends ListModel
 
 		// Return existing active seed
 		return (int) $seedData['seed'];
-	}
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
 }

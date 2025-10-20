@@ -22,6 +22,8 @@ use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
 // No direct access to this file
 defined('_JEXEC') or die;
 
+
+/***[JCBGUI.site_view.php_view.84.$$$$]***/
 $max_listing = $this->params->get('max_listings', 1);
 $number_of_listings = count( (array) ($this->mine ?? []));
 $allow_more_listings = ($max_listing > $number_of_listings);
@@ -46,10 +48,13 @@ if (!empty($items))
 
 $id = $this->input->getInt('id', 0);
 $search_link = Route::_(RouteHelper::getCompaniesRoute($id)) . '/';
-$search_value = $this->input->get('search', null, 'STRING');
+$search_value = $this->input->get('search', null, 'STRING');/***[/JCBGUI$$$$]***/
+
 
 ?>
 <?php echo $this->toolbar->render(); ?>
+
+<!--[JCBGUI.site_view.default.84.$$$$]-->
 <?php if (!empty($items)): ?>
 <?php echo LayoutHelper::render('searchbox', ['url' => $search_link, 'value' => $search_value]); ?>
 <div class="container-xxl my-4">
@@ -129,4 +134,5 @@ document.addEventListener('DOMContentLoaded', function () {
 	<?php echo Text::_('COM_SERVICEDIRECTORY_YOU_MUST_BE_SIGNED_IN_TO_VIEW_OR_MANAGE_YOUR_COMPANY_LISTINGS'); ?>
 	<?php echo $this->loadTemplate('loginmodule'); ?>
 <?php endif; ?>
-<br>
+<br><!--[/JCBGUI$$$$]-->
+

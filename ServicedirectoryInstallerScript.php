@@ -378,23 +378,23 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 		// do any updates needed
 		if ($type === 'update')
 		{
-
+/***[INSERTED$$$$]***//**387**/
 			// Check that the PHP configurations are sufficient 
 			if ($this->classExists(PHPConfigurationChecker::class))
 			{
 				(new PHPConfigurationChecker())->run();
-			}
+			}/***[/INSERTED$$$$]***/
 		}
 
 		// do any install needed
 		if ($type === 'install')
 		{
-
+/***[INSERTED$$$$]***//**387**/
 			// Check that the PHP configurations are sufficient 
 			if ($this->classExists(PHPConfigurationChecker::class))
 			{
 				(new PHPConfigurationChecker())->run();
-			}
+			}/***[/INSERTED$$$$]***/
 		}
 
 		return true;
@@ -824,12 +824,12 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 			);
 
 
-
+/***[INSERTED$$$$]***//**388**/
 			// Check that the database is up-to date
 			if ($this->classExists(SchemaChecker::class))
 			{
 				(new SchemaChecker())->run();
-			}
+			}/***[/INSERTED$$$$]***/
 
 			// Get Application object
 			$this->app ??= Factory::getApplication();
@@ -1610,17 +1610,17 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 
 
-
+/***[INSERTED$$$$]***//**388**/
 			// Check that the database is up-to date
 			if ($this->classExists(SchemaChecker::class))
 			{
 				(new SchemaChecker())->run();
-			}
+			}/***[/INSERTED$$$$]***/
 
 			echo '<div style="background-color: #fff;" class="alert alert-info"><a target="_blank" href="https://github.com/joomengine/Joomla-Service-Directory" title="Service Directory">
 				<img src="components/com_servicedirectory/assets/images/vdm-component.jpg"/>
 				</a>
-				<h3>Upgrade to Version 5.0.1 Was Successful! Let us know if anything is not working as expected.</h3></div>';
+				<h3>Upgrade to Version 5.0.0 Was Successful! Let us know if anything is not working as expected.</h3></div>';
 
 			// Add/Update component in the action logs extensions table.
 			$this->setActionLogsExtensions();

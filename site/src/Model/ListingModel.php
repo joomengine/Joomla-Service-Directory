@@ -325,6 +325,7 @@ class ListingModel extends ItemModel
 			}
 		}
 
+/***[JCBGUI.dynamic_get.php_after_getitem.144.$$$$]***/
 		if (!empty($this->_item[$pk]))
 		{
 			$this->mapper = [
@@ -373,7 +374,8 @@ class ListingModel extends ItemModel
 			$this->returnUrl = urlencode(base64_encode((string) Uri::getInstance()));
 
 			$this->_item[$pk] = $this->processItem($this->_item[$pk]);
-		}
+		}/***[/JCBGUI$$$$]***/
+
 
 		return $this->_item[$pk];
 	}
@@ -749,7 +751,7 @@ class ListingModel extends ItemModel
 	}
 
 
-
+/***[INSERTED$$$$]***//**435**/
 	/**
 	 * The entity value.
 	 *
@@ -1137,7 +1139,7 @@ class ListingModel extends ItemModel
 
 		return true;
 	}
-
+/***[INSERTED$$$$]***//**441**/
 	/**
 	 * Check whether the current user is allowed to edit a company record.
 	 *
@@ -1178,8 +1180,8 @@ class ListingModel extends ItemModel
 		}
 
 		return false;
-	}
-
+	}/***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**429**/
 	/**
 	 * Convert Markdown text to HTML.
 	 *
@@ -1237,7 +1239,7 @@ class ListingModel extends ItemModel
 			return '';
 		}
 	}
-
+/***[INSERTED$$$$]***//**432**/
 	/**
 	 * Escapes a value for output in a view script.
 	 *
@@ -1256,8 +1258,8 @@ class ListingModel extends ItemModel
 		}
 
 		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
-	}
-
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
+/***[INSERTED$$$$]***//**442**/
 	/**
 	 * Get or regenerate a time-based random seed that stays stable for one minute.
 	 *
@@ -1295,5 +1297,5 @@ class ListingModel extends ItemModel
 
 		// Return existing active seed
 		return (int) $seedData['seed'];
-	}
+	}/***[/INSERTED$$$$]***//***[/INSERTED$$$$]***/
 }

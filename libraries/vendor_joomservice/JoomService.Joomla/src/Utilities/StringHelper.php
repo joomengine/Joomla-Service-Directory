@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.12.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,15 +10,19 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Utilities;
 
 
+
+/***[JCBGUI.power.head.12.$$$$]***/
 use Joomla\CMS\Factory;
 use Joomla\Filter\InputFilter;
 use Joomla\CMS\Language\LanguageFactoryInterface;
 use Joomla\CMS\Language\LanguageFactory;
-use Joomla\CMS\Language\Language;
+use Joomla\CMS\Language\Language;/***[/JCBGUI$$$$]***/
+
 use JoomService\Joomla\Utilities\Component\Helper;
 
 
@@ -27,6 +33,8 @@ use JoomService\Joomla\Utilities\Component\Helper;
  */
 abstract class StringHelper
 {
+
+/***[JCBGUI.power.main_class_code.12.$$$$]***/
 	/**
 	 * The Main Active Language
 	 * 
@@ -468,6 +476,7 @@ abstract class StringHelper
 		}
 
 		return implode($key);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

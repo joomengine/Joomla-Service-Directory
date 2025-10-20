@@ -408,7 +408,10 @@ class HtmlView extends BaseHtmlView
 		{
 			Html::_('script', $script, ['version' => 'auto']);
 		}
-// LayoutHelper::render('filedisplay', $displayData);
+
+/***[JCBGUI.admin_view.php_document.283.$$$$]***/
+// LayoutHelper::render('filedisplay', $displayData);/***[/JCBGUI$$$$]***/
+
 	}
 
 	/**

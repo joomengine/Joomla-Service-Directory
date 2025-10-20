@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.747.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Data\Action;
 
@@ -24,6 +27,8 @@ use JoomService\Joomla\Interfaces\Data\InsertInterface;
  */
 class Insert implements InsertInterface
 {
+
+/***[JCBGUI.power.main_class_code.747.$$$$]***/
 	/**
 	 * Model
 	 *
@@ -197,6 +202,7 @@ class Insert implements InsertInterface
 	public function getTable(): string
 	{
 		return $this->table;
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

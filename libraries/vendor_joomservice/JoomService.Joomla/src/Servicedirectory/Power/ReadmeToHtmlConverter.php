@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.1052.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Servicedirectory\Power;
 
@@ -21,6 +24,8 @@ namespace JoomService\Joomla\Servicedirectory\Power;
  */
 class ReadmeToHtmlConverter
 {
+
+/***[JCBGUI.power.main_class_code.1052.$$$$]***/
 	/**
 	 * Convert Markdown/README string to sanitized and formatted HTML output.
 	 *
@@ -278,6 +283,7 @@ class ReadmeToHtmlConverter
 			'$1',
 			$text
 		);
-	}
+	}/***[/JCBGUI$$$$]***/
+
 }
 

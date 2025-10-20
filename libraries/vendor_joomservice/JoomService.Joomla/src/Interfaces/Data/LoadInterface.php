@@ -1,4 +1,6 @@
 <?php
+
+/***[JCBGUI.power.licensing_template.745.$$$$]***/
 /**
  * @package    Joomla.Component.Builder
  *
@@ -8,6 +10,7 @@
  * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+/***[/JCBGUI$$$$]***/
 
 namespace JoomService\Joomla\Interfaces\Data;
 
@@ -19,6 +22,8 @@ namespace JoomService\Joomla\Interfaces\Data;
  */
 interface LoadInterface
 {
+
+/***[JCBGUI.power.main_class_code.745.$$$$]***/
 	/**
 	 * Set the current active table
 	 *
@@ -101,6 +106,7 @@ interface LoadInterface
 	 * @return  string
 	 * @since 3.2.2
 	 */
-	public function getTable(): string;
+	public function getTable(): string;/***[/JCBGUI$$$$]***/
+
 }
 
