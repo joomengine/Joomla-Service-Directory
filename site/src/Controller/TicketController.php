@@ -21,6 +21,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Data\Factory as DataFactory;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -74,6 +76,51 @@ class TicketController extends FormController
 	 * @since  1.6
 	 */
 	protected $view_list = 'directory';
+
+
+	/**
+	 * Method to edit an existing record.
+	 *
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key
+	 *                           (sometimes required to avoid router collisions).
+	 *
+	 * @return  boolean  True if access level check and checkout passes, false otherwise.
+	 *
+	 * @since   1.6
+	 */
+	public function edit($key = null, $urlVar = null)
+	{
+		// for modal title key selection (unique key to do mapping)
+		$titleKey = $this->input->get('titleKey', 'id', 'word');
+		$guid = null;
+		$value = null;
+
+ 		// Determine the name of the primary key for the data.
+		if (empty($key))
+		{
+			$model = $this->getModel();
+			$table = $model->getTable();
+			$key = $table->getKeyName();
+		}
+
+		if ($titleKey === 'guid')
+		{
+			$guid = $this->input->get('guid', null, 'string');
+		}
+
+		if ($guid !== null && GuidHelper::valid($guid))
+		{
+			$value = GuidHelper::item($guid, 'ticket', 'a.' . $key, 'servicedirectory');
+		}
+
+		if ($value !== null)
+		{
+			$this->input->set($key, $value);
+		}
+
+		return parent::edit($key, $urlVar);
+	}
 
 	/**
 	 * Method override to check if you can add a new record.
@@ -360,6 +407,48 @@ class TicketController extends FormController
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
 	{
+		// current id and state
+		$id = $model->getState('ticket.id', 0);
+		$published = (int) ($validData['published'] ?? $model->getState('ticket.published', 0));
+
+		// get current user
+		$user = $this->app->getIdentity();
+
+		// set the status based on the type of area and user editing this
+		$isAdmin = $this->app->isClient('administrator');
+
+		// get the permission
+		$permission = $id > 0
+			? $user->authorise('ticket.edit.state', 'com_servicedirectory.ticket.' . (int) $id)
+			: $user->authorise('ticket.edit.state', 'com_servicedirectory.ticket');
+
+		// if this is a site area, and not staff, set the ticket to open = 1
+		if (!$isAdmin && !$permission)
+		{
+			$published = 1;
+		}
+		// if this is a admin area or staff, and the ticket was open = 1, set it to hold = 0
+		elseif (($permission || $isAdmin) && $published === 1)
+		{
+			$published = 0;
+		}
+
+		// Ensure the ticket is always assigned to (created_by) the company owner,
+		// allowing them to manage and respond to the ticket directly.
+		// This maintains ownership-based access control - only this owner can edit their own tickets.
+		$company = $validData['company'] ?? $model->getState('ticket.company', null);
+		$guid = $validData['guid'] ?? $model->getState('ticket.guid', null);
+		if (!empty($guid) && !empty($company) && ($owner = GuidHelper::item($company, 'company', 'a.created_by', 'servicedirectory')) !== null)
+		{
+			$ticket = (object) [
+				'created_by' => $owner,
+				'guid' => $guid,
+				'published' => $published
+			];
+
+			DataFactory::_('Data.Item')->table('ticket')->set($ticket, 'guid', 'update');
+		}
+
 		return;
 	}
 

@@ -27,7 +27,7 @@ use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\JsonHelper;
-use JoomService\Joomla\Servicedirectory\Power\ReadmeToHtmlConverter;
+use JoomService\Joomla\Servicedirectory\Markdown\Html;
 use JoomService\Joomla\Utilities\StringHelper;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Uri\Uri;
@@ -1113,11 +1113,11 @@ class CategoryModel extends ListModel
 			return '';
 		}
 
-		static $ReadmeToHtmlConverter = null;
+		static $Html = null;
 
-		if ($ReadmeToHtmlConverter === null)
+		if ($Html === null)
 		{
-			$ReadmeToHtmlConverter = new ReadmeToHtmlConverter();
+			$Html = new Html();
 		}
 
 		try
@@ -1137,7 +1137,7 @@ class CategoryModel extends ListModel
 
 		try
 		{
-			return $ReadmeToHtmlConverter->convert($string);
+			return $Html->convert($string);
 		}
 		catch (\Throwable $e)
 		{

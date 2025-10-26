@@ -40,14 +40,14 @@ class DisplayController extends BaseController
 	 * @since  4.0.0
 	 */
 	protected array $allowed_edit_views = [
-		'company' => [
-			'edit' => 'core.edit',
-			'edit.own' => 'core.edit.own'
-		],
 		'ticket' => [
 			'access' => 'ticket.access',
 			'edit' => 'ticket.edit',
 			'edit.own' => 'ticket.edit.own'
+		],
+		'company' => [
+			'edit' => 'core.edit',
+			'edit.own' => 'core.edit.own'
 		]
 	];
 

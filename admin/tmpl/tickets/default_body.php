@@ -104,6 +104,9 @@ $edit = "index.php?option=com_servicedirectory&view=tickets&task=ticket.edit";
 			</div>
 		</td>
 		<td class="hidden-phone">
+			<?php echo Text::_($item->priority); ?>
+		</td>
+		<td class="hidden-phone">
 			<?php echo Text::_($item->published); ?>
 		</td>
 		<td class="nowrap center hidden-phone">

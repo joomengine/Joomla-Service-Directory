@@ -91,22 +91,55 @@
 			label="COM_SERVICEDIRECTORY_TICKET_SUBJECT_LABEL"
 			description="COM_SERVICEDIRECTORY_TICKET_SUBJECT_DESCRIPTION"
 			class="text_area"
+			required="true"
 			hint="COM_SERVICEDIRECTORY_TICKET_SUBJECT_HINT"
 		/>
-		<!-- Company Field. Type: Companies. (custom) -->
+		<!-- Company Field. Type: Modalselect. (custom) -->
 		<field
-			type="companies"
+			type="ModalSelect"
 			name="company"
 			label="COM_SERVICEDIRECTORY_TICKET_COMPANY_LABEL"
-			description="COM_SERVICEDIRECTORY_TICKET_COMPANY_DESCRIPTION"
-			message="COM_SERVICEDIRECTORY_TICKET_COMPANY_MESSAGE"
+			sql_title_table="#__servicedirectory_company"
+			sql_title_column="name"
+			data-key-name="guid"
+			sql_title_key="guid"
+			urlSelect="index.php?option=com_servicedirectory&amp;view=companies&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			urlNew="index.php?option=com_servicedirectory&amp;task=company.add&amp;layout=modal&amp;tmpl=component"
+			urlEdit="index.php?option=com_servicedirectory&amp;task=company.edit&amp;guid={id}&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			titleSelect="COM_SERVICEDIRECTORY_TICKET_COMPANY_TITLESELECT"
+			titleNew="COM_SERVICEDIRECTORY_TICKET_COMPANY_TITLENEW"
+			titleEdit="COM_SERVICEDIRECTORY_TICKET_COMPANY_TITLEEDIT"
+			iconSelect="icon-copy"
+			select="true"
+			new="true"
+			edit="true"
+			clear="true"
+			required="false"
+			class="input-large"
+			hint="COM_SERVICEDIRECTORY_TICKET_COMPANY_HINT"
+		/>
+		<!-- Priority Field. Type: List. (joomla) -->
+		<field
+			type="list"
+			name="priority"
+			label="COM_SERVICEDIRECTORY_TICKET_PRIORITY_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_PRIORITY_DESCRIPTION"
 			class="list_class"
 			layout="joomla.form.field.list-fancy-select"
 			multiple="false"
+			filter="INT"
 			required="true"
-			button="false"
-			entity="ticket"
-		/>
+			default="1">
+			<!-- Option Set. -->
+			<option value="">
+				COM_SERVICEDIRECTORY_TICKET_SELECT_A_PRIORITY</option>
+			<option value="1">
+				COM_SERVICEDIRECTORY_TICKET_LOW</option>
+			<option value="2">
+				COM_SERVICEDIRECTORY_TICKET_NORMAL</option>
+			<option value="3">
+				COM_SERVICEDIRECTORY_TICKET_HIGH</option>
+		</field>
 		<!-- Published Field. Type: List. (joomla) -->
 		<field
 			type="list"
@@ -116,7 +149,7 @@
 			class="list_class"
 			multiple="false"
 			filter="INT"
-			required="true"
+			required="false"
 			default="1">
 			<!-- Option Set. -->
 			<option value="1">
@@ -158,6 +191,8 @@
 			button="false"
 			entity="ticket"
 		/>
+		<!-- Noteticketconversation Field. Type: Note. A None Database Field. (joomla) -->
+		<field type="note" name="noteticketconversation" description="COM_SERVICEDIRECTORY_TICKET_NOTETICKETCONVERSATION_DESCRIPTION" class="noteticketconversation" />
 		<!-- Comment Field. Type: Editor. (joomla) -->
 		<field
 			type="editor"
@@ -175,6 +210,25 @@
 			required="true"
 			validate="maxlength"
 		/>
+		<!-- Ticket_status Field. Type: List. (joomla) -->
+		<field
+			type="list"
+			name="ticket_status"
+			label="COM_SERVICEDIRECTORY_TICKET_TICKET_STATUS_LABEL"
+			description="COM_SERVICEDIRECTORY_TICKET_TICKET_STATUS_DESCRIPTION"
+			class="list_class"
+			multiple="false"
+			filter="INT"
+			required="false"
+			default="1">
+			<!-- Option Set. -->
+			<option value="1">
+				COM_SERVICEDIRECTORY_TICKET_OPEN</option>
+			<option value="0">
+				COM_SERVICEDIRECTORY_TICKET_ONHOLD</option>
+			<option value="2">
+				COM_SERVICEDIRECTORY_TICKET_CLOSED</option>
+		</field>
 	</fieldset>
 
 	<!-- Access Control Fields. -->

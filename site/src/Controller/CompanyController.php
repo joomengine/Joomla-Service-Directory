@@ -142,6 +142,11 @@ class CompanyController extends FormController
 			return false;
 		}
 
+		// check that user does not add more companies than is allowed
+		//if (!ServicedirectoryHelper::allowAdd($user, 'companies'))
+		//{
+		//	return false;
+		//}
 		// In the absence of better information, revert to the component permissions.
 		return parent::allowAdd($data);
 	}

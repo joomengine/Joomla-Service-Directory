@@ -31,8 +31,10 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
-use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
+use JoomService\Joomla\Utilities\Component\Helper;
+use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -137,20 +139,20 @@ class PlatformModel extends AdminModel
 	{
 		if ($item = parent::getItem($pk))
 		{
-			if (!empty($item->params) && !is_array($item->params))
-			{
-				// Convert the params field to an array.
-				$registry = new Registry;
-				$registry->loadString($item->params);
-				$item->params = $registry->toArray();
-			}
-
-			if (!empty($item->metadata))
+			if (property_exists($item, 'metadata') && !is_array($item->metadata))
 			{
 				// Convert the metadata field to an array.
-				$registry = new Registry;
-				$registry->loadString($item->metadata);
-				$item->metadata = $registry->toArray();
+				$metadata       = new Registry($item->metadata);
+				$item->metadata = $metadata->toArray();
+			}
+
+			// check edit access permissions
+			if (!empty($item->id) && !$this->allowEdit((array) $item))
+			{
+ 				$app = Factory::getApplication();
+  				$app->enqueueMessage(Text::_('Not authorised!'), 'error');
+				$app->redirect('index.php?option=com_servicedirectory');
+				return false;
 			}
 		}
 
@@ -473,20 +475,60 @@ class PlatformModel extends AdminModel
 	}
 
 	/**
-	 * Method override to check if you can edit an existing record.
+	 * Method to check if you can edit an existing record.
+	 *   We know this is a double access check (Controller already does an allowEdit check)
+	 *   But when the item is directly accessed the controller is skipped (2025_).
 	 *
 	 * @param    array    $data   An array of input data.
 	 * @param    string   $key    The name of the key for the primary key.
 	 *
-	 * @return   boolean
+	 * @return   boolean  True if allowed to edit the record. Defaults to the permission set in the component.
 	 * @since    2.5
 	 */
-	protected function allowEdit($data = [], $key = 'id')
+	protected function allowEdit(array $data = [], string $key = 'id'): bool
 	{
-		// Check specific edit permission then general edit permission.
-		$user = Factory::getApplication()->getIdentity();
+		// get user object.
+		$user = $this->getCurrentUser();
+		// get record id.
+		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
 
-		return $user->authorise('platform.edit', 'com_servicedirectory.platform.'. ((int) isset($data[$key]) ? $data[$key] : 0)) or $user->authorise('platform.edit',  'com_servicedirectory');
+
+		// Access check.
+		$access = ($user->authorise('platform.access', 'com_servicedirectory.platform.' . (int) $recordId) && $user->authorise('platform.access', 'com_servicedirectory'));
+		if (!$access)
+		{
+			return false;
+		}
+
+		if ($recordId)
+		{
+			// The record has been set. Check the record permissions.
+			$permission = $user->authorise('platform.edit', 'com_servicedirectory.platform.' . (int) $recordId);
+			if (!$permission)
+			{
+				if ($user->authorise('platform.edit.own', 'com_servicedirectory.platform.' . $recordId))
+				{
+					// Now test the owner is the user.
+					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+					if (empty($ownerId))
+					{
+						return false;
+					}
+
+					// If the owner matches 'me' then allow.
+					if ($ownerId == $user->id)
+					{
+						if ($user->authorise('platform.edit.own', 'com_servicedirectory'))
+						{
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		}
+		// Since there is no permission, revert to the component permissions.
+		return $user->authorise('platform.edit', $this->option);
 	}
 
 	/**
@@ -595,6 +637,50 @@ class PlatformModel extends AdminModel
 			return false;
 		}
 
+		// linked tables to also update
+		$_tables_array = [
+			'social_handle' => 'platform'
+		];
+
+		// we must also update all linked tables
+		if (!empty($_tables_array) && UtilitiesArrayHelper::check($pks))
+		{
+			$_field_key ??= 'guid';
+			Helper::setOption('com_servicedirectory');
+			foreach($_tables_array as $_delete_table => $_field_name)
+			{
+				// get the platform field key's
+				$_guids = DataFactory::_('Load')->values(
+					['a.guid' => $_field_key], // select
+					['a' => 'platform'], // tables
+					['a.id' =>
+						['value' => $pks, 'operator' => 'IN']
+					] // where
+				);
+
+				// get the linked IDs
+				$_pks = DataFactory::_('Load')->values(
+					['a.id' => 'id'], // select
+					['a' => $_delete_table], // tables
+					['a.' . $_field_name =>
+						['value' => $_guids, 'operator' => 'IN']
+					] // where
+				);
+
+				if ($_pks !== null)
+				{
+					// load the model
+					$_Model = Helper::getModel($_delete_table);
+
+					// change publish state to trash (in-case the state was not changed in sync with the parent)
+					$_Model->publish($_pks, -2);
+
+					// delete the items
+					$_Model->delete($_pks);
+				}
+			}
+		}
+
 		return true;
 	}
 
@@ -612,6 +698,47 @@ class PlatformModel extends AdminModel
 		if (!parent::publish($pks, $value))
 		{
 			return false;
+		}
+
+		// linked tables to also update
+		$_tables_array = [
+			'social_handle' => 'platform'
+		];
+
+		// we must also update all linked tables
+		if (!empty($_tables_array) && UtilitiesArrayHelper::check($pks))
+		{
+			$_field_key ??= 'guid';
+			Helper::setOption('com_servicedirectory');
+			foreach($_tables_array as $_update_table => $_field_name)
+			{
+				// get the platform field key's
+				$_guids = DataFactory::_('Load')->values(
+					['a.guid' => $_field_key], // select
+					['a' => 'platform'], // tables
+					['a.id' =>
+						['value' => $pks, 'operator' => 'IN']
+					] // where
+				);
+
+				// get the linked IDs
+				$_pks = DataFactory::_('Load')->values(
+					['a.id' => 'id'], // select
+					['a' => $_update_table], // tables
+					['a.' . $_field_name =>
+						['value' => $_guids, 'operator' => 'IN']
+					] // where
+				);
+
+				if ($_pks !== null)
+				{
+					// load the model
+					$_Model = Helper::getModel($_update_table);
+
+					// change publish state
+					$_Model->publish($_pks, $value);
+				}
+			}
 		}
 
 		return true;

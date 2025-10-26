@@ -1,1 +1,16 @@
-<changelogs></changelogs>
+<?xml version="1.0" encoding="UTF-8"?>
+<changelogs>
+  <changelog>
+    <element>com_servicedirectory</element>
+    <type>component</type>
+    <version>5.0.1</version>
+    <security>
+      <item>Fix Security breach in the edit and create of Companies and Tickets.</item>
+    </security>
+    <addition>
+      <item>Add the ticket view to the Service Directory for managing Company tickets.</item>
+      <item>Add a Ticket tab to the Listing site view where a user can view all their Tickets.</item>
+      <item>Add a support tab to Company that links Companies to the Ticket system.</item>
+    </addition>
+  </changelog>
+</changelogs>

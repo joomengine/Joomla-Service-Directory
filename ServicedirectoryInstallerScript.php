@@ -187,6 +187,9 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 	{
 		// Remove Related Component Data.
 
+		// Remove Ticket Data
+		$this->removeViewData("com_servicedirectory.ticket");
+
 		// Remove Company Data
 		$this->removeViewData("com_servicedirectory.company");
 
@@ -210,9 +213,6 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 		// Remove Address Data
 		$this->removeViewData("com_servicedirectory.address");
-
-		// Remove Ticket Data
-		$this->removeViewData("com_servicedirectory.ticket");
 
 		// Remove Region Data
 		$this->removeViewData("com_servicedirectory.region");
@@ -265,6 +265,9 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 		// Remove component from action logs extensions table.
 		$this->removeActionLogsExtensions();
 
+		// Remove Ticket from action logs config table.
+		$this->removeActionLogConfig('com_servicedirectory.ticket');
+
 		// Remove Company from action logs config table.
 		$this->removeActionLogConfig('com_servicedirectory.company');
 
@@ -288,9 +291,6 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 		// Remove Address from action logs config table.
 		$this->removeActionLogConfig('com_servicedirectory.address');
-
-		// Remove Ticket from action logs config table.
-		$this->removeActionLogConfig('com_servicedirectory.ticket');
 
 		// Remove Region from action logs config table.
 		$this->removeActionLogConfig('com_servicedirectory.region');
@@ -418,6 +418,23 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 		if ($type === 'install')
 		{
 
+			// Install Ticket Content Types.
+			$this->setContentType(
+				// typeTitle
+				'Servicedirectory Ticket',
+				// typeAlias
+				'com_servicedirectory.ticket',
+				// table
+				'{"special": {"dbtable": "#__servicedirectory_ticket","key": "id","type": "TicketTable","prefix": "JoomService\Component\Servicedirectory\Administrator\Table"}}',
+				// rules
+				'',
+				// fieldMappings
+				'{"common": {"core_content_item_id": "id","core_title": "subject","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "null","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "null","core_metadesc": "null","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"subject":"subject","company":"company","priority":"priority","guid":"guid"}}',
+				// router
+				'',
+				// contentHistoryOptions
+				'{"formFile": "administrator/components/com_servicedirectory/forms/ticket.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits","priority","published"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "company","targetTable": "#__servicedirectory_company","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "file_type","targetTable": "#__servicedirectory_file_type","targetColumn": "guid","displayColumn": "name"}]}'
+			);
 			// Install Company Content Types.
 			$this->setContentType(
 				// typeTitle
@@ -553,23 +570,6 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				'',
 				// contentHistoryOptions
 				'{"formFile": "administrator/components/com_servicedirectory/forms/address.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "type","targetTable": "#__servicedirectory_address_type","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "country","targetTable": "#__servicedirectory_country","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "state","targetTable": "#__servicedirectory_state","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "city","targetTable": "#__servicedirectory_city","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "company","targetTable": "#__servicedirectory_company","targetColumn": "guid","displayColumn": "name"}]}'
-			);
-			// Install Ticket Content Types.
-			$this->setContentType(
-				// typeTitle
-				'Servicedirectory Ticket',
-				// typeAlias
-				'com_servicedirectory.ticket',
-				// table
-				'{"special": {"dbtable": "#__servicedirectory_ticket","key": "id","type": "TicketTable","prefix": "JoomService\Component\Servicedirectory\Administrator\Table"}}',
-				// rules
-				'',
-				// fieldMappings
-				'{"common": {"core_content_item_id": "id","core_title": "subject","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "null","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "null","core_metadesc": "null","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"subject":"subject","company":"company","guid":"guid"}}',
-				// router
-				'',
-				// contentHistoryOptions
-				'{"formFile": "administrator/components/com_servicedirectory/forms/ticket.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits","published"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "company","targetTable": "#__servicedirectory_company","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "file_type","targetTable": "#__servicedirectory_file_type","targetColumn": "guid","displayColumn": "name"}]}'
 			);
 			// Install Region Content Types.
 			$this->setContentType(
@@ -812,7 +812,7 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 
 			// Fix the assets table rules column size.
-			$this->setDatabaseAssetsRulesFix(71520, "MEDIUMTEXT");
+			$this->setDatabaseAssetsRulesFix(71840, "MEDIUMTEXT");
 			// Install the global extension assets permission.
 			$this->setAssetsRules(
 				'{"site.directory.access":{"1":1},"site.companies.access":{"1":1},"site.category.access":{"1":1},"site.listing.access":{"1":1},"site.tag.access":{"1":1},"site.areaofexpertise.access":{"1":1},"site.lang.access":{"1":1}}'
@@ -842,6 +842,22 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 			// Add component to the action logs extensions table.
 			$this->setActionLogsExtensions();
+
+			// Add Ticket to the action logs config table.
+			$this->setActionLogConfig(
+				// typeTitle
+				'TICKET',
+				// typeAlias
+				'com_servicedirectory.ticket',
+				// idHolder
+				'id',
+				// titleHolder
+				'subject',
+				// tableName
+				'#__servicedirectory_ticket',
+				// textPrefix
+				'COM_SERVICEDIRECTORY'
+			);
 
 			// Add Company to the action logs config table.
 			$this->setActionLogConfig(
@@ -967,22 +983,6 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				'line_one',
 				// tableName
 				'#__servicedirectory_address',
-				// textPrefix
-				'COM_SERVICEDIRECTORY'
-			);
-
-			// Add Ticket to the action logs config table.
-			$this->setActionLogConfig(
-				// typeTitle
-				'TICKET',
-				// typeAlias
-				'com_servicedirectory.ticket',
-				// idHolder
-				'id',
-				// titleHolder
-				'subject',
-				// tableName
-				'#__servicedirectory_ticket',
 				// textPrefix
 				'COM_SERVICEDIRECTORY'
 			);
@@ -1216,6 +1216,23 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 		if ($type === 'update')
 		{
 
+			// Update Ticket Content Types.
+			$this->setContentType(
+				// typeTitle
+				'Servicedirectory Ticket',
+				// typeAlias
+				'com_servicedirectory.ticket',
+				// table
+				'{"special": {"dbtable": "#__servicedirectory_ticket","key": "id","type": "TicketTable","prefix": "JoomService\Component\Servicedirectory\Administrator\Table"}}',
+				// rules
+				'',
+				// fieldMappings
+				'{"common": {"core_content_item_id": "id","core_title": "subject","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "null","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "null","core_metadesc": "null","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"subject":"subject","company":"company","priority":"priority","guid":"guid"}}',
+				// router
+				'',
+				// contentHistoryOptions
+				'{"formFile": "administrator/components/com_servicedirectory/forms/ticket.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits","priority","published"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "company","targetTable": "#__servicedirectory_company","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "file_type","targetTable": "#__servicedirectory_file_type","targetColumn": "guid","displayColumn": "name"}]}'
+			);
 			// Update Company Content Types.
 			$this->setContentType(
 				// typeTitle
@@ -1351,23 +1368,6 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				'',
 				// contentHistoryOptions
 				'{"formFile": "administrator/components/com_servicedirectory/forms/address.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "type","targetTable": "#__servicedirectory_address_type","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "country","targetTable": "#__servicedirectory_country","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "state","targetTable": "#__servicedirectory_state","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "city","targetTable": "#__servicedirectory_city","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "company","targetTable": "#__servicedirectory_company","targetColumn": "guid","displayColumn": "name"}]}'
-			);
-			// Update Ticket Content Types.
-			$this->setContentType(
-				// typeTitle
-				'Servicedirectory Ticket',
-				// typeAlias
-				'com_servicedirectory.ticket',
-				// table
-				'{"special": {"dbtable": "#__servicedirectory_ticket","key": "id","type": "TicketTable","prefix": "JoomService\Component\Servicedirectory\Administrator\Table"}}',
-				// rules
-				'',
-				// fieldMappings
-				'{"common": {"core_content_item_id": "id","core_title": "subject","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "null","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "null","core_metadesc": "null","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"subject":"subject","company":"company","guid":"guid"}}',
-				// router
-				'',
-				// contentHistoryOptions
-				'{"formFile": "administrator/components/com_servicedirectory/forms/ticket.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits","published"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "company","targetTable": "#__servicedirectory_company","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "file_type","targetTable": "#__servicedirectory_file_type","targetColumn": "guid","displayColumn": "name"}]}'
 			);
 			// Update Region Content Types.
 			$this->setContentType(
@@ -1620,10 +1620,26 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 			echo '<div style="background-color: #fff;" class="alert alert-info"><a target="_blank" href="https://github.com/joomengine/Joomla-Service-Directory" title="Service Directory">
 				<img src="components/com_servicedirectory/assets/images/vdm-component.jpg"/>
 				</a>
-				<h3>Upgrade to Version 5.0.0 Was Successful! Let us know if anything is not working as expected.</h3></div>';
+				<h3>Upgrade to Version 5.0.1 Was Successful! Let us know if anything is not working as expected.</h3></div>';
 
 			// Add/Update component in the action logs extensions table.
 			$this->setActionLogsExtensions();
+
+			// Add/Update Ticket in the action logs config table.
+			$this->setActionLogConfig(
+				// typeTitle
+				'TICKET',
+				// typeAlias
+				'com_servicedirectory.ticket',
+				// idHolder
+				'id',
+				// titleHolder
+				'subject',
+				// tableName
+				'#__servicedirectory_ticket',
+				// textPrefix
+				'COM_SERVICEDIRECTORY'
+			);
 
 			// Add/Update Company in the action logs config table.
 			$this->setActionLogConfig(
@@ -1749,22 +1765,6 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				'line_one',
 				// tableName
 				'#__servicedirectory_address',
-				// textPrefix
-				'COM_SERVICEDIRECTORY'
-			);
-
-			// Add/Update Ticket in the action logs config table.
-			$this->setActionLogConfig(
-				// typeTitle
-				'TICKET',
-				// typeAlias
-				'com_servicedirectory.ticket',
-				// idHolder
-				'id',
-				// titleHolder
-				'subject',
-				// tableName
-				'#__servicedirectory_ticket',
 				// textPrefix
 				'COM_SERVICEDIRECTORY'
 			);

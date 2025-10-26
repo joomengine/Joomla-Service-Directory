@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `#__servicedirectory_ticket`;
 DROP TABLE IF EXISTS `#__servicedirectory_company`;
 DROP TABLE IF EXISTS `#__servicedirectory_portfolio`;
 DROP TABLE IF EXISTS `#__servicedirectory_category`;
@@ -6,7 +7,6 @@ DROP TABLE IF EXISTS `#__servicedirectory_social_handle`;
 DROP TABLE IF EXISTS `#__servicedirectory_area_of_expertise`;
 DROP TABLE IF EXISTS `#__servicedirectory_file`;
 DROP TABLE IF EXISTS `#__servicedirectory_address`;
-DROP TABLE IF EXISTS `#__servicedirectory_ticket`;
 DROP TABLE IF EXISTS `#__servicedirectory_region`;
 DROP TABLE IF EXISTS `#__servicedirectory_subregion`;
 DROP TABLE IF EXISTS `#__servicedirectory_country`;

@@ -27,7 +27,7 @@ use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\JsonHelper;
-use JoomService\Joomla\Servicedirectory\Power\ReadmeToHtmlConverter;
+use JoomService\Joomla\Servicedirectory\Markdown\Html;
 use JoomService\Joomla\Utilities\StringHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
@@ -369,8 +369,8 @@ class DirectoryModel extends ListModel
 
 		// Get from #__servicedirectory_company as a
 		$query->select($db->quoteName(
-			array('a.id','a.description','a.name','a.alias','a.contactname','a.email','a.phone','a.website','a.published','a.created','a.modified','a.created_by'),
-			array('id','description','name','alias','contactname','email','phone','website','published','created','modified','created_by')));
+			array('a.id','a.description','a.name','a.alias','a.contactname','a.email','a.phone','a.website','a.published','a.created','a.created_by','a.modified_by'),
+			array('id','description','name','alias','contactname','email','phone','website','published','created','created_by','modified_by')));
 		$query->from($db->quoteName('#__servicedirectory_company', 'a'));
 		$query->where('a.created_by = ' . (int) $this->userId);
 
@@ -427,6 +427,145 @@ class DirectoryModel extends ListModel
 		// return items
 		return $items;
 	}
+
+	/**
+	 * Custom Method
+	 *
+	 * @return mixed  An array of objects on success, false on failure.
+	 *
+	 */
+	public function getTickets()
+	{
+
+		// Get the global params
+		$globalParams = ComponentHelper::getParams('com_servicedirectory', true);
+		// Get a db connection.
+		$db = $this->getDatabase();
+
+		// Create a new query object.
+		$query = $db->getQuery(true);
+
+		// Get from #__servicedirectory_ticket as a
+		$query->select($db->quoteName(
+			array('a.id','a.subject','a.priority','a.company','a.guid','a.published','a.created_by','a.created'),
+			array('id','subject','priority','company','guid','published','created_by','created')));
+		$query->from($db->quoteName('#__servicedirectory_ticket', 'a'));
+
+		// Get from #__servicedirectory_company as c
+		$query->select($db->quoteName(
+			array('c.name'),
+			array('company_name')));
+		$query->join('LEFT', ($db->quoteName('#__servicedirectory_company', 'c')) . ' ON (' . $db->quoteName('a.company') . ' = ' . $db->quoteName('c.guid') . ')');
+		$query->where('a.created_by = ' . (int) $this->userId);
+		// Get where a.published is 0
+		$query->where('a.published >= 0');
+		$query->order('a.id DESC');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		$items = $db->loadObjectList();
+
+		if (empty($items))
+		{
+			return false;
+		}
+
+		// Insure all item fields are adapted where needed.
+		if (UtilitiesArrayHelper::check($items))
+		{
+			foreach ($items as $nr => &$item)
+			{
+				// Always create a slug for sef URL's
+				$item->slug = ($item->id ?? '0') . (isset($item->alias) ? ':' . $item->alias : '');
+				// set guidTicketTicket_commentT to the $item object.
+				$item->guidTicketTicket_commentT = $this->getGuidTicketTicket_commentEacc_T($item->guid);
+			}
+		}
+		if (!empty($items))
+		{
+			unset($item);
+			foreach ($items as $item)
+			{
+				$item->comments = $item->guidTicketTicket_commentT ?? [];
+				unset($item->guidTicketTicket_commentT);
+				foreach ($item->comments as $ticket)
+				{
+					$ticket->comment = $this->convertMarkdownToHtml($ticket->comment ?? '');
+				}
+			}
+		}
+		// return items
+		return $items;
+	}
+
+	/**
+	 * Method to get an array of Ticket_comment Objects.
+	 *
+	 * @return mixed  An array of Ticket_comment Objects on success, false on failure.
+	 *
+	 */
+	public function getGuidTicketTicket_commentEacc_T($guid)
+	{
+		// Get a db connection.
+		$db = $this->getDatabase();
+
+		// Create a new query object.
+		$query = $db->getQuery(true);
+
+		// Get from #__servicedirectory_ticket_comment as t
+		$query->select($db->quoteName(
+			array('t.comment','t.created_by','t.created'),
+			array('comment','created_by','created')));
+		$query->from($db->quoteName('#__servicedirectory_ticket_comment', 't'));
+		$query->where('t.ticket = ' . $db->quote($guid));
+
+		// Get from #__users as u
+		$query->select($db->quoteName(
+			array('u.name'),
+			array('name')));
+		$query->join('LEFT', ($db->quoteName('#__users', 'u')) . ' ON (' . $db->quoteName('t.created_by') . ' = ' . $db->quoteName('u.id') . ')');
+		// Get where t.published is 0
+		$query->where('t.published >= 0');
+		$query->order('t.id DESC');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		$db->execute();
+
+		// check if there was data returned
+		if ($db->getNumRows())
+		{
+			// Load the Event Dispatcher
+			PluginHelper::importPlugin('content');
+			$items = $db->loadObjectList();
+
+			// Convert the parameter fields into objects.
+			foreach ($items as $nr => &$item)
+			{
+				// Check if item has params, or pass whole item.
+				$params = (isset($item->params) && JsonHelper::check($item->params)) ? json_decode($item->params) : $item;
+				// Make sure the content prepare plugins fire on comment
+				$_comment = new \stdClass();
+				$_comment->text =& $item->comment; // value must be in text
+				// Since all values are now in text (Joomla Limitation), we also add the field name (comment) to context
+				// onContentPrepare Event Trigger
+				$this->getDispatcher()->dispatch('onContentPrepare',
+					new ContentPrepareEvent(
+						'onContentPrepare',
+						[
+							'context' => 'com_servicedirectory.directory.comment',
+							'subject' => $_comment,
+							'params' => $params,
+							'page' => 0
+						]
+					)
+				);
+			}
+			return $items;
+		}
+		return false;
+	}
+
 
 
 	/**
@@ -884,11 +1023,11 @@ class DirectoryModel extends ListModel
 			return '';
 		}
 
-		static $ReadmeToHtmlConverter = null;
+		static $Html = null;
 
-		if ($ReadmeToHtmlConverter === null)
+		if ($Html === null)
 		{
-			$ReadmeToHtmlConverter = new ReadmeToHtmlConverter();
+			$Html = new Html();
 		}
 
 		try
@@ -908,7 +1047,7 @@ class DirectoryModel extends ListModel
 
 		try
 		{
-			return $ReadmeToHtmlConverter->convert($string);
+			return $Html->convert($string);
 		}
 		catch (\Throwable $e)
 		{

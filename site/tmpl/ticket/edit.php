@@ -51,6 +51,16 @@ defined('_JEXEC') or die;
 		</div>
 	<?php echo Html::_('uitab.endTab'); ?>
 
+	<?php echo Html::_('uitab.addTab', 'ticketTab', 'attachments', Text::_('COM_SERVICEDIRECTORY_TICKET_ATTACHMENTS', true)); ?>
+		<div class="row">
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<?php echo LayoutHelper::render('ticket.attachments_fullwidth', $this); ?>
+			</div>
+		</div>
+	<?php echo Html::_('uitab.endTab'); ?>
+
 	<?php $this->ignore_fieldsets = array('details','metadata','vdmmetadata','accesscontrol'); ?>
 	<?php $this->tab_name = 'ticketTab'; ?>
 	<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>

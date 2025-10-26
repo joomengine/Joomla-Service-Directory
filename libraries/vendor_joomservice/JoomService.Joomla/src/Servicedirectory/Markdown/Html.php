@@ -9,7 +9,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JoomService\Joomla\Servicedirectory\Power;
+namespace JoomService\Joomla\Servicedirectory\Markdown;
 
 
 /**
@@ -19,7 +19,7 @@ namespace JoomService\Joomla\Servicedirectory\Power;
  * 
  * @since  5.1.1
  */
-class ReadmeToHtmlConverter
+final class Html
 {
 	/**
 	 * Convert Markdown/README string to sanitized and formatted HTML output.
