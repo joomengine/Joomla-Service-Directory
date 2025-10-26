@@ -40,6 +40,9 @@ defined('_JEXEC') or die;
 			<?php echo Html::_('searchtools.sort', 'COM_SERVICEDIRECTORY_TICKET_COMPANY_LABEL', 'g.name', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th class="nowrap hidden-phone" >
+			<?php echo Html::_('searchtools.sort', 'COM_SERVICEDIRECTORY_TICKET_PRIORITY_LABEL', 'a.priority', $this->listDirn, $this->listOrder); ?>
+	</th>
+	<th class="nowrap hidden-phone" >
 			<?php echo Html::_('searchtools.sort', 'COM_SERVICEDIRECTORY_TICKET_PUBLISHED_LABEL', 'a.published', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th width="5" class="nowrap center hidden-phone" >

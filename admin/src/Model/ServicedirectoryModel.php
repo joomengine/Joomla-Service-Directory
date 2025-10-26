@@ -54,7 +54,7 @@ class ServicedirectoryModel extends ListModel
 	 * @since 5.1.1
 	 */
 	protected array $viewGroups = [
-		'main' => ['png.company.add', 'png.companies', 'png.portfolios', 'png.categories', 'png.tags', 'png.social_handles', 'png.areas_of_expertise', 'png.files', 'png.addresses', 'png.tickets', 'png.regions', 'png.subregions', 'png.countries', 'png.states', 'png.cities'],
+		'main' => ['png.tickets', 'png.company.add', 'png.companies', 'png.portfolios', 'png.categories', 'png.tags', 'png.social_handles', 'png.areas_of_expertise', 'png.files', 'png.addresses', 'png.regions', 'png.subregions', 'png.countries', 'png.states', 'png.cities'],
 	];
 
 	/**
@@ -64,6 +64,10 @@ class ServicedirectoryModel extends ListModel
 	 * @since 5.1.1
 	 */
 	protected array $viewAccess = [
+		'ticket.create' => 'ticket.create',
+		'tickets.access' => 'ticket.access',
+		'ticket.access' => 'ticket.access',
+		'tickets.dashboard_list' => 'ticket.dashboard_list',
 		'companies.access' => 'company.access',
 		'company.access' => 'company.access',
 		'companies.dashboard_list' => 'company.dashboard_list',
@@ -96,10 +100,6 @@ class ServicedirectoryModel extends ListModel
 		'addresses.access' => 'address.access',
 		'address.access' => 'address.access',
 		'addresses.dashboard_list' => 'address.dashboard_list',
-		'ticket.create' => 'ticket.create',
-		'tickets.access' => 'ticket.access',
-		'ticket.access' => 'ticket.access',
-		'tickets.dashboard_list' => 'ticket.dashboard_list',
 		'region.create' => 'region.create',
 		'regions.access' => 'region.access',
 		'region.access' => 'region.access',

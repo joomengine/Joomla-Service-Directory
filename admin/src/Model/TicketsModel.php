@@ -88,6 +88,7 @@ class TicketsModel extends ListModel
 				'a.created_by','created_by',
 				'a.modified_by','modified_by',
 				'g.name','company',
+				'a.priority','priority',
 				'a.subject','subject'
 			);
 		}
@@ -148,6 +149,13 @@ class TicketsModel extends ListModel
 			$this->setState('filter.company', $company);
 		}
 
+		$priority = $this->getUserStateFromRequest($this->context . '.filter.priority', 'filter_priority');
+		if ($formSubmited)
+		{
+			$priority = $input->post->get('priority');
+			$this->setState('filter.priority', $priority);
+		}
+
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published');
 		if ($formSubmited)
 		{
@@ -206,6 +214,8 @@ class TicketsModel extends ListModel
 		{
 			foreach ($items as $nr => &$item)
 			{
+				// convert priority
+				$item->priority = $this->selectionTranslation($item->priority, 'priority');
 				// convert published
 				$item->published = $this->selectionTranslation($item->published, 'published');
 			}
@@ -223,6 +233,21 @@ class TicketsModel extends ListModel
 	 */
 	public function selectionTranslation($value,$name)
 	{
+		// Array of priority language strings
+		if ($name === 'priority')
+		{
+			$priorityArray = array(
+				0 => 'COM_SERVICEDIRECTORY_TICKET_SELECT_A_PRIORITY',
+				1 => 'COM_SERVICEDIRECTORY_TICKET_LOW',
+				2 => 'COM_SERVICEDIRECTORY_TICKET_NORMAL',
+				3 => 'COM_SERVICEDIRECTORY_TICKET_HIGH'
+			);
+			// Now check if value is found in this array
+			if (isset($priorityArray[$value]) && StringHelper::check($priorityArray[$value]))
+			{
+				return $priorityArray[$value];
+			}
+		}
 		// Array of published language strings
 		if ($name === 'published')
 		{
@@ -309,7 +334,7 @@ class TicketsModel extends ListModel
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.subject LIKE '.$search.' OR a.company LIKE '.$search.' OR g.name LIKE '.$search.')');
+				$query->where('(a.subject LIKE '.$search.' OR a.company LIKE '.$search.' OR g.name LIKE '.$search.' OR a.priority LIKE '.$search.')');
 			}
 		}
 
@@ -329,6 +354,23 @@ class TicketsModel extends ListModel
 		elseif (StringHelper::check($_company))
 		{
 			$query->where('a.company = ' . $db->quote($db->escape($_company)));
+		}
+		// Filter by Priority.
+		$_priority = $this->getState('filter.priority');
+		if (is_numeric($_priority))
+		{
+			if (is_float($_priority))
+			{
+				$query->where('a.priority = ' . (float) $_priority);
+			}
+			else
+			{
+				$query->where('a.priority = ' . (int) $_priority);
+			}
+		}
+		elseif (StringHelper::check($_priority))
+		{
+			$query->where('a.priority = ' . $db->quote($db->escape($_priority)));
 		}
 		// Filter by Published.
 		$_published = $this->getState('filter.published');
@@ -388,6 +430,7 @@ class TicketsModel extends ListModel
 		$id .= ':' . $this->getState('filter.created_by');
 		$id .= ':' . $this->getState('filter.modified_by');
 		$id .= ':' . $this->getState('filter.company');
+		$id .= ':' . $this->getState('filter.priority');
 		$id .= ':' . $this->getState('filter.subject');
 
 		return parent::getStoreId($id);

@@ -22,9 +22,27 @@
 			layout="joomla.form.field.list-fancy-select"
 		/>
 		<field
-			type="companies"
+			type="ModalSelect"
+			sql_title_table="#__servicedirectory_company"
+			sql_title_column="name"
+			sql_title_key="guid"
+			urlSelect="index.php?option=com_servicedirectory&amp;view=companies&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			hint="COM_SERVICEDIRECTORY_TICKET_COMPANY_HINT"
+			titleSelect="COM_SERVICEDIRECTORY_TICKET_COMPANY_TITLESELECT"
+			iconSelect="icon-copy"
+			select="true"
+			edit="false"
+			clear="true"
+			onchange="form.submit()"
 			name="company"
 			label="COM_SERVICEDIRECTORY_TICKET_COMPANY_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<field
+			type="ticketsfilterpriority"
+			name="priority"
+			label="COM_SERVICEDIRECTORY_TICKET_PRIORITY_LABEL"
 			multiple="false"
 			class="js-select-submit-on-change"
 		/>
@@ -54,6 +72,8 @@
 			<option value="a.subject DESC">COM_SERVICEDIRECTORY_FILTER_SUBJECT_DESCENDING</option>
 			<option value="g.name ASC">COM_SERVICEDIRECTORY_FILTER_COMPANY_ASCENDING</option>
 			<option value="g.name DESC">COM_SERVICEDIRECTORY_FILTER_COMPANY_DESCENDING</option>
+			<option value="a.priority ASC">COM_SERVICEDIRECTORY_FILTER_PRIORITY_ASCENDING</option>
+			<option value="a.priority DESC">COM_SERVICEDIRECTORY_FILTER_PRIORITY_DESCENDING</option>
 			<option value="a.published ASC">COM_SERVICEDIRECTORY_FILTER_STATUS_ASCENDING</option>
 			<option value="a.published DESC">COM_SERVICEDIRECTORY_FILTER_STATUS_DESCENDING</option>
 			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>

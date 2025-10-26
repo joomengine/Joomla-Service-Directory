@@ -30,10 +30,12 @@ use Joomla\Utilities\ArrayHelper;
 use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
+use JoomService\Joomla\Servicedirectory\Markdown\Html;
+use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Data\Factory as DataFactory;
 use JoomService\Joomla\Utilities\GuidHelper;
-use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
+use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -60,16 +62,22 @@ class TicketModel extends AdminModel
 				'subject'
 			),
 			'right' => array(
-				'published'
+				'ticket_status'
 			),
 			'fullwidth' => array(
 				'comment',
-				'file_type',
-				'note_file_vdm_uploader',
-				'note_file_vdm_display'
+				'noteticketconversation',
+				'priority'
 			),
 			'above' => array(
 				'company'
+			)
+		),
+		'attachments' => array(
+			'fullwidth' => array(
+				'file_type',
+				'note_file_vdm_uploader',
+				'note_file_vdm_display'
 			)
 		)
 	);
@@ -127,6 +135,85 @@ class TicketModel extends AdminModel
 		return parent::getTable($type, $prefix, $config);
 	}
 
+
+	/**
+	 * Convert Markdown text to HTML.
+	 *
+	 * Uses the Super Power class responsible for Markdown-to-HTML conversion.
+	 * The converter instance is cached statically to avoid repeated instantiations
+	 * within the same request, improving overall performance.
+	 *
+	 * Example:
+	 * ```php
+	 * echo $this->convertMarkdownToHtml('# Hello World');
+	 * ```
+	 *
+	 * @param  string  $string  The Markdown-formatted string to convert.
+	 *
+	 * @return string  The resulting HTML output or an empty string on failure.
+	 * @since  5.1.2
+	 */
+	protected function convertMarkdownToHtml(string $string): string
+	{
+		$string = trim($string);
+		if ($string === '')
+		{
+			return '';
+		}
+
+		static $Html = null;
+
+		if ($Html === null)
+		{
+			$Html = new Html();
+		}
+
+		try
+		{
+			// Sanitize: remove all existing HTML to ensure only Markdown is processed
+			$string = $this->escape($string);
+		}
+		catch (\Throwable $e)
+		{
+			return '';
+		}
+
+		if (trim($string) === '')
+		{
+			return '';
+		}
+
+		try
+		{
+			return $Html->convert($string);
+		}
+		catch (\Throwable $e)
+		{
+			// Fail gracefully, return empty string
+			return '';
+		}
+	}
+
+	/**
+	 * Escapes a value for output in a view script.
+	 *
+	 * @param   mixed  $var     The output to escape.
+	 * @param   bool   $shorten The switch to shorten.
+	 * @param   int    $length  The shorting length.
+	 *
+	 * @return  mixed  The escaped value.
+	 * @since   5.1.2
+	 */
+	protected function escape($var, bool $shorten = false, int $length = 40)
+	{
+		if (!is_string($var))
+		{
+			return $var;
+		}
+
+		return UtilitiesStringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
+	}
+
 	/**
 	 * Method to get a single record.
 	 *
@@ -139,22 +226,32 @@ class TicketModel extends AdminModel
 	{
 		if ($item = parent::getItem($pk))
 		{
-			if (!empty($item->params) && !is_array($item->params))
-			{
-				// Convert the params field to an array.
-				$registry = new Registry;
-				$registry->loadString($item->params);
-				$item->params = $registry->toArray();
-			}
-
-			if (!empty($item->metadata))
+			if (property_exists($item, 'metadata') && !is_array($item->metadata))
 			{
 				// Convert the metadata field to an array.
-				$registry = new Registry;
-				$registry->loadString($item->metadata);
-				$item->metadata = $registry->toArray();
+				$metadata       = new Registry($item->metadata);
+				$item->metadata = $metadata->toArray();
 			}
-			$item->comments = DataFactory::_('Data.Items')->table('ticket_comment')->get([$item->guid], 'ticket');
+
+			// check edit access permissions
+			if (!empty($item->id) && !$this->allowEdit((array) $item))
+			{
+ 				$app = Factory::getApplication();
+  				$app->enqueueMessage(Text::_('Not authorised!'), 'error');
+				$app->redirect('index.php?option=com_servicedirectory');
+				return false;
+			}
+			$item->comments = DataFactory::_('Load')->items(
+				['all' => 'a.*', 'b.name'], ['ticket_comment', '#__users.created_by.id'], ['a.ticket' => ($item->guid ?? 'none')], ['a.id' => 'DESC']
+			);
+			
+			if (!empty($item->comments))
+			{
+				foreach ($item->comments as $comment)
+				{
+					$comment->comment = $this->convertMarkdownToHtml($comment->comment ?? '');
+				}
+			}
 		}
 
 		return $item;
@@ -295,6 +392,23 @@ class TicketModel extends AdminModel
 				$form->setFieldAttribute('company', 'required', 'false');
 			}
 		}
+		// Modify the form based on Edit Priority access controls.
+		if ($id != 0 && (!$user->authorise('ticket.edit.priority', 'com_servicedirectory.ticket.' . (int) $id))
+			|| ($id == 0 && !$user->authorise('ticket.edit.priority', 'com_servicedirectory')))
+		{
+			// Disable field on display.
+			$form->setFieldAttribute('priority', 'disabled', 'true');
+			// Make field readonly on display.
+			$form->setFieldAttribute('priority', 'readonly', 'true');
+			// If there is no value continue.
+			if (!$form->getValue('priority'))
+			{
+				// Disable field while saving.
+				$form->setFieldAttribute('priority', 'filter', 'unset');
+				// Disable field while saving.
+				$form->setFieldAttribute('priority', 'required', 'false');
+			}
+		}
 		// Modify the form based on Edit File Type access controls.
 		if ($id != 0 && (!$user->authorise('ticket.edit.file_type', 'com_servicedirectory.ticket.' . (int) $id))
 			|| ($id == 0 && !$user->authorise('ticket.edit.file_type', 'com_servicedirectory')))
@@ -327,6 +441,23 @@ class TicketModel extends AdminModel
 				$form->setFieldAttribute('comment', 'filter', 'unset');
 				// Disable field while saving.
 				$form->setFieldAttribute('comment', 'required', 'false');
+			}
+		}
+		// Modify the form based on Edit Ticket Status access controls.
+		if ($id != 0 && (!$user->authorise('ticket.edit.ticket_status', 'com_servicedirectory.ticket.' . (int) $id))
+			|| ($id == 0 && !$user->authorise('ticket.edit.ticket_status', 'com_servicedirectory')))
+		{
+			// Disable field on display.
+			$form->setFieldAttribute('ticket_status', 'disabled', 'true');
+			// Make field readonly on display.
+			$form->setFieldAttribute('ticket_status', 'readonly', 'true');
+			// If there is no value continue.
+			if (!$form->getValue('ticket_status'))
+			{
+				// Disable field while saving.
+				$form->setFieldAttribute('ticket_status', 'filter', 'unset');
+				// Disable field while saving.
+				$form->setFieldAttribute('ticket_status', 'required', 'false');
 			}
 		}
 		// Only load these values if no id is found
@@ -459,20 +590,60 @@ class TicketModel extends AdminModel
 	}
 
 	/**
-	 * Method override to check if you can edit an existing record.
+	 * Method to check if you can edit an existing record.
+	 *   We know this is a double access check (Controller already does an allowEdit check)
+	 *   But when the item is directly accessed the controller is skipped (2025_).
 	 *
 	 * @param    array    $data   An array of input data.
 	 * @param    string   $key    The name of the key for the primary key.
 	 *
-	 * @return   boolean
+	 * @return   boolean  True if allowed to edit the record. Defaults to the permission set in the component.
 	 * @since    2.5
 	 */
-	protected function allowEdit($data = [], $key = 'id')
+	protected function allowEdit(array $data = [], string $key = 'id'): bool
 	{
-		// Check specific edit permission then general edit permission.
-		$user = Factory::getApplication()->getIdentity();
+		// get user object.
+		$user = $this->getCurrentUser();
+		// get record id.
+		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
 
-		return $user->authorise('ticket.edit', 'com_servicedirectory.ticket.'. ((int) isset($data[$key]) ? $data[$key] : 0)) or $user->authorise('ticket.edit',  'com_servicedirectory');
+
+		// Access check.
+		$access = ($user->authorise('ticket.access', 'com_servicedirectory.ticket.' . (int) $recordId) && $user->authorise('ticket.access', 'com_servicedirectory'));
+		if (!$access)
+		{
+			return false;
+		}
+
+		if ($recordId)
+		{
+			// The record has been set. Check the record permissions.
+			$permission = $user->authorise('ticket.edit', 'com_servicedirectory.ticket.' . (int) $recordId);
+			if (!$permission)
+			{
+				if ($user->authorise('ticket.edit.own', 'com_servicedirectory.ticket.' . $recordId))
+				{
+					// Now test the owner is the user.
+					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+					if (empty($ownerId))
+					{
+						return false;
+					}
+
+					// If the owner matches 'me' then allow.
+					if ($ownerId == $user->id)
+					{
+						if ($user->authorise('ticket.edit.own', 'com_servicedirectory'))
+						{
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		}
+		// Since there is no permission, revert to the component permissions.
+		return $user->authorise('ticket.edit', $this->option);
 	}
 
 	/**
@@ -581,6 +752,50 @@ class TicketModel extends AdminModel
 			return false;
 		}
 
+		// linked tables to also update
+		$_tables_array = [
+			'ticket_comment' => 'ticket'
+		];
+
+		// we must also update all linked tables
+		if (!empty($_tables_array) && UtilitiesArrayHelper::check($pks))
+		{
+			$_field_key ??= 'guid';
+			Helper::setOption('com_servicedirectory');
+			foreach($_tables_array as $_delete_table => $_field_name)
+			{
+				// get the ticket field key's
+				$_guids = DataFactory::_('Load')->values(
+					['a.guid' => $_field_key], // select
+					['a' => 'ticket'], // tables
+					['a.id' =>
+						['value' => $pks, 'operator' => 'IN']
+					] // where
+				);
+
+				// get the linked IDs
+				$_pks = DataFactory::_('Load')->values(
+					['a.id' => 'id'], // select
+					['a' => $_delete_table], // tables
+					['a.' . $_field_name =>
+						['value' => $_guids, 'operator' => 'IN']
+					] // where
+				);
+
+				if ($_pks !== null)
+				{
+					// load the model
+					$_Model = Helper::getModel($_delete_table);
+
+					// change publish state to trash (in-case the state was not changed in sync with the parent)
+					$_Model->publish($_pks, -2);
+
+					// delete the items
+					$_Model->delete($_pks);
+				}
+			}
+		}
+
 		return true;
 	}
 
@@ -598,6 +813,47 @@ class TicketModel extends AdminModel
 		if (!parent::publish($pks, $value))
 		{
 			return false;
+		}
+
+		// linked tables to update
+		$_tables_array = [
+			'ticket_comment' => 'ticket'
+		];
+
+		// we must also update all linked tables
+		if (!empty($_tables_array) && UtilitiesArrayHelper::check($pks))
+		{
+			$_field_key ??= 'guid';
+			Helper::setOption('com_servicedirectory');
+			foreach($_tables_array as $_update_table => $_field_name)
+			{
+				// get the ticket field key's
+				$_guids = DataFactory::_('Load')->values(
+					['a.guid' => $_field_key], // select
+					['a' => 'ticket'], // tables
+					['a.id' =>
+						['value' => $pks, 'operator' => 'IN']
+					] // where
+				);
+
+				// get the linked IDs
+				$_pks = DataFactory::_('Load')->values(
+					['a.id' => 'id'], // select
+					['a' => $_update_table], // tables
+					['a.' . $_field_name =>
+						['value' => $_guids, 'operator' => 'IN']
+					] // where
+				);
+
+				if ($_pks !== null)
+				{
+					// load the model
+					$_Model = Helper::getModel($_update_table);
+
+					// change publish state
+					$_Model->publish($_pks, $value);
+				}
+			}
 		}
 
 		return true;
@@ -985,40 +1241,19 @@ class TicketModel extends AdminModel
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
 		}
-		if (!empty($data['comment']) && is_string($data['comment']))
+		if (!empty($data['comment']) && is_string($data['comment']) && !empty($data['guid']))
 		{
-			$ticketGuid = $data['guid'] ?? 'error';
-		
-			// Retrieve existing language records for this company
-			$existing = DataFactory::_('Data.Items')
-				->table('ticket_comment')
-				->get([$ticketGuid], 'ticket');
-		
-			$i = 0;
-			$ticketSub["ticket{$i}"] = [
+			$user = $this->getCurrentUser();
+			$ticket = (object) [
 				'guid' => '',
-				'comment' => $data['comment']
+				'ticket' => $data['guid'],
+				'comment' => $data['comment'],
+				'created_by' => (int) $user->id
 			];
 		
-			// Index existing records by language for quick lookup
-			if (!empty($existing))
-			{
-				foreach ($existing as $row)
-				{
-					if (!empty($row->ticket))
-					{
-						$i++;
-						$ticketSub["ticket{$i}"] =  [
-							'guid' => $row->guid,
-							'comment' => $row->comment
-						];
-					}
-				}
-			}
+			DataFactory::_('Data.Item')
+				->table('ticket_comment')->set($ticket, 'guid', 'insert');
 		
-			DataFactory::_('Data.Subform')
-				->table('ticket_comment')
-				->set($ticketSub, 'guid', 'ticket', $ticketGuid);
 			unset($data['comment']);
 		}
 

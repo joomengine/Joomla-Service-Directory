@@ -12,3 +12,6 @@
 /* CSS Document */
 
 
+p.small.float-end {
+	display: none !important;
+}

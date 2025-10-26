@@ -144,6 +144,7 @@ class HtmlView extends BaseHtmlView
 		$this->items = $model->getItems();
 		$this->images = $model->getImages();
 		$this->mine = $model->getMine();
+		$this->tickets = $model->getTickets();
 
 		// Set the toolbar
 		$this->addToolBar();

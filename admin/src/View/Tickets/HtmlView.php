@@ -309,6 +309,7 @@ class HtmlView extends BaseHtmlView
 			'a.published' => Text::_('JSTATUS'),
 			'a.subject' => Text::_('COM_SERVICEDIRECTORY_TICKET_SUBJECT_LABEL'),
 			'g.name' => Text::_('COM_SERVICEDIRECTORY_TICKET_COMPANY_LABEL'),
+			'a.priority' => Text::_('COM_SERVICEDIRECTORY_TICKET_PRIORITY_LABEL'),
 			'a.id' => Text::_('JGRID_HEADING_ID')
 		);
 	}

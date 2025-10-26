@@ -21,16 +21,17 @@ use Joomla\CMS\User\UserFactoryInterface;
 // No direct access to this file
 defined('_JEXEC') or die;
 
-// set the defaults
+$app = $displayData->app ?? Factory::getApplication();
 $items = $displayData->vvvsupport;
-$user = Factory::getApplication()->getIdentity();
-$id = $displayData->item->id;
+$user = $displayData->user ?? $app->getIdentity();
+$id = (int) ($displayData->item->id ?? 0);
 // set the edit URL
 $edit = "index.php?option=com_servicedirectory&view=tickets&task=ticket.edit";
 // set a return value
 $return = ($id) ? "index.php?option=com_servicedirectory&view=company&layout=edit&id=" . $id : "";
 // check for a return value
-$jinput = Factory::getApplication()->input;
+// check for a return value
+$jinput = $displayData->input ?? (method_exists($app, 'getInput') ? $app->getInput() : $app->input);
 if ($_return = $jinput->get('return', null, 'base64'))
 {
 	$return .= "&return=" . $_return;
@@ -68,6 +69,9 @@ $can = ServicedirectoryHelper::getActions('ticket');
 			<?php echo Text::_('COM_SERVICEDIRECTORY_TICKET_COMPANY_LABEL'); ?>
 		</th>
 		<th data-hide="phone">
+			<?php echo Text::_('COM_SERVICEDIRECTORY_TICKET_PRIORITY_LABEL'); ?>
+		</th>
+		<th data-hide="phone,tablet">
 			<?php echo Text::_('COM_SERVICEDIRECTORY_TICKET_PUBLISHED_LABEL'); ?>
 		</th>
 		<th width="5" data-type="numeric" data-hide="phone,tablet">
@@ -115,6 +119,9 @@ $can = ServicedirectoryHelper::getActions('ticket');
 			<?php echo $displayData->escape($item->company_name); ?>
 		</td>
 		<td>
+			<?php echo Text::_($item->priority); ?>
+		</td>
+		<td>
 			<?php echo Text::_($item->published); ?>
 		</td>
 		<td class="nowrap center hidden-phone">
@@ -125,7 +132,7 @@ $can = ServicedirectoryHelper::getActions('ticket');
 </tbody>
 <tfoot class="hide-if-no-paging">
 	<tr>
-		<td colspan="4">
+		<td colspan="5">
 			<div class="pagination pagination-centered"></div>
 		</td>
 	</tr>
