@@ -17,6 +17,7 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="6\.[01234]"/>
+		<sha512>62222ce34989a4d79e9bf867aefc7e8493f7245080fc8cde35d126be7f5081b912c09ab2b16dab12ef90c2d98a7b0c5b84e24c29e0cf440909bf7a7c1512bf3a</sha512>
 	</update>
 	<update>
 		<name>Service Directory</name>
@@ -35,5 +36,6 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="6\.[01234]"/>
+		<sha512>eeb4fae68df50f0fad6c1341ef95c0916b958e5600e97073317841139d58b7185d31950965441d72b28fb41ab9ffc1edc326353d122198358ae0995aa247daab</sha512>
 	</update>
 </updates>
