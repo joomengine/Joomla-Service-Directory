@@ -31,6 +31,7 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GetHelper;
@@ -728,7 +729,7 @@ class Address_typeModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('address_type');
+			$this->canDo		= Actions::get('address_type');
 		}
 
 		if (!$this->canDo->get('address_type.create') && !$this->canDo->get('address_type.batch'))
@@ -871,7 +872,7 @@ class Address_typeModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('address_type');
+			$this->canDo		= Actions::get('address_type');
 		}
 
 		if (!$this->canDo->get('address_type.edit') && !$this->canDo->get('address_type.batch'))

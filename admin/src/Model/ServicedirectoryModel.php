@@ -54,7 +54,7 @@ class ServicedirectoryModel extends ListModel
 	 * @since 5.1.1
 	 */
 	protected array $viewGroups = [
-		'main' => ['png.tickets', 'png.company.add', 'png.companies', 'png.portfolios', 'png.categories', 'png.tags', 'png.social_handles', 'png.areas_of_expertise', 'png.files', 'png.addresses', 'png.regions', 'png.subregions', 'png.countries', 'png.states', 'png.cities'],
+		'main' => ['png.tickets', 'png||company_review||index.php?option=com_servicedirectory&view=review_company_updates', 'png.companies', 'png.portfolios', 'png.categories', 'png.tags', 'png.social_handles', 'png.areas_of_expertise', 'png.files', 'png.addresses', 'png.regions', 'png.subregions', 'png.countries', 'png.states', 'png.cities'],
 	];
 
 	/**
@@ -71,7 +71,6 @@ class ServicedirectoryModel extends ListModel
 		'companies.access' => 'company.access',
 		'company.access' => 'company.access',
 		'companies.dashboard_list' => 'company.dashboard_list',
-		'company.dashboard_add' => 'company.dashboard_add',
 		'portfolio.create' => 'portfolio.create',
 		'portfolios.access' => 'portfolio.access',
 		'portfolio.access' => 'portfolio.access',
@@ -147,6 +146,8 @@ class ServicedirectoryModel extends ListModel
 		'ticket_comment.create' => 'ticket_comment.create',
 		'ticket_comments.access' => 'ticket_comment.access',
 		'ticket_comment.access' => 'ticket_comment.access',
+		'review_company_updates.access' => 'review_company_update.access',
+		'review_company_update.access' => 'review_company_update.access',
 	];
 
 	/**
@@ -179,7 +180,7 @@ class ServicedirectoryModel extends ListModel
 	 * @since   1.6
 	 * @throws  \Exception
 	 */
-	public function __construct($config = [], MVCFactoryInterface $factory = null)
+	public function __construct($config = [], ?MVCFactoryInterface $factory = null)
 	{
 		parent::__construct($config, $factory);
 

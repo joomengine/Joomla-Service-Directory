@@ -27,7 +27,7 @@ $number_of_listings = count( (array) ($this->mine ?? []));
 $allow_more_listings = ($max_listing > $number_of_listings);
 
 $access_listing = ($this->user->authorise('company.access', 'com_servicedirectory') && $this->user->authorise('company.dashboard_list', 'com_servicedirectory'));
-$create_listing = ($allow_more_listings && $access_listing && $this->user->authorise('core.create', 'com_servicedirectory') && $this->user->authorise('company.dashboard_add', 'com_servicedirectory'));
+$create_listing = ($allow_more_listings && $access_listing && $this->user->authorise('core.create', 'com_servicedirectory'));
 $return_here = urlencode(base64_encode((string) Uri::getInstance()));
 $create_listing_url = Route::_("/index.php?option=com_servicedirectory&view=company&layout=edit&return={$return_here}");
 

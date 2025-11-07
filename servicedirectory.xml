@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="6.0" method="upgrade">
 	<name>COM_SERVICEDIRECTORY</name>
-	<creationDate>26th October, 2025</creationDate>
+	<creationDate>7th November, 2025</creationDate>
 	<author>Lemuel van der Merwe</author>
 	<authorEmail>joomla@vdm.io</authorEmail>
 	<authorUrl>https://github.com/joomengine/Joomla-Service-Directory</authorUrl>
 	<copyright>Copyright (C) 2015 Vast Development Method. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>6.0.1</version>
+	<version>6.0.2</version>
 	<description><![CDATA[
-		<h1>Service Directory (v.6.0.1)</h1>
+		<h1>Service Directory (v.6.0.2)</h1>
 		<div style="clear: both;"></div>
 		<p>The Service Directory component is a powerful Joomla solution for creating and managing a public or private directory of people who offer services. Each listing can include essential contact details, a clear description of the services provided, and other relevant business information. The component also supports showcasing portfolios or previous work, allowing visitors to learn more about each provider's experience and capabilities.
 
@@ -70,6 +70,7 @@ Designed for flexibility and ease of use, Service Directory helps you organize a
 			<!-- Instead of link you can specify individual link attributes -->
 			<menu option="com_servicedirectory" view="servicedirectory">COM_SERVICEDIRECTORY_MENU_DASHBOARD</menu>
 			<menu option="com_servicedirectory" view="tickets">COM_SERVICEDIRECTORY_MENU_TICKETS</menu>
+			<menu link="option=com_servicedirectory&amp;view=review_company_updates">COM_SERVICEDIRECTORY_MENU_COMPANY_REVIEWS</menu>
 			<menu option="com_servicedirectory" view="companies">COM_SERVICEDIRECTORY_MENU_COMPANIES</menu>
 			<menu option="com_servicedirectory" view="portfolios">COM_SERVICEDIRECTORY_MENU_PORTFOLIOS</menu>
 			<menu option="com_servicedirectory" view="categories">COM_SERVICEDIRECTORY_MENU_CATEGORIES</menu>

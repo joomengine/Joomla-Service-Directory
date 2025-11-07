@@ -22,7 +22,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
-use JoomService\Joomla\Data\Factory as DataFactory;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -405,19 +404,6 @@ class CompanyController extends FormController
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
 	{
-		$user = $this->app->getIdentity();
-		if (!$user->authorise('core.edit.state', 'com_servicedirectory.company'))
-		{
-			$id = $model->getState('company.id', 0);
-			if ($id > 0)
-			{
-				// set the item into unpublish state
-				DataFactory::_('Data.Item')
-					->table('company')
-					->set((object) ['id' => $id, 'published' => 0], 'id', 'update');
-			}
-		}
-
 		return;
 	}
 

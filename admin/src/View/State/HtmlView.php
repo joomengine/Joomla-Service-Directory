@@ -26,6 +26,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Document\Document;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\Input\Input;
@@ -201,8 +202,8 @@ class HtmlView extends BaseHtmlView
 		$this->scripts = $model->getScripts();
 		$this->state = $model->getState();
 
-		// get action permissions
-		$this->canDo = ServicedirectoryHelper::getActions('state', $this->item);
+		// get the permitted actions the current user can do.
+		$this->canDo = Actions::get('state', $this->item);
 
 		// Set the return
 		$this->setReturn();
@@ -292,7 +293,7 @@ class HtmlView extends BaseHtmlView
 			}
 			if ($isNew)
 			{
-				// Do not creat but cancel.
+				// Do not create but cancel.
 				ToolbarHelper::cancel('state.cancel', 'JTOOLBAR_CANCEL');
 			}
 			else
@@ -380,7 +381,7 @@ class HtmlView extends BaseHtmlView
 			}
 			if ($isNew)
 			{
-				// Do not creat but cancel.
+				// Do not create but cancel.
 				ToolbarHelper::cancel('state.cancel', 'JTOOLBAR_CANCEL');
 			}
 			else

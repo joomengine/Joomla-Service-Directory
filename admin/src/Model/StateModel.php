@@ -33,6 +33,7 @@ use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Data\Factory as DataFactory;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
@@ -868,7 +869,7 @@ class StateModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('state');
+			$this->canDo		= Actions::get('state');
 		}
 
 		if (!$this->canDo->get('state.create') && !$this->canDo->get('state.batch'))
@@ -1011,7 +1012,7 @@ class StateModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('state');
+			$this->canDo		= Actions::get('state');
 		}
 
 		if (!$this->canDo->get('state.edit') && !$this->canDo->get('state.batch'))

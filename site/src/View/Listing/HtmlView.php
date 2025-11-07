@@ -24,6 +24,7 @@ use Joomla\CMS\Document\Document;
 use JoomService\Component\Servicedirectory\Site\Helper\HeaderCheck;
 use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\ObjectHelper;
 use JoomService\Joomla\Utilities\JsonHelper;
 use JoomService\Joomla\Utilities\StringHelper;
@@ -103,6 +104,14 @@ class HtmlView extends BaseHtmlView
 	protected array $scripts;
 
 	/**
+	 * The actions object
+	 *
+	 * @var    object
+	 * @since  3.10.11
+	 */
+	public object $canDo;
+
+	/**
 	 * Display the view
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -124,6 +133,10 @@ class HtmlView extends BaseHtmlView
 		$this->menu = $this->app->getMenu()->getActive();
 		// get the user object
 		$this->user ??= $this->getCurrentUser();
+
+		// get the permitted actions the current user can do.
+		$this->canDo = Actions::get('listing');
+
 		// Load module values
 		$model = $this->getModel();
 		$this->styles = $model->getStyles() ?? [];
@@ -200,20 +213,20 @@ class HtmlView extends BaseHtmlView
 	 * Add the page title and toolbar.
 	 *
 	 * @return  void
+	 * @throws  \Exception
 	 * @since   1.6
 	 */
 	protected function addToolbar(): void
 	{
-
+		
+		// now initiate toolbar if it's not already loaded
+		$this->toolbar ??= $this->getDocument()->getToolbar();
 		// set help url for this view if found
 		$this->help_url = ServicedirectoryHelper::getHelpUrl('listing');
 		if (StringHelper::check($this->help_url))
 		{
-			ToolbarHelper::help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
+			$this->toolbar->help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
 		}
-
-		// add the toolbar if it's not already loaded
-		$this->toolbar ??= $this->getDocument()->getToolbar();
 	}
 
 	/**

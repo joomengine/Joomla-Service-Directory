@@ -32,6 +32,7 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
@@ -822,7 +823,7 @@ class TimezoneModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('timezone');
+			$this->canDo		= Actions::get('timezone');
 		}
 
 		if (!$this->canDo->get('timezone.create') && !$this->canDo->get('timezone.batch'))
@@ -965,7 +966,7 @@ class TimezoneModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('timezone');
+			$this->canDo		= Actions::get('timezone');
 		}
 
 		if (!$this->canDo->get('timezone.edit') && !$this->canDo->get('timezone.batch'))

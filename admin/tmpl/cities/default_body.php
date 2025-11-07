@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper as Html;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use Joomla\CMS\User\UserFactoryInterface;
 
 // No direct access to this file
@@ -28,7 +29,7 @@ $edit = "index.php?option=com_servicedirectory&view=cities&task=city.edit";
 		$userChkOut = Factory::getContainer()->
 			get(UserFactoryInterface::class)->
 				loadUserById((int) ($item->checked_out ?? 0));
-		$canDo = ServicedirectoryHelper::getActions('city',$item,'cities');
+		$canDo = Actions::get('city', $item, 'cities');
 	?>
 	<tr class="row<?php echo $i % 2; ?>">
 		<td class="order nowrap center hidden-phone">

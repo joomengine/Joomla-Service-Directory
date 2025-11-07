@@ -31,6 +31,7 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GetHelper;
@@ -702,7 +703,7 @@ class Company_area_of_expertiseModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('company_area_of_expertise');
+			$this->canDo		= Actions::get('company_area_of_expertise');
 		}
 
 		if (!$this->canDo->get('company_area_of_expertise.create') && !$this->canDo->get('company_area_of_expertise.batch'))
@@ -845,7 +846,7 @@ class Company_area_of_expertiseModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('company_area_of_expertise');
+			$this->canDo		= Actions::get('company_area_of_expertise');
 		}
 
 		if (!$this->canDo->get('company_area_of_expertise.edit') && !$this->canDo->get('company_area_of_expertise.batch'))

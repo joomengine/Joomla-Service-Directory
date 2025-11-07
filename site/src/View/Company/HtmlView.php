@@ -26,6 +26,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Document\Document;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\Input\Input;
@@ -200,8 +201,8 @@ class HtmlView extends BaseHtmlView
 		$this->styles = $model->getStyles() ?? [];
 		$this->scripts = $model->getScripts() ?? [];
 
-		// get action permissions
-		$this->canDo = ServicedirectoryHelper::getActions('company', $this->item);
+		// get the permitted actions the current user can do.
+		$this->canDo = Actions::get('company', $this->item);
 
 		// Set the return
 		$this->setReturn();
@@ -259,10 +260,14 @@ class HtmlView extends BaseHtmlView
 	 * Add the page title and toolbar.
 	 *
 	 * @return  void
+	 * @throws  \Exception
 	 * @since   1.6
 	 */
 	protected function addToolbar(): void
 	{
+		// Initialize the toolbar only if it hasn't been initialized yet.
+		$this->toolbar ??= $this->getDocument()->getToolbar();
+
 		$this->input->set('hidemainmenu', true);
 		$user = $this->getCurrentUser();
 		$userId = $user->id;
@@ -284,7 +289,7 @@ class HtmlView extends BaseHtmlView
 			}
 			if ($isNew)
 			{
-				// Do not creat but cancel.
+				// Do not create but cancel.
 				ToolbarHelper::cancel('company.cancel', 'JTOOLBAR_CANCEL');
 			}
 			else
@@ -340,9 +345,6 @@ class HtmlView extends BaseHtmlView
 		{
 			ToolbarHelper::help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
 		}
-
-		// add the toolbar if it's not already loaded
-		$this->toolbar ??= $this->getDocument()->getToolbar();
 	}
 
 	/**
@@ -430,12 +432,12 @@ class HtmlView extends BaseHtmlView
 		if (method_exists($document, 'getWebAssetManager'))
 		{
 			/** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
-			$wa = $this->getDocument()->getWebAssetManager();
+			$wa = $document -> getWebAssetManager();
 			$wa->addInlineScript($script);
 		}
 		else
 		{
-			$this->getDocument()->addScriptDeclaration($script);
+			$document -> addScriptDeclaration($script);
 		}
 		// Define the configuration for the Cascading Select Manager
 		Text::script('COM_SERVICEDIRECTORY_SELECT_A_COUNTRY');

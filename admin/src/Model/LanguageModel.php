@@ -33,6 +33,7 @@ use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 
 // No direct access to this file
@@ -746,7 +747,7 @@ class LanguageModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('language');
+			$this->canDo		= Actions::get('language');
 		}
 
 		if (!$this->canDo->get('language.create') && !$this->canDo->get('language.batch'))
@@ -889,7 +890,7 @@ class LanguageModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('language');
+			$this->canDo		= Actions::get('language');
 		}
 
 		if (!$this->canDo->get('language.edit') && !$this->canDo->get('language.batch'))

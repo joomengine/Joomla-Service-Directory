@@ -70,7 +70,7 @@ class ServicedirectoryComponent extends MVCComponent implements
 	}
 
 	// will fix these soon
-	protected function getTableNameForSection(string $section = null){}
-	public function countItems(array $items, string $section){}
+	protected function getTableNameForSection(?string $section = null){}
+	public function countItems(array $items, ?string $section){}
 
 }

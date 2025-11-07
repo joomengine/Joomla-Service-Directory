@@ -34,6 +34,7 @@ use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
@@ -857,7 +858,7 @@ class PlatformModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('platform');
+			$this->canDo		= Actions::get('platform');
 		}
 
 		if (!$this->canDo->get('platform.create') && !$this->canDo->get('platform.batch'))
@@ -1000,7 +1001,7 @@ class PlatformModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('platform');
+			$this->canDo		= Actions::get('platform');
 		}
 
 		if (!$this->canDo->get('platform.edit') && !$this->canDo->get('platform.batch'))

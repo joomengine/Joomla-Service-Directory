@@ -21,4 +21,5 @@ DROP TABLE IF EXISTS `#__servicedirectory_company_language`;
 DROP TABLE IF EXISTS `#__servicedirectory_company_tag`;
 DROP TABLE IF EXISTS `#__servicedirectory_company_area_of_expertise`;
 DROP TABLE IF EXISTS `#__servicedirectory_ticket_comment`;
+DROP TABLE IF EXISTS `#__servicedirectory_review_company_update`;
 

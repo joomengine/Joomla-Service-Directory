@@ -34,6 +34,7 @@ use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -845,7 +846,7 @@ class TagModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('tag');
+			$this->canDo		= Actions::get('tag');
 		}
 
 		if (!$this->canDo->get('tag.create') && !$this->canDo->get('tag.batch'))
@@ -983,7 +984,7 @@ class TagModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('tag');
+			$this->canDo		= Actions::get('tag');
 		}
 
 		if (!$this->canDo->get('tag.edit') && !$this->canDo->get('tag.batch'))

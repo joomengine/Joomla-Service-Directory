@@ -33,6 +33,7 @@ use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Data\Factory as DataFactory;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
@@ -1066,7 +1067,7 @@ class CountryModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('country');
+			$this->canDo		= Actions::get('country');
 		}
 
 		if (!$this->canDo->get('country.create') && !$this->canDo->get('country.batch'))
@@ -1209,7 +1210,7 @@ class CountryModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('country');
+			$this->canDo		= Actions::get('country');
 		}
 
 		if (!$this->canDo->get('country.edit') && !$this->canDo->get('country.batch'))

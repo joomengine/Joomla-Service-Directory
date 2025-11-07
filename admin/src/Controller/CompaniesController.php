@@ -52,4 +52,86 @@ class CompaniesController extends AdminController
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
+
+	/**
+	 * Redirect the request to the company tickets.
+	 *
+	 * @return bool True on successful initialization, false on failure.
+	 * @since  5.2.4
+	 */
+	public function gotoTickets()
+	{
+		// Check for request forgeries
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+		// check if user has the right
+		$user = $this->app->getIdentity();
+
+		// set default error message
+		$message = '<h1>' . Text::_('COM_SERVICEDIRECTORY_PERMISSION_DENIED') . '</h1>';
+		$message .= '<p>' . Text::_('COM_SERVICEDIRECTORY_YOU_DO_NOT_HAVE_ACCESS_PERMISSION_TO_TICKETS') . '</p>';
+		$status = 'error';
+		$success = false;
+
+		if($user->authorise('ticket.access', 'com_servicedirectory'))
+		{
+			// set success message
+			$message = null;
+
+			$status = null;
+			$success = true;
+
+			// set redirect
+			$redirect_url = Route::_('index.php?option=com_servicedirectory&view=tickets', false);
+		}
+		else
+		{
+			// set redirect
+			$redirect_url = Route::_('index.php?option=com_servicedirectory&view=companies', false);
+		}
+		$this->setRedirect($redirect_url, $message, $status);
+
+		return $success;
+	}
+
+	/**
+	 * Redirect the request to the company reviews.
+	 *
+	 * @return bool True on successful initialization, false on failure.
+	 * @since  5.2.4
+	 */
+	public function gotoCompanyReviews()
+	{
+		// Check for request forgeries
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+		// check if user has the right
+		$user = $this->app->getIdentity();
+
+		// set default error message
+		$message = '<h1>' . Text::_('COM_SERVICEDIRECTORY_PERMISSION_DENIED') . '</h1>';
+		$message .= '<p>' . Text::_('COM_SERVICEDIRECTORY_YOU_DO_NOT_HAVE_ACCESS_PERMISSION_TO_COMPANY_REVIEWS') . '</p>';
+		$status = 'error';
+		$success = false;
+
+		if($user->authorise('review_company_update.access', 'com_servicedirectory'))
+		{
+			// set success message
+			$message = null;
+
+			$status = null;
+			$success = true;
+
+			// set redirect
+			$redirect_url = Route::_('index.php?option=com_servicedirectory&view=review_company_updates', false);
+		}
+		else
+		{
+			// set redirect
+			$redirect_url = Route::_('index.php?option=com_servicedirectory&view=companies', false);
+		}
+		$this->setRedirect($redirect_url, $message, $status);
+
+		return $success;
+	}
 }
