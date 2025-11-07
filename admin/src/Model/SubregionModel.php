@@ -33,6 +33,7 @@ use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Data\Factory as DataFactory;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
@@ -798,7 +799,7 @@ class SubregionModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('subregion');
+			$this->canDo		= Actions::get('subregion');
 		}
 
 		if (!$this->canDo->get('subregion.create') && !$this->canDo->get('subregion.batch'))
@@ -941,7 +942,7 @@ class SubregionModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('subregion');
+			$this->canDo		= Actions::get('subregion');
 		}
 
 		if (!$this->canDo->get('subregion.edit') && !$this->canDo->get('subregion.batch'))

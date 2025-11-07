@@ -36,6 +36,7 @@ use JoomService\Joomla\Data\Factory as DataFactory;
 use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -972,7 +973,7 @@ class TicketModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('ticket');
+			$this->canDo		= Actions::get('ticket');
 		}
 
 		if (!$this->canDo->get('ticket.create') && !$this->canDo->get('ticket.batch'))
@@ -1115,7 +1116,7 @@ class TicketModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('ticket');
+			$this->canDo		= Actions::get('ticket');
 		}
 
 		if (!$this->canDo->get('ticket.edit') && !$this->canDo->get('ticket.batch'))

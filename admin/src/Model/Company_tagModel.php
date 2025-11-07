@@ -31,6 +31,7 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GetHelper;
@@ -702,7 +703,7 @@ class Company_tagModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('company_tag');
+			$this->canDo		= Actions::get('company_tag');
 		}
 
 		if (!$this->canDo->get('company_tag.create') && !$this->canDo->get('company_tag.batch'))
@@ -845,7 +846,7 @@ class Company_tagModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('company_tag');
+			$this->canDo		= Actions::get('company_tag');
 		}
 
 		if (!$this->canDo->get('company_tag.edit') && !$this->canDo->get('company_tag.batch'))

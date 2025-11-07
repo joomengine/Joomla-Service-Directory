@@ -31,6 +31,7 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use Joomla\Filesystem\File;
@@ -687,7 +688,7 @@ class FileModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('file');
+			$this->canDo		= Actions::get('file');
 		}
 
 		if (!$this->canDo->get('file.create') && !$this->canDo->get('file.batch'))
@@ -830,7 +831,7 @@ class FileModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('file');
+			$this->canDo		= Actions::get('file');
 		}
 
 		if (!$this->canDo->get('file.edit') && !$this->canDo->get('file.batch'))

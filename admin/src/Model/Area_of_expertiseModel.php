@@ -34,6 +34,7 @@ use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -832,7 +833,7 @@ class Area_of_expertiseModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('area_of_expertise');
+			$this->canDo		= Actions::get('area_of_expertise');
 		}
 
 		if (!$this->canDo->get('area_of_expertise.create') && !$this->canDo->get('area_of_expertise.batch'))
@@ -970,7 +971,7 @@ class Area_of_expertiseModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('area_of_expertise');
+			$this->canDo		= Actions::get('area_of_expertise');
 		}
 
 		if (!$this->canDo->get('area_of_expertise.edit') && !$this->canDo->get('area_of_expertise.batch'))

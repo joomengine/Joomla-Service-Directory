@@ -134,6 +134,7 @@ class HtmlView extends BaseHtmlView
 		$this->menu = $this->app->getMenu()->getActive();
 		// get the user object
 		$this->user ??= $this->getCurrentUser();
+
 		// Load module values
 		$model = $this->getModel();
 		$this->styles = $model->getStyles() ?? [];
@@ -163,20 +164,20 @@ class HtmlView extends BaseHtmlView
 	 * Add the page title and toolbar.
 	 *
 	 * @return  void
+	 * @throws  \Exception
 	 * @since   1.6
 	 */
 	protected function addToolbar(): void
 	{
-
+		
+		// now initiate toolbar if it's not already loaded
+		$this->toolbar ??= $this->getDocument()->getToolbar();
 		// set help url for this view if found
 		$this->help_url = ServicedirectoryHelper::getHelpUrl('tag');
 		if (StringHelper::check($this->help_url))
 		{
-			ToolbarHelper::help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
+			$this->toolbar->help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
 		}
-
-		// add the toolbar if it's not already loaded
-		$this->toolbar ??= $this->getDocument()->getToolbar();
 	}
 
 	/**

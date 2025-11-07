@@ -70,7 +70,7 @@ class DisplayController extends BaseController
 	 * @throws \Exception
 	 * @since   3.0.1
 	 */
-	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+	public function __construct($config = [], ?MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		$app ??= Factory::getApplication();
 		$this->identity ??= $app->getIdentity();

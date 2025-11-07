@@ -256,6 +256,9 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 		// Remove Ticket comment Data
 		$this->removeViewData("com_servicedirectory.ticket_comment");
 
+		// Remove Review company update Data
+		$this->removeViewData("com_servicedirectory.review_company_update");
+
 		// Remove Asset Data.
 		$this->removeAssetData();
 
@@ -333,6 +336,9 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 		// Remove Ticket_comment from action logs config table.
 		$this->removeActionLogConfig('com_servicedirectory.ticket_comment');
+
+		// Remove Review_company_update from action logs config table.
+		$this->removeActionLogConfig('com_servicedirectory.review_company_update');
 		// little notice as after service, in case of bad experience with component.
 		echo '<div style="background-color: #fff;" class="alert alert-info">
 		<h2>Did something go wrong? Are you disappointed?</h2>
@@ -809,10 +815,27 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				// contentHistoryOptions
 				'{"formFile": "administrator/components/com_servicedirectory/forms/ticket_comment.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "ticket","targetTable": "#__servicedirectory_ticket","targetColumn": "guid","displayColumn": "subject"}]}'
 			);
+			// Install Review company update Content Types.
+			$this->setContentType(
+				// typeTitle
+				'Servicedirectory Review_company_update',
+				// typeAlias
+				'com_servicedirectory.review_company_update',
+				// table
+				'{"special": {"dbtable": "#__servicedirectory_review_company_update","key": "id","type": "Review_company_updateTable","prefix": "JoomService\Component\Servicedirectory\Administrator\Table"}}',
+				// rules
+				'',
+				// fieldMappings
+				'{"common": {"core_content_item_id": "id","core_title": "name","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "description","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"name":"name","contactname":"contactname","category":"category","review_status":"review_status","languages":"languages","chamber_of_commerce":"chamber_of_commerce","guid":"guid","tags":"tags","email":"email","areas_of_expertise":"areas_of_expertise","alias":"alias","company_type":"company_type","description":"description","website":"website","phone":"phone","companysize":"companysize"}}',
+				// router
+				'',
+				// contentHistoryOptions
+				'{"formFile": "administrator/components/com_servicedirectory/forms/review_company_update.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits","created_by","review_status"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "category","targetTable": "#__servicedirectory_category","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "file_type","targetTable": "#__servicedirectory_file_type","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "languages","targetTable": "#__servicedirectory_language","targetColumn": "langtag","displayColumn": "name"},{"sourceColumn": "tags","targetTable": "#__servicedirectory_tag","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "areas_of_expertise","targetTable": "#__servicedirectory_area_of_expertise","targetColumn": "guid","displayColumn": "name"}]}'
+			);
 
 
 			// Fix the assets table rules column size.
-			$this->setDatabaseAssetsRulesFix(71840, "MEDIUMTEXT");
+			$this->setDatabaseAssetsRulesFix(76640, "MEDIUMTEXT");
 			// Install the global extension assets permission.
 			$this->setAssetsRules(
 				'{"site.directory.access":{"1":1},"site.companies.access":{"1":1},"site.category.access":{"1":1},"site.listing.access":{"1":1},"site.tag.access":{"1":1},"site.areaofexpertise.access":{"1":1},"site.lang.access":{"1":1}}'
@@ -1207,6 +1230,22 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				'ticket',
 				// tableName
 				'#__servicedirectory_ticket_comment',
+				// textPrefix
+				'COM_SERVICEDIRECTORY'
+			);
+
+			// Add Review_company_update to the action logs config table.
+			$this->setActionLogConfig(
+				// typeTitle
+				'REVIEW_COMPANY_UPDATE',
+				// typeAlias
+				'com_servicedirectory.review_company_update',
+				// idHolder
+				'id',
+				// titleHolder
+				'name',
+				// tableName
+				'#__servicedirectory_review_company_update',
 				// textPrefix
 				'COM_SERVICEDIRECTORY'
 			);
@@ -1607,6 +1646,23 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				// contentHistoryOptions
 				'{"formFile": "administrator/components/com_servicedirectory/forms/ticket_comment.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "ticket","targetTable": "#__servicedirectory_ticket","targetColumn": "guid","displayColumn": "subject"}]}'
 			);
+			// Update Review company update Content Types.
+			$this->setContentType(
+				// typeTitle
+				'Servicedirectory Review_company_update',
+				// typeAlias
+				'com_servicedirectory.review_company_update',
+				// table
+				'{"special": {"dbtable": "#__servicedirectory_review_company_update","key": "id","type": "Review_company_updateTable","prefix": "JoomService\Component\Servicedirectory\Administrator\Table"}}',
+				// rules
+				'',
+				// fieldMappings
+				'{"common": {"core_content_item_id": "id","core_title": "name","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "description","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"name":"name","contactname":"contactname","category":"category","review_status":"review_status","languages":"languages","chamber_of_commerce":"chamber_of_commerce","guid":"guid","tags":"tags","email":"email","areas_of_expertise":"areas_of_expertise","alias":"alias","company_type":"company_type","description":"description","website":"website","phone":"phone","companysize":"companysize"}}',
+				// router
+				'',
+				// contentHistoryOptions
+				'{"formFile": "administrator/components/com_servicedirectory/forms/review_company_update.xml","hideFields": ["asset_id","checked_out","checked_out_time"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","version","hits","created_by","review_status"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "category","targetTable": "#__servicedirectory_category","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "file_type","targetTable": "#__servicedirectory_file_type","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "languages","targetTable": "#__servicedirectory_language","targetColumn": "langtag","displayColumn": "name"},{"sourceColumn": "tags","targetTable": "#__servicedirectory_tag","targetColumn": "guid","displayColumn": "name"},{"sourceColumn": "areas_of_expertise","targetTable": "#__servicedirectory_area_of_expertise","targetColumn": "guid","displayColumn": "name"}]}'
+			);
 
 
 
@@ -1620,7 +1676,7 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 			echo '<div style="background-color: #fff;" class="alert alert-info"><a target="_blank" href="https://github.com/joomengine/Joomla-Service-Directory" title="Service Directory">
 				<img src="components/com_servicedirectory/assets/images/vdm-component.jpg"/>
 				</a>
-				<h3>Upgrade to Version 5.0.1 Was Successful! Let us know if anything is not working as expected.</h3></div>';
+				<h3>Upgrade to Version 5.0.2 Was Successful! Let us know if anything is not working as expected.</h3></div>';
 
 			// Add/Update component in the action logs extensions table.
 			$this->setActionLogsExtensions();
@@ -1989,6 +2045,22 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 				'ticket',
 				// tableName
 				'#__servicedirectory_ticket_comment',
+				// textPrefix
+				'COM_SERVICEDIRECTORY'
+			);
+
+			// Add/Update Review_company_update in the action logs config table.
+			$this->setActionLogConfig(
+				// typeTitle
+				'REVIEW_COMPANY_UPDATE',
+				// typeAlias
+				'com_servicedirectory.review_company_update',
+				// idHolder
+				'id',
+				// titleHolder
+				'name',
+				// tableName
+				'#__servicedirectory_review_company_update',
 				// textPrefix
 				'COM_SERVICEDIRECTORY'
 			);

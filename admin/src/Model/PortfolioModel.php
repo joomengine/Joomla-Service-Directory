@@ -31,6 +31,7 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GetHelper;
@@ -813,7 +814,7 @@ class PortfolioModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('portfolio');
+			$this->canDo		= Actions::get('portfolio');
 		}
 
 		if (!$this->canDo->get('portfolio.create') && !$this->canDo->get('portfolio.batch'))
@@ -956,7 +957,7 @@ class PortfolioModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('portfolio');
+			$this->canDo		= Actions::get('portfolio');
 		}
 
 		if (!$this->canDo->get('portfolio.edit') && !$this->canDo->get('portfolio.batch'))

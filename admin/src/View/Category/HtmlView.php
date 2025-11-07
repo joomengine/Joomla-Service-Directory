@@ -26,6 +26,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Document\Document;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\Input\Input;
@@ -201,8 +202,8 @@ class HtmlView extends BaseHtmlView
 		$this->scripts = $model->getScripts();
 		$this->state = $model->getState();
 
-		// get action permissions
-		$this->canDo = ServicedirectoryHelper::getActions('category', $this->item);
+		// get the permitted actions the current user can do.
+		$this->canDo = Actions::get('category', $this->item);
 
 		// Set the return
 		$this->setReturn();
@@ -292,7 +293,7 @@ class HtmlView extends BaseHtmlView
 			}
 			if ($isNew)
 			{
-				// Do not creat but cancel.
+				// Do not create but cancel.
 				ToolbarHelper::cancel('category.cancel', 'JTOOLBAR_CANCEL');
 			}
 			else
@@ -380,7 +381,7 @@ class HtmlView extends BaseHtmlView
 			}
 			if ($isNew)
 			{
-				// Do not creat but cancel.
+				// Do not create but cancel.
 				ToolbarHelper::cancel('category.cancel', 'JTOOLBAR_CANCEL');
 			}
 			else
@@ -473,12 +474,12 @@ class HtmlView extends BaseHtmlView
 		if (method_exists($document, 'getWebAssetManager'))
 		{
 			/** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
-			$wa = $this->getDocument()->getWebAssetManager();
+			$wa = $document -> getWebAssetManager();
 			$wa->addInlineScript($script);
 		}
 		else
 		{
-			$this->getDocument()->addScriptDeclaration($script);
+			$document -> addScriptDeclaration($script);
 		}
 
 		Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit.min.js', ['version' => 'auto']);

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addruleprefix="JoomService\Component\Servicedirectory\Administrator\Rule"
+	addfieldprefix="JoomService\Component\Servicedirectory\Administrator\Field"
+>
+	<fields name="filter">
+		<field
+			type="text"
+			name="search"
+			inputmode="search"
+			label="COM_SERVICEDIRECTORY_FILTER_SEARCH"
+			description="COM_SERVICEDIRECTORY_FILTER_SEARCH_REVIEW_COMPANY_UPDATES"
+			hint="JSEARCH_FILTER"
+		/>
+		<field
+			type="status"
+			name="published"
+			label="COM_SERVICEDIRECTORY_FILTER_PUBLISHED"
+			description="COM_SERVICEDIRECTORY_FILTER_PUBLISHED_REVIEW_COMPANY_UPDATES"
+			class="js-select-submit-on-change"
+		>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			type="accesslevel"
+			name="access"
+			label="JGRID_HEADING_ACCESS"
+			hint="JOPTION_SELECT_ACCESS"
+			multiple="true"
+			class="js-select-submit-on-change"
+			layout="joomla.form.field.list-fancy-select"
+		/>
+		<field
+			type="categories"
+			name="category"
+			label="COM_SERVICEDIRECTORY_REVIEW_COMPANY_UPDATE_CATEGORY_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<field
+			type="reviewcompanyupdatesfiltercreatedby"
+			name="created_by"
+			label="COM_SERVICEDIRECTORY_REVIEW_COMPANY_UPDATE_CREATED_BY_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<field
+			type="reviewcompanyupdatesfilterreviewstatus"
+			name="review_status"
+			label="COM_SERVICEDIRECTORY_REVIEW_COMPANY_UPDATE_REVIEW_STATUS_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<input type="hidden" name="form_submited" value="1"/>
+	</fields>
+
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			class="js-select-submit-on-change"
+			default="a.id DESC"
+			validate="options"
+		>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+			<option value="a.published ASC">JSTATUS_ASC</option>
+			<option value="a.published DESC">JSTATUS_DESC</option>
+			<option value="a.name ASC">COM_SERVICEDIRECTORY_FILTER_NAME_ASCENDING</option>
+			<option value="a.name DESC">COM_SERVICEDIRECTORY_FILTER_NAME_DESCENDING</option>
+			<option value="g.name ASC">COM_SERVICEDIRECTORY_FILTER_CATEGORY_ASCENDING</option>
+			<option value="g.name DESC">COM_SERVICEDIRECTORY_FILTER_CATEGORY_DESCENDING</option>
+			<option value="a.created_by ASC">COM_SERVICEDIRECTORY_FILTER_CREATED_BY_ASCENDING</option>
+			<option value="a.created_by DESC">COM_SERVICEDIRECTORY_FILTER_CREATED_BY_DESCENDING</option>
+			<option value="a.review_status ASC">COM_SERVICEDIRECTORY_FILTER_REVIEW_STATUS_ASCENDING</option>
+			<option value="a.review_status DESC">COM_SERVICEDIRECTORY_FILTER_REVIEW_STATUS_DESCENDING</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			class="js-select-submit-on-change"
+		/>
+	</fields>
+</form>

@@ -36,6 +36,7 @@ use JoomService\Joomla\Utilities\ObjectHelper;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -937,8 +938,8 @@ class CompanyModel extends AdminModel
 				return false;
 			}
 		}
-		// Since there is no permission given, block access.
-		return false;
+		// Since there is no permission given, core edit must be checked.
+		return $user->authorise('core.edit', $this->option);
 	}
 
 	/**
@@ -1279,7 +1280,7 @@ class CompanyModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('company');
+			$this->canDo		= Actions::get('company');
 		}
 
 		if (!$this->canDo->get('core.create') && !$this->canDo->get('company.batch'))
@@ -1417,7 +1418,7 @@ class CompanyModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('company');
+			$this->canDo		= Actions::get('company');
 		}
 
 		if (!$this->canDo->get('core.edit') && !$this->canDo->get('company.batch'))
@@ -1542,6 +1543,36 @@ class CompanyModel extends AdminModel
 		{
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
+		}
+		$user = $this->getCurrentUser();
+		$companyId = (int) ($data['id'] ?? 0);
+		if (!$user->authorise('core.edit.state', 'com_servicedirectory.company'))
+		{
+			$data['review_status'] = 0;
+			$data['published'] = 1;
+
+			$success = DataFactory::_('Data.Item')
+				->table('review_company_update')
+				->set((object) $data, 'guid');
+
+			// Existing listings
+			if ($companyId > 0)
+			{
+				if ($success)
+				{
+					$app->enqueueMessage(Text::_('COM_SERVICEDIRECTORY_YOUR_UPDATE_HAS_BEEN_SUBMITTED_FOR_REVIEWBRTHE_CHANGES_WILL_APPEAR_ONCE_APPROVED_BY_OUR_TEAM'), 'notice');
+					return true;
+				}
+
+				$app->enqueueMessage(Text::_('COM_SERVICEDIRECTORY_YOUR_UPDATE_COULD_NOT_BE_SUBMITTEDBRPLEASE_TRY_AGAIN_LATER_IF_THE_ISSUE_PERSISTS_PLEASE_OPEN_A_SUPPORT_TICKET'), 'warning');
+				return false;
+			}
+			// New listings
+			else
+			{
+				unset($data['review_status']);
+				$data['published'] = 0; // unpublish the listing, until its been reviewed
+			}
 		}
 		if (isset($data['addresses']))
 		{

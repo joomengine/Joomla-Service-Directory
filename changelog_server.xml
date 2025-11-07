@@ -13,4 +13,13 @@
       <item>Add a support tab to Company that links Companies to the Ticket system.</item>
     </addition>
   </changelog>
+  <changelog>
+    <element>com_servicedirectory</element>
+    <type>component</type>
+    <version>5.0.2</version>
+    <addition>
+      <item>Add Company Review Updates area for managing owner-submitted updates on listings.</item>
+      <item>Add custom toolbar in Company Review area to replace default actions.</item>
+    </addition>
+  </changelog>
 </changelogs>

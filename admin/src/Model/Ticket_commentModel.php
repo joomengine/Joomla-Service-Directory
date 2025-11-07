@@ -31,6 +31,7 @@ use Joomla\Input\Input;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GetHelper;
@@ -711,7 +712,7 @@ class Ticket_commentModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('ticket_comment');
+			$this->canDo		= Actions::get('ticket_comment');
 		}
 
 		if (!$this->canDo->get('ticket_comment.create') && !$this->canDo->get('ticket_comment.batch'))
@@ -854,7 +855,7 @@ class Ticket_commentModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('ticket_comment');
+			$this->canDo		= Actions::get('ticket_comment');
 		}
 
 		if (!$this->canDo->get('ticket_comment.edit') && !$this->canDo->get('ticket_comment.batch'))

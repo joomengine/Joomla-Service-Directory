@@ -32,6 +32,7 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 
@@ -889,7 +890,7 @@ class CityModel extends AdminModel
 			$this->user 		= Factory::getApplication()->getIdentity();
 			$this->table 		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('city');
+			$this->canDo		= Actions::get('city');
 		}
 
 		if (!$this->canDo->get('city.create') && !$this->canDo->get('city.batch'))
@@ -1032,7 +1033,7 @@ class CityModel extends AdminModel
 			$this->user		= Factory::getApplication()->getIdentity();
 			$this->table		= $this->getTable();
 			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= ServicedirectoryHelper::getActions('city');
+			$this->canDo		= Actions::get('city');
 		}
 
 		if (!$this->canDo->get('city.edit') && !$this->canDo->get('city.batch'))

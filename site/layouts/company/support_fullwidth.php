@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper as Html;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use JoomService\Joomla\Utilities\StringHelper;
+use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\User\UserFactoryInterface;
 
@@ -51,7 +52,7 @@ else
 // set the create new URL
 $new = "index.php?option=com_servicedirectory&view=tickets&task=ticket.add" . $ref;
 // load the action object
-$can = ServicedirectoryHelper::getActions('ticket');
+$can = Actions::get('ticket');
 
 ?>
 <div class="form-vertical">
@@ -86,7 +87,7 @@ $can = ServicedirectoryHelper::getActions('ticket');
 		$userChkOut = Factory::getContainer()->
 			get(UserFactoryInterface::class)->
 				loadUserById((int) ($item->checked_out ?? 0));
-		$canDo = ServicedirectoryHelper::getActions('ticket',$item,'tickets');
+		$canDo = Actions::get('ticket', $item, 'tickets');
 	?>
 	<tr>
 		<td>
