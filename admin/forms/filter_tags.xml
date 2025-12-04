@@ -22,6 +22,24 @@
 			layout="joomla.form.field.list-fancy-select"
 		/>
 		<field
+			type="ModalSelect"
+			sql_title_table="#__servicedirectory_tag"
+			sql_title_column="name"
+			sql_title_key="guid"
+			urlSelect="index.php?option=com_servicedirectory&amp;view=tags&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			hint="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_HINT"
+			titleSelect="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_TITLESELECT"
+			iconSelect="icon-copy"
+			select="true"
+			edit="false"
+			clear="true"
+			onchange="form.submit()"
+			name="parent_guid"
+			label="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_LABEL"
+			multiple="false"
+			class="js-select-submit-on-change"
+		/>
+		<field
 			type="tagsfilterpublished"
 			name="published"
 			label="COM_SERVICEDIRECTORY_TAG_PUBLISHED_LABEL"
@@ -45,6 +63,8 @@
 			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
 			<option value="a.name ASC">COM_SERVICEDIRECTORY_FILTER_NAME_ASCENDING</option>
 			<option value="a.name DESC">COM_SERVICEDIRECTORY_FILTER_NAME_DESCENDING</option>
+			<option value="g.name ASC">COM_SERVICEDIRECTORY_FILTER_PARENT_ASCENDING</option>
+			<option value="g.name DESC">COM_SERVICEDIRECTORY_FILTER_PARENT_DESCENDING</option>
 			<option value="a.published ASC">COM_SERVICEDIRECTORY_FILTER_STATUS_ASCENDING</option>
 			<option value="a.published DESC">COM_SERVICEDIRECTORY_FILTER_STATUS_DESCENDING</option>
 			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>

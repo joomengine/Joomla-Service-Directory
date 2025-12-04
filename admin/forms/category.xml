@@ -112,18 +112,31 @@
 			filter="HTML"
 			hint="COM_SERVICEDIRECTORY_CATEGORY_DESCRIPTION_HINT"
 		/>
-		<!-- Parent_guid Field. Type: Categories. (custom) -->
+		<!-- Parent_guid Field. Type: Modalselect. (custom) -->
 		<field
-			type="categories"
+			type="ModalSelect"
 			name="parent_guid"
 			label="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_LABEL"
-			description="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_DESCRIPTION"
-			class="list_class"
-			layout="joomla.form.field.list-fancy-select"
-			multiple="true"
+			sql_title_table="#__servicedirectory_category"
+			sql_title_column="name"
+			data-key-name="guid"
+			sql_title_key="guid"
+			urlSelect="index.php?option=com_servicedirectory&amp;view=categories&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			urlNew="index.php?option=com_servicedirectory&amp;task=category.add&amp;layout=modal&amp;tmpl=component"
+			urlEdit="index.php?option=com_servicedirectory&amp;task=category.edit&amp;guid={id}&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			titleSelect="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_TITLESELECT"
+			titleNew="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_TITLENEW"
+			titleEdit="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_TITLEEDIT"
+			iconSelect="icon-copy"
+			select="true"
+			new="true"
+			edit="true"
+			clear="true"
 			required="false"
-			button="false"
-			entity="category"
+			filter="STRING"
+			class="input-large"
+			description="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_DESCRIPTION"
+			hint="COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_HINT"
 		/>
 		<!-- Published Field. Type: List. (joomla) -->
 		<field

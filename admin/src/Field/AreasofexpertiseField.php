@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper as Html;
 use Joomla\CMS\Component\ComponentHelper;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use Joomla\Database\DatabaseInterface;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -44,7 +45,7 @@ class AreasofexpertiseField extends ListField
 	protected function getOptions()
 	{
 				// Get the databse object.
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('a.guid','a.name'),array('guid','areas_of_expertise_name')));
 		$query->from($db->quoteName('#__servicedirectory_area_of_expertise', 'a'));

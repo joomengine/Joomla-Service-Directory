@@ -5,27 +5,4 @@
 			<![CDATA[COM_SERVICEDIRECTORY_MENU_DIRECTORY_DESC]]>
 		</message>
 	</layout>
-	<!-- Adding page parameters -->
-	<fields name="params">
-		<fieldset name="basic" label="COM_SERVICEDIRECTORY"
-			addruleprefix="JoomService\Component\Servicedirectory\Site\Rule"
-			addfieldprefix="JoomService\Component\Servicedirectory\Site\Field">
-		<!-- Show_login Field. Type: Radio. (joomla) -->
-		<field
-			type="radio"
-			name="show_login"
-			label="COM_SERVICEDIRECTORY_CONFIG_SHOW_LOGIN_LABEL"
-			layout="joomla.form.field.radio.switcher"
-			default=""
-			filter="string">
-			<!--  Global & Option Set. -->
-			<option value="">
-				JGLOBAL_USE_GLOBAL</option>
-			<option value="1">
-				COM_SERVICEDIRECTORY_CONFIG_YES</option>
-			<option value="0">
-				COM_SERVICEDIRECTORY_CONFIG_NO</option>
-		</field>
-		</fieldset>
-	</fields>
 </metadata>

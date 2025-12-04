@@ -99,7 +99,7 @@ $edit = "index.php?option=com_servicedirectory&view=tags&task=tag.edit";
 			<?php echo $this->escape($item->description); ?>
 		</td>
 		<td class="hidden-phone">
-			<?php echo $this->escape($item->parent_guid); ?>
+			<?php echo $this->escape($item->parent_guid_name); ?>
 		</td>
 		<td class="hidden-phone">
 			<?php echo Text::_($item->published); ?>

@@ -112,18 +112,31 @@
 			filter="HTML"
 			hint="COM_SERVICEDIRECTORY_TAG_DESCRIPTION_HINT"
 		/>
-		<!-- Parent_guid Field. Type: Tags. (custom) -->
+		<!-- Parent_guid Field. Type: Modalselect. (custom) -->
 		<field
-			type="tags"
+			type="ModalSelect"
 			name="parent_guid"
 			label="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_LABEL"
-			description="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_DESCRIPTION"
-			class="list_class"
-			layout="joomla.form.field.list-fancy-select"
-			multiple="true"
+			sql_title_table="#__servicedirectory_tag"
+			sql_title_column="name"
+			data-key-name="guid"
+			sql_title_key="guid"
+			urlSelect="index.php?option=com_servicedirectory&amp;view=tags&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			urlNew="index.php?option=com_servicedirectory&amp;task=tag.add&amp;layout=modal&amp;tmpl=component"
+			urlEdit="index.php?option=com_servicedirectory&amp;task=tag.edit&amp;guid={id}&amp;layout=modal&amp;tmpl=component&amp;titleKey=guid"
+			titleSelect="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_TITLESELECT"
+			titleNew="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_TITLENEW"
+			titleEdit="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_TITLEEDIT"
+			iconSelect="icon-copy"
+			select="true"
+			new="true"
+			edit="true"
+			clear="true"
 			required="false"
-			button="false"
-			entity="tag"
+			filter="STRING"
+			class="input-large"
+			description="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_DESCRIPTION"
+			hint="COM_SERVICEDIRECTORY_TAG_PARENT_GUID_HINT"
 		/>
 		<!-- Published Field. Type: List. (joomla) -->
 		<field

@@ -275,12 +275,15 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
+				// Initialize the toolbar only if it hasn't been initialized yet.
+		$this->toolbar ??= $this->getDocument()->getToolbar();
+
 		$this->input->set('hidemainmenu', true);
 		$user = $this->getCurrentUser();
 		$userId = $user->id;
 		$isNew = $this->item->id == 0;
 
-		ToolbarHelper::title( Text::_($isNew ? 'COM_SERVICEDIRECTORY_COMPANY_NEW' : 'COM_SERVICEDIRECTORY_COMPANY_EDIT'), 'pencil-2 article-add');
+		ToolbarHelper::title( Text::_($isNew ? 'COM_SERVICEDIRECTORY_A_NEW_COMPANY':'COM_SERVICEDIRECTORY_EDITING_THE_COMPANYT'), 'pencil-2 article-add');
 		// Built the actions for new and existing records.
 		if (StringHelper::check($this->referral))
 		{
@@ -305,7 +308,7 @@ class HtmlView extends BaseHtmlView
 				ToolbarHelper::cancel('company.cancel', 'JTOOLBAR_CLOSE');
 			}
 		}
-		else
+		elseif ($this->app->isClient('administrator'))
 		{
 			if ($isNew)
 			{
@@ -344,13 +347,18 @@ class HtmlView extends BaseHtmlView
 				ToolbarHelper::cancel('company.cancel', 'JTOOLBAR_CLOSE');
 			}
 		}
+		else
+		{
+			// We can close it.
+			ToolbarHelper::cancel('company.cancel', 'JTOOLBAR_CLOSE');
+		}
 		ToolbarHelper::divider();
 		ToolbarHelper::inlinehelp();
 		// set help url for this view if found
-		$this->help_url = ServicedirectoryHelper::getHelpUrl('company');
+		$this->help_url = $this->app->isClient('administrator') ? ServicedirectoryHelper::getHelpUrl('company') : null;
 		if (StringHelper::check($this->help_url))
 		{
-			ToolbarHelper::help('COM_SERVICEDIRECTORY_HELP_MANAGER', false, $this->help_url);
+			ToolbarHelper::help('COM_SERVICEDIRECTORY_HELP', false, $this->help_url);
 		}
 	}
 

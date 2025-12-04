@@ -843,7 +843,7 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 
 			// Install the global extension params.
 			$this->setExtensionsParams(
-				'{"autorName":"Lemuel van der Merwe","autorEmail":"joomla@vdm.io","show_login":"1","max_listings":"1","max_tags":"5","max_expertise":"5","max_languages":"5","show_listing_object":"0","sef_ids":"1","check_in":"-1 day","save_history":"1","history_limit":"10","titleContributor1":"Contributor","nameContributor1":"Llewellyn van der Merwe","emailContributor1":"joomla@vdm.io","linkContributor1":"https://git.vdm.dev/joomla/Service-Directory","useContributor1":"2","showContributor1":"3","titleContributor2":"Contributor","nameContributor2":"Tom van der Laan","emailContributor2":"info@tlwebdesign.nl","linkContributor2":"http://www.tlwebdesign.nl/","useContributor2":"2","showContributor2":"3","add_jquery_framework":"1","uikit_load":"1","uikit_min":""}'
+				'{"autorName":"Lemuel van der Merwe","autorEmail":"joomla@vdm.io","show_login":"0","max_listings":"1","max_tags":"5","max_expertise":"5","max_languages":"5","show_listing_object":"0","sef_ids":"1","check_in":"-1 day","save_history":"1","history_limit":"10","titleContributor1":"Contributor","nameContributor1":"Llewellyn van der Merwe","emailContributor1":"joomla@vdm.io","linkContributor1":"https://git.vdm.dev/joomla/Service-Directory","useContributor1":"2","showContributor1":"3","titleContributor2":"Contributor","nameContributor2":"Tom van der Laan","emailContributor2":"info@tlwebdesign.nl","linkContributor2":"http://www.tlwebdesign.nl/","useContributor2":"2","showContributor2":"3","add_jquery_framework":"1","uikit_load":"1","uikit_min":""}'
 			);
 
 
@@ -1676,7 +1676,7 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 			echo '<div style="background-color: #fff;" class="alert alert-info"><a target="_blank" href="https://github.com/joomengine/Joomla-Service-Directory" title="Service Directory">
 				<img src="components/com_servicedirectory/assets/images/vdm-component.jpg"/>
 				</a>
-				<h3>Upgrade to Version 5.0.2 Was Successful! Let us know if anything is not working as expected.</h3></div>';
+				<h3>Upgrade to Version 5.0.3 Was Successful! Let us know if anything is not working as expected.</h3></div>';
 
 			// Add/Update component in the action logs extensions table.
 			$this->setActionLogsExtensions();

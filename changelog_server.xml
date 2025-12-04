@@ -22,4 +22,17 @@
       <item>Add custom toolbar in Company Review area to replace default actions.</item>
     </addition>
   </changelog>
+  <changelog>
+    <element>com_servicedirectory</element>
+    <type>component</type>
+    <version>5.0.3</version>
+    <fix>
+      <item>Fix the redundant slash in ListingModel in certain subdirectory setups. #1</item>
+      <item>Fix the strpos() deprecation warning in the router where null is passed to $haystack. #1</item>
+    </fix>
+    <change>
+      <item>Update Site Router to align with the new JCB Router Helper class.</item>
+      <item>Update depreciated Factory::getDBO() calls to use latest standards. #1</item>
+    </change>
+  </changelog>
 </changelogs>

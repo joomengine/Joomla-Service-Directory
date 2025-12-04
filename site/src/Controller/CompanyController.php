@@ -76,6 +76,22 @@ class CompanyController extends FormController
 	 */
 	protected $view_list = 'directory';
 
+	/**
+	 * Referral value
+	 *
+	 * @var    string
+	 * @since  5.0
+	 */
+	protected string $ref;
+
+	/**
+	 * Referral ID value
+	 *
+	 * @var    int
+	 * @since  5.0
+	 */
+	protected int $refid;
+
 
 	/**
 	 * Method to edit an existing record.
@@ -142,10 +158,10 @@ class CompanyController extends FormController
 		}
 
 		// check that user does not add more companies than is allowed
-		//if (!ServicedirectoryHelper::allowAdd($user, 'companies'))
-		//{
-		//	return false;
-		//}
+		if (!ServicedirectoryHelper::allowAddListing($user, $data))
+		{
+			return false;
+		}
 		// In the absence of better information, revert to the component permissions.
 		return parent::allowAdd($data);
 	}
@@ -245,28 +261,6 @@ class CompanyController extends FormController
 		}
 
 		return $append;
-	}
-
-	/**
-	 * Method to run batch operations.
-	 *
-	 * @param   object  $model  The model.
-	 *
-	 * @return  boolean   True if successful, false otherwise and internal error is set.
-	 *
-	 * @since   2.5
-	 */
-	public function batch($model = null)
-	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
-
-		// Set the model
-		$model = $this->getModel('Company', '', []);
-
-		// Preset the redirect
-		$this->setRedirect(Route::_('index.php?option=com_servicedirectory&view=companies' . $this->getRedirectToListAppend(), false));
-
-		return parent::batch($model);
 	}
 
 	/**

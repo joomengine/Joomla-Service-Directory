@@ -18,6 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper as Html;
 use Joomla\CMS\Component\ComponentHelper;
 use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -152,7 +153,7 @@ class LangField extends ListField
 	 */
 	protected function getOptions()
 	{
-		$db = Factory::getDBO();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('a.langtag','a.name'),array('langtag','languages_name')));
 		$query->from($db->quoteName('#__servicedirectory_language', 'a'));

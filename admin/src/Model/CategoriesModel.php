@@ -26,7 +26,6 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
 use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\ObjectHelper;
-use JoomService\Joomla\Utilities\JsonHelper;
 use JoomService\Joomla\Utilities\StringHelper;
 
 // No direct access to this file
@@ -88,6 +87,7 @@ class CategoriesModel extends ListModel
 				'a.ordering','ordering',
 				'a.created_by','created_by',
 				'a.modified_by','modified_by',
+				'g.name','parent_guid',
 				'a.name','name'
 			);
 		}
@@ -141,6 +141,13 @@ class CategoriesModel extends ListModel
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
+		$parent_guid = $this->getUserStateFromRequest($this->context . '.filter.parent_guid', 'filter_parent_guid');
+		if ($formSubmited)
+		{
+			$parent_guid = $input->post->get('parent_guid');
+			$this->setState('filter.parent_guid', $parent_guid);
+		}
+
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published');
 		if ($formSubmited)
 		{
@@ -191,8 +198,6 @@ class CategoriesModel extends ListModel
 					continue;
 				}
 
-				// convert parent_guid
-				$item->parent_guid = JsonHelper::string($item->parent_guid, ', ', 'category', 'guid', 'name');
 			}
 		}
 
@@ -308,6 +313,23 @@ class CategoriesModel extends ListModel
 			}
 		}
 
+		// Filter by Parent_guid.
+		$_parent_guid = $this->getState('filter.parent_guid');
+		if (is_numeric($_parent_guid))
+		{
+			if (is_float($_parent_guid))
+			{
+				$query->where('a.parent_guid = ' . (float) $_parent_guid);
+			}
+			else
+			{
+				$query->where('a.parent_guid = ' . (int) $_parent_guid);
+			}
+		}
+		elseif (StringHelper::check($_parent_guid))
+		{
+			$query->where('a.parent_guid = ' . $db->quote($db->escape($_parent_guid)));
+		}
 		// Filter by Published.
 		$_published = $this->getState('filter.published');
 		if (is_numeric($_published))
@@ -365,6 +387,7 @@ class CategoriesModel extends ListModel
 		$id .= ':' . $this->getState('filter.ordering');
 		$id .= ':' . $this->getState('filter.created_by');
 		$id .= ':' . $this->getState('filter.modified_by');
+		$id .= ':' . $this->getState('filter.parent_guid');
 		$id .= ':' . $this->getState('filter.name');
 
 		return parent::getStoreId($id);

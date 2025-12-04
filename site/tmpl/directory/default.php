@@ -22,14 +22,14 @@ use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
 // No direct access to this file
 defined('_JEXEC') or die;
 
-$max_listing = $this->params->get('max_listings', 1);
-$number_of_listings = count( (array) ($this->mine ?? []));
-$allow_more_listings = ($max_listing > $number_of_listings);
+$max_listing = (int) $this->params->get('max_listings', 1);
+$number_of_listings = (int) (is_array($this->mine) ? count((array) $this->mine) : 0);
+$allow_more_listings = (bool) ($max_listing > $number_of_listings);
 
 $access_listing = ($this->user->authorise('company.access', 'com_servicedirectory') && $this->user->authorise('company.dashboard_list', 'com_servicedirectory'));
 $create_listing = ($allow_more_listings && $access_listing && $this->user->authorise('core.create', 'com_servicedirectory'));
 $return_here = urlencode(base64_encode((string) Uri::getInstance()));
-$create_listing_url = Route::_("/index.php?option=com_servicedirectory&view=company&layout=edit&return={$return_here}");
+$create_listing_url = Route::_("index.php?option=com_servicedirectory&view=company&layout=edit&return={$return_here}");
 
 $items = $this->items ?? [];
 if (!empty($items))
@@ -50,8 +50,8 @@ $search_value = $this->input->get('search', null, 'STRING');
 
 ?>
 <?php echo $this->toolbar->render(); ?>
-<?php if (!empty($items)): ?>
 <?php echo LayoutHelper::render('searchbox', ['url' => $search_link, 'value' => $search_value]); ?>
+<?php if (!empty($items)): ?>
 <div class="container-xxl my-4">
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
 		<?php foreach ($items as $item): ?>
@@ -108,7 +108,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 <?php else: ?>
-	<div class="alert alert-warning mb-0" role="alert"><?php echo Text::_('COM_SERVICEDIRECTORY_NO_CATEGORIES'); ?></div>
+	<div class="container-xxl my-4">
+		<div class="row">
+			<div class="alert alert-warning mb-0" role="alert"><?php echo Text::_('COM_SERVICEDIRECTORY_NO_CATEGORIES'); ?></div>
+		</div>
+	</div>
 <?php endif; ?>
 
 <?php if ($access_listing): ?>
@@ -125,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		<b><?php echo Text::sprintf('COM_SERVICEDIRECTORY_WELCOME_BACK_S', $this->escape($this->user->name)); ?></b><br>
 		<?php echo Text::_('COM_SERVICEDIRECTORY_YOUR_ACCOUNT_IS_NOT_PERMITTED_TO_ADD_A_LISTING'); ?>
 	</div>
-<?php elseif ((bool) $this->params->get('show_login', 0)): ?>
+<?php elseif ((int) $this->params->get('show_login', 0) === 1): ?>
 	<?php echo Text::_('COM_SERVICEDIRECTORY_YOU_MUST_BE_SIGNED_IN_TO_VIEW_OR_MANAGE_YOUR_COMPANY_LISTINGS'); ?>
 	<?php echo $this->loadTemplate('loginmodule'); ?>
 <?php endif; ?>

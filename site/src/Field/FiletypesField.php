@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper as Html;
 use Joomla\CMS\Component\ComponentHelper;
 use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
+use Joomla\Database\DatabaseInterface;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -44,7 +45,7 @@ class FiletypesField extends ListField
 	protected function getOptions()
 	{
 		// Get the database object.
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('a.guid','a.name','a.target'),array('guid','file_type_name','target')));
 		$query->from($db->quoteName('#__servicedirectory_file_type', 'a'));

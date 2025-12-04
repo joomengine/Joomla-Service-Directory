@@ -30,7 +30,7 @@ $tmpl    = $this->input->get('tmpl');
 $tmpl    = $tmpl ? '&tmpl=' . $tmpl : '';
 ?>
 <div id="servicedirectory_loader">
-<form action="<?php echo Route::_('index.php?option=com_servicedirectory&&layout=' . $layout . $tmpl . '&id='. (int) $this->item->id . $this->referral); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
+<form action="<?php echo Route::_('index.php?option=com_servicedirectory&view=company_tag&layout=' . $layout . $tmpl . '&id='. (int) $this->item->id . $this->referral); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
 
 <div class="main-card">
 

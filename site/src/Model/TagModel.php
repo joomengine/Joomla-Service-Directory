@@ -793,7 +793,7 @@ class TagModel extends ListModel
 		if ($this->allowCompanyEdit($item))
 		{
 			$item->edit_link = Route::_(
-				"/index.php?option=com_servicedirectory&view=company&task=company.edit&id={$item->id}{$return}"
+				"index.php?option=com_servicedirectory&view=company&task=company.edit&id={$item->id}{$return}"
 			);
 		}
 

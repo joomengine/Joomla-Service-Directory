@@ -35,6 +35,8 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use JoomService\Joomla\Data\Factory as DataFactory;
+use JoomService\Joomla\Utilities\Component\Helper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\JsonHelper;
@@ -68,6 +70,80 @@ abstract class ServicedirectoryHelper
 	 * @var      string
 	 */
 	public static $langTag;
+
+
+	/**
+	 * Check whether the user is allowed to add or update an item.
+	 *
+	 * Enforces a per-user item limit while still allowing updates to existing
+	 * records owned by the user.
+	 *
+	 * @param  User|null   $user  The current user.
+	 * @param  array|null  $data  The submitted data (may include 'id' for updates).
+	 *
+	 * @return bool  True to allow the action, false otherwise.
+	 * @since  5.1.4
+	 */
+	public static function allowAddListing(?User $user, ?array $data): bool
+	{
+		// User validation
+		if (!$user || empty($user->id))
+		{
+			return false;
+		}
+
+		// Normalize incoming item ID
+		$itemId = (isset($data['id']) && is_numeric($data['id']) && (int) $data['id'] > 0)
+			? (int) $data['id']
+			: null;
+
+		// Fetch existing item IDs for user
+		$existing = DataFactory::_('Data.Items')
+			->table('company')
+			->values([$user->id], 'created_by', 'id');
+
+		// Normalize DB result to array
+		if (!is_array($existing))
+		{
+			$existing = [];
+		}
+
+		// Clean + normalize to integers
+		$existing = array_values(array_filter(array_map('intval', $existing)));
+
+		// Count existing items
+		$count = count($existing);
+
+		// Fetch maximum allowed listings
+		$max = (int) Helper::getParams('com_servicedirectory')
+			->get('max_listings', 1);
+
+		// Ensure sane configuration
+		if ($max < 1)
+		{
+			return false;
+		}
+
+		// ---------- UPDATE MODE ----------
+		// Item exists and belongs to user → always allow
+		if ($itemId !== null && in_array($itemId, $existing, true))
+		{
+			return true;
+		}
+
+		// ---------- CREATE MODE ----------
+		// No ID in request OR ID not owned by user = new item
+
+		// Already at or above max → deny
+		if ($count >= $max)
+		{
+			return false;
+		}
+
+		// Below max → allow new item
+		return true;
+	}
+
 
 	// <<<=== Privacy integration with Joomla Privacy suite ===>>>
 

@@ -227,14 +227,16 @@
 			type="radio"
 			name="show_login"
 			label="COM_SERVICEDIRECTORY_CONFIG_SHOW_LOGIN_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_SHOW_LOGIN_DESCRIPTION"
 			layout="joomla.form.field.radio.switcher"
 			default="0"
-			filter="integer">
+			filter="integer"
+			>
 			<!-- Option Set. -->
-			<option value="1">
-				COM_SERVICEDIRECTORY_CONFIG_YES</option>
 			<option value="0">
 				COM_SERVICEDIRECTORY_CONFIG_NO</option>
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>
 		</field>
 	</fieldset>
 	<fieldset
@@ -247,6 +249,7 @@
 			name="max_listings"
 			label="COM_SERVICEDIRECTORY_CONFIG_MAX_LISTINGS_LABEL"
 			default="1"
+			description="COM_SERVICEDIRECTORY_CONFIG_MAX_LISTINGS_DESCRIPTION"
 			min="1"
 			max="100"
 			step="1"
@@ -257,6 +260,7 @@
 			name="max_tags"
 			label="COM_SERVICEDIRECTORY_CONFIG_MAX_TAGS_LABEL"
 			default="5"
+			description="COM_SERVICEDIRECTORY_CONFIG_MAX_TAGS_DESCRIPTION"
 			min="1"
 			max="10"
 			step="1"
@@ -267,6 +271,7 @@
 			name="max_expertise"
 			label="COM_SERVICEDIRECTORY_CONFIG_MAX_EXPERTISE_LABEL"
 			default="5"
+			description="COM_SERVICEDIRECTORY_CONFIG_MAX_EXPERTISE_DESCRIPTION"
 			min="1"
 			max="10"
 			step="1"
@@ -277,6 +282,7 @@
 			name="max_languages"
 			label="COM_SERVICEDIRECTORY_CONFIG_MAX_LANGUAGES_LABEL"
 			default="5"
+			description="COM_SERVICEDIRECTORY_CONFIG_MAX_LANGUAGES_DESCRIPTION"
 			min="1"
 			max="10"
 			step="1"
@@ -286,14 +292,15 @@
 			type="radio"
 			name="show_listing_object"
 			label="COM_SERVICEDIRECTORY_CONFIG_SHOW_LISTING_OBJECT_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_SHOW_LISTING_OBJECT_DESCRIPTION"
 			layout="joomla.form.field.radio.switcher"
 			default="0"
 			filter="integer">
 			<!-- Option Set. -->
-			<option value="1">
-				COM_SERVICEDIRECTORY_CONFIG_YES</option>
 			<option value="0">
 				COM_SERVICEDIRECTORY_CONFIG_NO</option>
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>
 		</field>
 	</fieldset>
 	<fieldset
@@ -305,14 +312,15 @@
 			type="radio"
 			name="sef_ids"
 			label="COM_SERVICEDIRECTORY_CONFIG_SEF_IDS_LABEL"
+			description="COM_SERVICEDIRECTORY_CONFIG_SEF_IDS_DESCRIPTION"
 			layout="joomla.form.field.radio.switcher"
 			default="1"
 			filter="integer">
 			<!-- Option Set. -->
-			<option value="1">
-				COM_SERVICEDIRECTORY_CONFIG_YES</option>
 			<option value="0">
 				COM_SERVICEDIRECTORY_CONFIG_NO</option>
+			<option value="1">
+				COM_SERVICEDIRECTORY_CONFIG_YES</option>
 		</field>
 	</fieldset>
 	<fieldset
