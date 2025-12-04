@@ -77,6 +77,22 @@ class TicketController extends FormController
 	 */
 	protected $view_list = 'directory';
 
+	/**
+	 * Referral value
+	 *
+	 * @var    string
+	 * @since  5.0
+	 */
+	protected string $ref;
+
+	/**
+	 * Referral ID value
+	 *
+	 * @var    int
+	 * @since  5.0
+	 */
+	protected int $refid;
+
 
 	/**
 	 * Method to edit an existing record.
@@ -248,28 +264,6 @@ class TicketController extends FormController
 		}
 
 		return $append;
-	}
-
-	/**
-	 * Method to run batch operations.
-	 *
-	 * @param   object  $model  The model.
-	 *
-	 * @return  boolean   True if successful, false otherwise and internal error is set.
-	 *
-	 * @since   2.5
-	 */
-	public function batch($model = null)
-	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
-
-		// Set the model
-		$model = $this->getModel('Ticket', '', []);
-
-		// Preset the redirect
-		$this->setRedirect(Route::_('index.php?option=com_servicedirectory&view=tickets' . $this->getRedirectToListAppend(), false));
-
-		return parent::batch($model);
 	}
 
 	/**

@@ -16,17 +16,28 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\HTML\HTMLHelper as Html;
 use JoomService\Component\Servicedirectory\Site\Helper\ServicedirectoryHelper;
+use JoomService\Component\Servicedirectory\Site\Helper\RouteHelper;
 
 // No direct access to this file
 defined('_JEXEC') or die;
 
+
+$id = $this->input->getInt('id', 0);
+$search_link = Route::_(RouteHelper::getLangRoute($id)) . '/';
+$search_value = $this->input->get('search', null, 'STRING');
+
 ?>
 <form action="<?php echo Route::_('index.php?option=com_servicedirectory'); ?>" method="post" name="adminForm" id="adminForm">
 <h1><?php echo $this->lang->name ?? Text::_('COM_SERVICEDIRECTORY_LANGUAGE'); ?></h1>
+<?php echo LayoutHelper::render('searchbox', ['url' => $search_link, 'value' => $search_value]); ?>
 <?php if (!empty($this->items)): ?>
 	<?php echo $this->loadTemplate('companies'); ?>
 <?php else: ?>
-	<div class="alert alert-warning mb-0" role="alert"><?php echo Text::_('COM_SERVICEDIRECTORY_NO_ITEMS_FOUND'); ?></div>
+	<div class="container-xxl my-4">
+		<div class="row">
+			<div class="alert alert-warning mb-0" role="alert"><?php echo Text::_('COM_SERVICEDIRECTORY_NO_ITEMS_FOUND'); ?></div>
+		</div>
+	</div>
 <?php endif; ?>
 
 <?php

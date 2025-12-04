@@ -17,7 +17,6 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="6\.[01234]"/>
-		<sha512>62222ce34989a4d79e9bf867aefc7e8493f7245080fc8cde35d126be7f5081b912c09ab2b16dab12ef90c2d98a7b0c5b84e24c29e0cf440909bf7a7c1512bf3a</sha512>
 	</update>
 	<update>
 		<name>Service Directory</name>
@@ -36,7 +35,6 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="6\.[01234]"/>
-		<sha512>eeb4fae68df50f0fad6c1341ef95c0916b958e5600e97073317841139d58b7185d31950965441d72b28fb41ab9ffc1edc326353d122198358ae0995aa247daab</sha512>
 	</update>
 	<update>
 		<name>Service Directory</name>
@@ -55,6 +53,23 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="6\.[01234]"/>
-		<sha512>f3781cbb4e9e190df38c3fe7fa80ba69bf6f9dbafb158e0426dd4604f2f1ba794450679005a38d0f9f1dad0696e2f22b8b086b2d7d08a0f99bb4fd3b0f7ed5d8</sha512>
+	</update>
+	<update>
+		<name>Service Directory</name>
+		<description>A professional directory component for listing and showcasing service providers.</description>
+		<element>pkg_servicedirectory</element>
+		<type>package</type>
+		<client>site</client>
+		<version>6.0.3</version>
+		<infourl title="Service Directory!">https://github.com/joomengine/Joomla-Service-Directory</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/joomengine/pkg-servicedirectory/archive/refs/tags/v6.0.3.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<maintainer>Lemuel van der Merwe</maintainer>
+		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
+		<targetplatform name="joomla" version="6\.[01234]"/>
 	</update>
 </updates>

@@ -364,6 +364,7 @@ class HtmlView extends BaseHtmlView
 			'a.ordering' => Text::_('JGRID_HEADING_ORDERING'),
 			'a.published' => Text::_('JSTATUS'),
 			'a.name' => Text::_('COM_SERVICEDIRECTORY_CATEGORY_NAME_LABEL'),
+			'g.name' => Text::_('COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_LABEL'),
 			'a.id' => Text::_('JGRID_HEADING_ID')
 		);
 	}

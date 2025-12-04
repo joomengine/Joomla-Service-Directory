@@ -19,6 +19,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
 use JoomService\Joomla\Utilities\JsonHelper;
 use JoomService\Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseInterface;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -48,7 +49,7 @@ class EntityfiletypesField extends ListField
 		// Get the user object.
 		$user = Factory::getApplication()->getIdentity();
 		// Get the database object.
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('a.guid','a.name','a.target'),array('guid','file_type_name','target')));
 		$query->from($db->quoteName('#__servicedirectory_file_type', 'a'));

@@ -47,8 +47,8 @@
 			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
 			<option value="a.published ASC">JSTATUS_ASC</option>
 			<option value="a.published DESC">JSTATUS_DESC</option>
-			<option value="g.name ASC">COM_SERVICEDIRECTORY_FILTER_LANGUAGES_ASCENDING</option>
-			<option value="g.name DESC">COM_SERVICEDIRECTORY_FILTER_LANGUAGES_DESCENDING</option>
+			<option value="g.name ASC">COM_SERVICEDIRECTORY_FILTER_LANGUAGE_ASCENDING</option>
+			<option value="g.name DESC">COM_SERVICEDIRECTORY_FILTER_LANGUAGE_DESCENDING</option>
 			<option value="h.name ASC">COM_SERVICEDIRECTORY_FILTER_COMPANY_ASCENDING</option>
 			<option value="h.name DESC">COM_SERVICEDIRECTORY_FILTER_COMPANY_DESCENDING</option>
 			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>

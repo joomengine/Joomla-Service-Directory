@@ -134,7 +134,7 @@ $images = !empty($bucket) ? array_values($bucket) : [];
 					<div class="uk-card-footer">
 						<button class="uk-button uk-button-danger uk-width-1-1"
 							type="button" uk-icon="trash"
-							onclick="VDMDeleteFiles('file_vdm_uploader', <?php echo json_encode($deleteList); ?>);">
+							onclick="VDMDeleteFiles('file_vdm_uploader', <?php echo $this->escape(json_encode($deleteList)); ?>);">
 						</button>
 					</div>
 				</div>

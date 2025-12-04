@@ -195,8 +195,6 @@
 			multiple="true"
 			required="true">
 			<!-- Option Set. -->
-			<option value="folder">
-				COM_SERVICEDIRECTORY_FILE_TYPE_FOLDER</option>
 			<option value="extension">
 				COM_SERVICEDIRECTORY_FILE_TYPE_EXTENSION</option>
 			<option value="company">

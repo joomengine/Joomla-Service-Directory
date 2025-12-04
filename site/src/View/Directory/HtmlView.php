@@ -215,21 +215,6 @@ class HtmlView extends BaseHtmlView
 			Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit'.$size.'.js', ['version' => 'auto']);
 			Html::_('script', 'media/com_servicedirectory/uikit-v3/js/uikit-icons'.$size.'.js', ['version' => 'auto']);
 		}
-		// load the meta description
-		if ($this->params->get('menu-meta_description'))
-		{
-			$this->getDocument()->setDescription($this->params->get('menu-meta_description'));
-		}
-		// load the key words if set
-		if ($this->params->get('menu-meta_keywords'))
-		{
-			$this->getDocument()->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
-		}
-		// check the robot params
-		if ($this->params->get('robots'))
-		{
-			$this->getDocument()->setMetadata('robots', $this->params->get('robots'));
-		}
 		// add styles
 		foreach ($this->styles as $style)
 		{

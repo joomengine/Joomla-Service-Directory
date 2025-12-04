@@ -36,7 +36,6 @@ use JoomService\Joomla\Utilities\ObjectHelper;
 use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
-use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\GetHelper;
 
 // No direct access to this file
@@ -1064,42 +1063,71 @@ class CompanyModel extends AdminModel
 			'company_area_of_expertise' => 'company'
 		];
 
-		// we must also update all linked tables
+		// Update all linked tables
 		if (!empty($_tables_array) && UtilitiesArrayHelper::check($pks))
 		{
+			// Ensure field key
 			$_field_key ??= 'guid';
+
+			// Set active component context
 			Helper::setOption('com_servicedirectory');
-			foreach($_tables_array as $_delete_table => $_field_name)
+
+			// Load GUIDs once
+			$_guids = DataFactory::_('Load')->values(
+				['a.' . $_field_key], // selection
+				['a' => 'company'], // source table
+				['a.id' => ['value' => (array) $pks, 'operator' => 'IN']] // where
+			);
+
+			// Abort early if nothing returned
+			if (empty($_guids))
 			{
-				// get the company field key's
-				$_guids = DataFactory::_('Load')->values(
-					['a.guid' => $_field_key], // select
-					['a' => 'company'], // tables
-					['a.id' =>
-						['value' => $pks, 'operator' => 'IN']
-					] // where
-				);
+				return true;
+			}
 
-				// get the linked IDs
-				$_pks = DataFactory::_('Load')->values(
-					['a.id' => 'id'], // select
-					['a' => $_delete_table], // tables
-					['a.' . $_field_name =>
-						['value' => $_guids, 'operator' => 'IN']
-					] // where
-				);
+			// Normalize & deduplicate GUIDs
+			$_guids = array_values(array_unique((array) $_guids));
 
-				if ($_pks !== null)
+			foreach ($_tables_array as $_delete_table => $_field_name)
+			{
+				// Skip invalid configuration
+				if (empty($_delete_table) || empty($_field_name))
 				{
-					// load the model
-					$_Model = Helper::getModel($_delete_table);
-
-					// change publish state to trash (in-case the state was not changed in sync with the parent)
-					$_Model->publish($_pks, -2);
-
-					// delete the items
-					$_Model->delete($_pks);
+					continue;
 				}
+
+				// Load linked item IDs
+				$_pks = DataFactory::_('Load')->values(
+					['a.id' => 'id'], // selection
+					['a' => $_delete_table], // table
+					['a.' . $_field_name => ['value' => $_guids, 'operator' => 'IN']] // where
+				);
+
+				// Skip empty or broken relations
+				if (empty($_pks))
+				{
+					continue;
+				}
+
+				// Normalize keys
+				$_pks = array_values(array_unique((array) $_pks));
+
+				// Load model safely (it throws; it never returns null)
+				try
+				{
+					$_Model = Helper::getModel($_delete_table);
+				}
+				catch (\Throwable $e)
+				{
+					// Intentionally ignored (safe fail)
+					continue;
+				}
+
+				// Move to trash first
+				$_Model->publish($_pks, -2);
+
+				// Delete records
+				$_Model->delete($_pks);
 			}
 		}
 
@@ -1134,382 +1162,67 @@ class CompanyModel extends AdminModel
 			'company_area_of_expertise' => 'company'
 		];
 
-		// we must also update all linked tables
+		// Update all linked tables
 		if (!empty($_tables_array) && UtilitiesArrayHelper::check($pks))
 		{
+			// Ensure field key
 			$_field_key ??= 'guid';
+
+			// Set active component context
 			Helper::setOption('com_servicedirectory');
-			foreach($_tables_array as $_update_table => $_field_name)
-			{
-				// get the company field key's
-				$_guids = DataFactory::_('Load')->values(
-					['a.guid' => $_field_key], // select
-					['a' => 'company'], // tables
-					['a.id' =>
-						['value' => $pks, 'operator' => 'IN']
-					] // where
-				);
 
-				// get the linked IDs
+			// Load GUIDs once
+			$_guids = DataFactory::_('Load')->values(
+				['a.' . $_field_key], // selection
+				['a' => 'company'], // source table
+				['a.id' => ['value' => (array) $pks, 'operator' => 'IN']] // where
+			);
+
+			// Abort early if nothing returned
+			if (empty($_guids))
+			{
+				return true;
+			}
+
+			// Normalize & deduplicate GUIDs
+			$_guids = array_values(array_unique((array) $_guids));
+
+			foreach ($_tables_array as $_update_table => $_field_name)
+			{
+				// Skip invalid config
+				if (empty($_update_table) || empty($_field_name))
+				{
+					continue;
+				}
+
+				// Load linked IDs
 				$_pks = DataFactory::_('Load')->values(
-					['a.id' => 'id'], // select
-					['a' => $_update_table], // tables
-					['a.' . $_field_name =>
-						['value' => $_guids, 'operator' => 'IN']
-					] // where
+					['a.id' => 'id'], // selection
+					['a' => $_update_table], // source table
+					['a.' . $_field_name => ['value' => $_guids, 'operator' => 'IN']] // where
 				);
 
-				if ($_pks !== null)
+				// Skip empty or broken relations
+				if (empty($_pks))
 				{
-					// load the model
+					continue;
+				}
+
+				// Normalize keys
+				$_pks = array_values(array_unique((array) $_pks));
+
+				// Load model safely
+				try {
 					$_Model = Helper::getModel($_update_table);
-
-					// change publish state
-					$_Model->publish($_pks, $value);
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Method to perform batch operations on an item or a set of items.
-	 *
-	 * @param   array  $commands  An array of commands to perform.
-	 * @param   array  $pks       An array of item ids.
-	 * @param   array  $contexts  An array of item contexts.
-	 *
-	 * @return  boolean  Returns true on success, false on failure.
-	 *
-	 * @since   12.2
-	 */
-	public function batch($commands, $pks, $contexts)
-	{
-		// Sanitize ids.
-		$pks = array_unique($pks);
-		ArrayHelper::toInteger($pks);
-
-		// Remove any values of zero.
-		if (array_search(0, $pks, true))
-		{
-			unset($pks[array_search(0, $pks, true)]);
-		}
-
-		if (empty($pks))
-		{
-			$this->setError(Text::_('JGLOBAL_NO_ITEM_SELECTED'));
-			return false;
-		}
-
-		$done = false;
-
-		// Set some needed variables.
-		$this->user ??= $this->getCurrentUser();
-		$this->table = $this->getTable();
-		$this->tableClassName = get_class($this->table);
-		$this->contentType = new UCMType;
-		$this->type = $this->contentType->getTypeByTable($this->tableClassName);
-		$this->canDo = ServicedirectoryHelper::getActions('company');
-		$this->batchSet = true;
-
-		if (!$this->canDo->get('core.batch'))
-		{
-			$this->setError(Text::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
-			return false;
-		}
-
-		if ($this->type == false)
-		{
-			$type = new UCMType;
-			$this->type = $type->getTypeByAlias($this->typeAlias);
-		}
-
-		$this->tagsObserver = $this->table->getObserverOfClass('JTableObserverTags');
-
-		if (!empty($commands['move_copy']))
-		{
-			$cmd = ArrayHelper::getValue($commands, 'move_copy', 'c');
-
-			if ($cmd == 'c')
-			{
-				$result = $this->batchCopy($commands, $pks, $contexts);
-
-				if (is_array($result))
-				{
-					foreach ($result as $old => $new)
-					{
-						$contexts[$new] = $contexts[$old];
-					}
-					$pks = array_values($result);
-				}
-				else
-				{
-					return false;
-				}
-			}
-			elseif ($cmd == 'm' && !$this->batchMove($commands, $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (!$done)
-		{
-			$this->setError(Text::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
-			return false;
-		}
-
-		// Clear the cache
-		$this->cleanCache();
-
-		return true;
-	}
-
-	/**
-	 * Batch copy items to a new category or current.
-	 *
-	 * @param   integer  $values    The new values.
-	 * @param   array    $pks       An array of row IDs.
-	 * @param   array    $contexts  An array of item contexts.
-	 *
-	 * @return  mixed  An array of new IDs on success, boolean false on failure.
-	 *
-	 * @since 12.2
-	 */
-	protected function batchCopy($values, $pks, $contexts)
-	{
-		if (empty($this->batchSet))
-		{
-			// Set some needed variables.
-			$this->user 		= Factory::getApplication()->getIdentity();
-			$this->table 		= $this->getTable();
-			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= Actions::get('company');
-		}
-
-		if (!$this->canDo->get('core.create') && !$this->canDo->get('company.batch'))
-		{
-			return false;
-		}
-
-		// get list of unique fields
-		$uniqueFields = $this->getUniqueFields();
-		// remove move_copy from array
-		unset($values['move_copy']);
-
-		// make sure published is set
-		if (!isset($values['published']))
-		{
-			$values['published'] = 0;
-		}
-		elseif (isset($values['published']) && !$this->canDo->get('core.edit.state'))
-		{
-				$values['published'] = 0;
-		}
-
-		$newIds = [];
-		// Parent exists so let's proceed
-		while (!empty($pks))
-		{
-			// Pop the first ID off the stack
-			$pk = array_shift($pks);
-
-			$this->table->reset();
-
-			// only allow copy if user may edit this item.
-			if (!$this->user->authorise('core.edit', $contexts[$pk]))
-			{
-				// Not fatal error
-				$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
-				continue;
-			}
-
-			// Check that the row actually exists
-			if (!$this->table->load($pk))
-			{
-				if ($error = $this->table->getError())
-				{
-					// Fatal error
-					$this->setError($error);
-					return false;
-				}
-				else
-				{
-					// Not fatal error
-					$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+				} catch (\Throwable $e) {
+					// Intentionally ignored
 					continue;
 				}
-			}
-			list($this->table->name, $this->table->alias) = $this->_generateNewTitle($this->table->alias, $this->table->name);
 
-			// insert all set values
-			if (UtilitiesArrayHelper::check($values))
-			{
-				foreach ($values as $key => $value)
-				{
-					if (strlen($value) > 0 && isset($this->table->$key))
-					{
-						$this->table->$key = $value;
-					}
-				}
-			}
-
-			// update all unique fields
-			if (UtilitiesArrayHelper::check($uniqueFields))
-			{
-				foreach ($uniqueFields as $uniqueField)
-				{
-					$this->table->$uniqueField = $this->generateUnique($uniqueField,$this->table->$uniqueField);
-				}
-			}
-
-			// Reset the ID because we are making a copy
-			$this->table->id = 0;
-
-			// TODO: Deal with ordering?
-			// $this->table->ordering = 1;
-
-			// Check the row.
-			if (!$this->table->check())
-			{
-				$this->setError($this->table->getError());
-
-				return false;
-			}
-
-			if (!empty($this->type))
-			{
-				$this->createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
-			}
-
-			// Store the row.
-			if (!$this->table->store())
-			{
-				$this->setError($this->table->getError());
-
-				return false;
-			}
-
-			// Get the new item ID
-			$newId = $this->table->get('id');
-
-			// Add the new ID to the array
-			$newIds[$pk] = $newId;
-		}
-
-		// Clean the cache
-		$this->cleanCache();
-
-		return $newIds;
-	}
-
-	/**
-	 * Batch move items to a new category
-	 *
-	 * @param   integer  $value     The new category ID.
-	 * @param   array    $pks       An array of row IDs.
-	 * @param   array    $contexts  An array of item contexts.
-	 *
-	 * @return  boolean  True if successful, false otherwise and internal error is set.
-	 *
-	 * @since 12.2
-	 */
-	protected function batchMove($values, $pks, $contexts)
-	{
-		if (empty($this->batchSet))
-		{
-			// Set some needed variables.
-			$this->user		= Factory::getApplication()->getIdentity();
-			$this->table		= $this->getTable();
-			$this->tableClassName	= get_class($this->table);
-			$this->canDo		= Actions::get('company');
-		}
-
-		if (!$this->canDo->get('core.edit') && !$this->canDo->get('company.batch'))
-		{
-			$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
-			return false;
-		}
-
-		// make sure published only updates if user has the permission.
-		if (isset($values['published']) && !$this->canDo->get('core.edit.state'))
-		{
-			unset($values['published']);
-		}
-		// remove move_copy from array
-		unset($values['move_copy']);
-
-		// Parent exists so we proceed
-		foreach ($pks as $pk)
-		{
-			if (!$this->user->authorise('core.edit', $contexts[$pk]))
-			{
-				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
-				return false;
-			}
-
-			// Check that the row actually exists
-			if (!$this->table->load($pk))
-			{
-				if ($error = $this->table->getError())
-				{
-					// Fatal error
-					$this->setError($error);
-					return false;
-				}
-				else
-				{
-					// Not fatal error
-					$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
-					continue;
-				}
-			}
-
-			// insert all set values.
-			if (UtilitiesArrayHelper::check($values))
-			{
-				foreach ($values as $key => $value)
-				{
-					// Do special action for access.
-					if ('access' === $key && strlen($value) > 0)
-					{
-						$this->table->$key = $value;
-					}
-					elseif (strlen($value) > 0 && isset($this->table->$key))
-					{
-						$this->table->$key = $value;
-					}
-				}
-			}
-
-
-			// Check the row.
-			if (!$this->table->check())
-			{
-				$this->setError($this->table->getError());
-
-				return false;
-			}
-
-			if (!empty($this->type))
-			{
-				$this->createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
-			}
-
-			// Store the row.
-			if (!$this->table->store())
-			{
-				$this->setError($this->table->getError());
-
-				return false;
+				// Apply publish state
+				$_Model->publish($_pks, $value);
 			}
 		}
-
-		// Clean the cache
-		$this->cleanCache();
 
 		return true;
 	}
@@ -1664,7 +1377,7 @@ class CompanyModel extends AdminModel
 			}
 		
 			// get max allowed number of items
-			$max = Helper::getParams()->get('max_expertise', 5);
+			$max = Helper::getParams()->get('max_tags', 5);
 			$m = 0;
 		
 			// Build subform data entries

@@ -702,10 +702,10 @@ class Table extends BaseTable implements TableInterface
 				'name' => 'parent_guid',
 				'guid' => '1737aa23-d70c-4ca1-b242-bfa508cb328c',
 				'label' => 'COM_SERVICEDIRECTORY_CATEGORY_PARENT_GUID_LABEL',
-				'type' => 'categories',
+				'type' => 'ModalSelect',
 				'title' => false,
 				'list' => 'categories',
-				'store' => 'json',
+				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
 					'type' => 'VARCHAR(36)',
@@ -896,10 +896,10 @@ class Table extends BaseTable implements TableInterface
 				'name' => 'parent_guid',
 				'guid' => '0e2bbd0e-44a5-47d3-af8b-564d4ac29f9b',
 				'label' => 'COM_SERVICEDIRECTORY_TAG_PARENT_GUID_LABEL',
-				'type' => 'tags',
+				'type' => 'ModalSelect',
 				'title' => false,
 				'list' => 'tags',
-				'store' => 'json',
+				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
 					'type' => 'VARCHAR(36)',
@@ -1312,7 +1312,7 @@ class Table extends BaseTable implements TableInterface
 			],
 			'entity_type' => [
 				'name' => 'entity_type',
-				'guid' => '2e24a9fe-5793-46be-b071-631c0b18d8f4',
+				'guid' => 'fcca71d0-8dbf-4caf-a4aa-80226e33c0e6',
 				'label' => 'COM_SERVICEDIRECTORY_FILE_ENTITY_TYPE_LABEL',
 				'type' => 'list',
 				'title' => false,
@@ -1322,7 +1322,7 @@ class Table extends BaseTable implements TableInterface
 				'db' => [
 					'type' => 'VARCHAR(255)',
 					'default' => '',
-					'GUID' => '2e24a9fe-5793-46be-b071-631c0b18d8f4',
+					'GUID' => 'fcca71d0-8dbf-4caf-a4aa-80226e33c0e6',
 					'null_switch' => 'NULL',
 					'unique_key' => false,
 					'key' => true,
@@ -3054,7 +3054,7 @@ class Table extends BaseTable implements TableInterface
 			],
 			'target' => [
 				'name' => 'target',
-				'guid' => 'e24026ef-294a-48e5-9be0-3f95dcb2b66b',
+				'guid' => '9574b7ec-ffde-4c9d-9844-ed9fdbc536d7',
 				'label' => 'COM_SERVICEDIRECTORY_FILE_TYPE_TARGET_LABEL',
 				'type' => 'list',
 				'title' => false,
@@ -3064,7 +3064,7 @@ class Table extends BaseTable implements TableInterface
 				'db' => [
 					'type' => 'VARCHAR(64)',
 					'default' => '',
-					'GUID' => 'e24026ef-294a-48e5-9be0-3f95dcb2b66b',
+					'GUID' => '9574b7ec-ffde-4c9d-9844-ed9fdbc536d7',
 					'null_switch' => 'NULL',
 					'unique_key' => false,
 					'key' => true,

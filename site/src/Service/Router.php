@@ -104,36 +104,38 @@ class Router extends RouterView
 
 		// Add the (companies:view) router configuration
 		$companies = new RouterViewConfiguration('companies');
-		$companies->setKey('search');
+		$companies->setKey('search')->setParent($directory);
 		$this->registerView($companies);
 
 		// Add the (category:view) router configuration
 		$category = new RouterViewConfiguration('category');
-		$category->setKey('id');
-		$category->setKey('search');
+		$category->setKey('id')->setKey('search')->setParent($directory);
 		$this->registerView($category);
 
 		// Add the (tag:view) router configuration
 		$tag = new RouterViewConfiguration('tag');
-		$tag->setKey('id');
-		$tag->setKey('search');
+		$tag->setKey('id')->setKey('search')->setParent($directory);
 		$this->registerView($tag);
 
 		// Add the (areaofexpertise:view) router configuration
 		$areaofexpertise = new RouterViewConfiguration('areaofexpertise');
-		$areaofexpertise->setKey('id');
-		$areaofexpertise->setKey('search');
+		$areaofexpertise->setKey('id')->setKey('search')->setParent($directory);
 		$this->registerView($areaofexpertise);
 
 		// Add the (lang:view) router configuration
 		$lang = new RouterViewConfiguration('lang');
-		$lang->setKey('id');
+		$lang->setKey('id')->setParent($directory);
 		$this->registerView($lang);
 
 		// Add the (listing:view) router configuration
 		$listing = new RouterViewConfiguration('listing');
-		$listing->setKey('id');
+		$listing->setKey('id')->setParent($directory);
 		$this->registerView($listing);
+
+		// Add the (company:view) router configuration
+		$company = new RouterViewConfiguration('company');
+		$company->setKey('id')->setParent($directory);
+		$this->registerView($company);
 
 		parent::__construct($app, $menu);
 
@@ -312,9 +314,14 @@ class Router extends RouterView
 	 */
 	public function getCategorySegment($id, $query)
 	{
+		$id = (string) ($id ?? '');
+		if (empty($id))
+		{
+			return 'error';
+		}
+
 		if (strpos($id, ':') === false)
 		{
-			$id = (int) $id;
 			$dbquery = $this->db->getQuery(true);
 			$dbquery->select($this->db->quoteName('alias'))
 				->from($this->db->quoteName('#__servicedirectory_category'))
@@ -325,11 +332,11 @@ class Router extends RouterView
 			$id .= ':' . $this->db->loadResult();
 		}
 
-		if ($this->noIDs)
+		if ($this->noIDs && strpos($id, ':') !== false)
 		{
 			list($void, $segment) = explode(':', $id, 2);
 
-			return [$void => $segment];
+			return [(int) $void => $segment];
 		}
 
 		return [(int) $id => $id];
@@ -376,9 +383,14 @@ class Router extends RouterView
 	 */
 	public function getTagSegment($id, $query)
 	{
+		$id = (string) ($id ?? '');
+		if (empty($id))
+		{
+			return 'error';
+		}
+
 		if (strpos($id, ':') === false)
 		{
-			$id = (int) $id;
 			$dbquery = $this->db->getQuery(true);
 			$dbquery->select($this->db->quoteName('alias'))
 				->from($this->db->quoteName('#__servicedirectory_tag'))
@@ -389,11 +401,11 @@ class Router extends RouterView
 			$id .= ':' . $this->db->loadResult();
 		}
 
-		if ($this->noIDs)
+		if ($this->noIDs && strpos($id, ':') !== false)
 		{
 			list($void, $segment) = explode(':', $id, 2);
 
-			return [$void => $segment];
+			return [(int) $void => $segment];
 		}
 
 		return [(int) $id => $id];
@@ -440,9 +452,14 @@ class Router extends RouterView
 	 */
 	public function getAreaofexpertiseSegment($id, $query)
 	{
+		$id = (string) ($id ?? '');
+		if (empty($id))
+		{
+			return 'error';
+		}
+
 		if (strpos($id, ':') === false)
 		{
-			$id = (int) $id;
 			$dbquery = $this->db->getQuery(true);
 			$dbquery->select($this->db->quoteName('alias'))
 				->from($this->db->quoteName('#__servicedirectory_area_of_expertise'))
@@ -453,11 +470,11 @@ class Router extends RouterView
 			$id .= ':' . $this->db->loadResult();
 		}
 
-		if ($this->noIDs)
+		if ($this->noIDs && strpos($id, ':') !== false)
 		{
 			list($void, $segment) = explode(':', $id, 2);
 
-			return [$void => $segment];
+			return [(int) $void => $segment];
 		}
 
 		return [(int) $id => $id];
@@ -504,9 +521,14 @@ class Router extends RouterView
 	 */
 	public function getLangSegment($id, $query)
 	{
+		$id = (string) ($id ?? '');
+		if (empty($id))
+		{
+			return 'error';
+		}
+
 		if (strpos($id, ':') === false)
 		{
-			$id = (int) $id;
 			$dbquery = $this->db->getQuery(true);
 			$dbquery->select($this->db->quoteName('langtag'))
 				->from($this->db->quoteName('#__servicedirectory_language'))
@@ -517,17 +539,29 @@ class Router extends RouterView
 			$id .= ':' . $this->db->loadResult();
 		}
 
-		if ($this->noIDs)
+		if ($this->noIDs && strpos($id, ':') !== false)
 		{
 			list($void, $segment) = explode(':', $id, 2);
 
-			return [$void => $segment];
+			return [(int) $void => $segment];
 		}
 
 		return [(int) $id => $id];
 	}
 
-
+	/**
+	 * Method to get the segment(s) for Company
+	 *
+	 * @param   string  $id     ID of the contact to retrieve the segments for
+	 * @param   array   $query  The request that is built right now
+	 *
+	 * @return  array|string  The segments of this item
+	 * @since   4.4.0
+	 */
+	public function getCompanySegment($id, $query)
+	{
+		return $this->getListingSegment($id, $query);
+	}
 
 	/**
 	 * Method to get the segment(s) for listing
@@ -570,9 +604,14 @@ class Router extends RouterView
 	 */
 	public function getListingSegment($id, $query)
 	{
+		$id = (string) ($id ?? '');
+		if (empty($id))
+		{
+			return 'error';
+		}
+
 		if (strpos($id, ':') === false)
 		{
-			$id = (int) $id;
 			$dbquery = $this->db->getQuery(true);
 			$dbquery->select($this->db->quoteName('alias'))
 				->from($this->db->quoteName('#__servicedirectory_company'))
@@ -583,11 +622,11 @@ class Router extends RouterView
 			$id .= ':' . $this->db->loadResult();
 		}
 
-		if ($this->noIDs)
+		if ($this->noIDs && strpos($id, ':') !== false)
 		{
 			list($void, $segment) = explode(':', $id, 2);
 
-			return [$void => $segment];
+			return [(int) $void => $segment];
 		}
 
 		return [(int) $id => $id];

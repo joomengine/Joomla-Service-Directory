@@ -62,10 +62,10 @@ class CompanyController extends ApiController
 		}
 
 		// check that user does not add more companies than is allowed
-		//if (!ServicedirectoryHelper::allowAdd($user, 'companies'))
-		//{
-		//	return false;
-		//}
+		if (!ServicedirectoryHelper::allowAddListing($user, $data))
+		{
+			return false;
+		}
 		// In the absence of better information, revert to the component permissions.
 		return parent::allowAdd($data);
 	}

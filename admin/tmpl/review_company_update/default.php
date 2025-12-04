@@ -45,7 +45,7 @@ $tmpl    = $tmpl ? '&tmpl=' . $tmpl : '';
 	});
 </script>
 <div id="servicedirectory_loader" style="display: none;">
-<form action="<?php echo Route::_('index.php?option=com_servicedirectory&&layout=' . $layout . $tmpl . '&id='. (int) $this->item->id . $this->referral); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
+<form action="<?php echo Route::_('index.php?option=com_servicedirectory&view=review_company_update&layout=' . $layout . $tmpl . '&id='. (int) $this->item->id . $this->referral); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
 
 <?php echo LayoutHelper::render('review_company_update.details_above', $this); ?>
 <div class="main-card">
