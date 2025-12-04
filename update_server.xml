@@ -17,6 +17,7 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="5\.[01234]"/>
+		<sha512>990980d228b3421347321fd3cee0393d6569dbce3974c0c6ceb1b1ab27fb27e0313fcec1cd3def7dc390eabb7c690385879a9d97585e145d509b892176a7d2d6</sha512>
 	</update>
 	<update>
 		<name>Service Directory</name>
@@ -35,6 +36,7 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="5\.[01234]"/>
+		<sha512>37817e1ce989235107902685cd8190a94352ef5a44c27eb7b2bf3d7d44ba7ed0f364dd7540df9710dc1c15a1cc2c4f0c80ae389e9129477dfa4abfb4c11f0e5d</sha512>
 	</update>
 	<update>
 		<name>Service Directory</name>
@@ -53,6 +55,7 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="5\.[01234]"/>
+		<sha512>c6d5519e835e88853762c91f41d6406724a5d3d8dbe1cfa13c654e8bb939e21df2643bfd3baf473e12a4a0cef3e205085928016068106efe0725db1548e02242</sha512>
 	</update>
 	<update>
 		<name>Service Directory</name>
@@ -71,5 +74,6 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="5\.[01234]"/>
+		<sha512>cceb5feb5586993652cfe65ca46d3299f0a7d1deff595280e6583dd1252d5589e1c27752fa2fff037c22a78e1ca4bbb752a35b8912c9de5ef9cbcea9afe53a5c</sha512>
 	</update>
 </updates>
