@@ -1207,7 +1207,7 @@ abstract class ServicedirectoryHelper
 	/**
 	 *	Can be used to build help urls.
 	 **/
-	public static function getHelpUrl($view)
+	public static function getHelpUrl(string $view)
 	{
 		return false;
 	}

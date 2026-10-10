@@ -20,12 +20,12 @@ defined('_JEXEC') or die;
 
 ?>
 <div id="j-main-container">
-	<div class="main-card" style="padding: 20px;">
-		<div class="row">
-			<div class="col-md-9">
+	<div class="main-card p-3 p-lg-4">
+		<div class="row g-4">
+			<div class="col-12 col-xl-9">
 				<?php echo $this->loadTemplate('main');?>
 			</div>
-			<div class="col-md-3">
+			<div class="col-12 col-xl-3">
 				<?php echo $this->loadTemplate('vdm');?>
 			</div>
 		</div>

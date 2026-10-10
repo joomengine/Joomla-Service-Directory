@@ -46,6 +46,7 @@ use JoomService\Joomla\Servicedirectory\Utilities\Permitted\Actions;
 use JoomService\Joomla\Utilities\FormHelper;
 use Joomla\CMS\User\User;
 use Joomla\CMS\Table\User as TableUser;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -1188,7 +1189,7 @@ abstract class ServicedirectoryHelper
 	/**
 	 *	Can be used to build help urls.
 	 **/
-	public static function getHelpUrl($view)
+	public static function getHelpUrl(string $view)
 	{
 		return false;
 	}
@@ -1201,7 +1202,7 @@ abstract class ServicedirectoryHelper
 		// load user for access menus
 		$user = Factory::getApplication()->getIdentity();
 		// load the submenus to sidebar
-		\JHtmlSidebar::addEntry(Text::_('COM_SERVICEDIRECTORY_SUBMENU_DASHBOARD'), 'index.php?option=com_servicedirectory&view=servicedirectory', $submenu === 'servicedirectory');
+		Sidebar::addEntry(Text::_('COM_SERVICEDIRECTORY_SUBMENU_DASHBOARD'), 'index.php?option=com_servicedirectory&view=servicedirectory', $submenu === 'servicedirectory');
 	}
 
 	/**

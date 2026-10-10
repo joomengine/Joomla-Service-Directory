@@ -36,6 +36,7 @@ use JoomService\Joomla\Utilities\StringHelper as UtilitiesStringHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 use JoomService\Joomla\Utilities\Component\Helper;
+use Joomla\CMS\Access\Exception\NotAllowed;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -176,13 +177,25 @@ class Review_company_updateModel extends AdminModel
 				$item->metadata = $metadata->toArray();
 			}
 
-			// check edit access permissions
-			if (!empty($item->id) && !$this->allowEdit((array) $item))
+			// API reads use read permissions; administrator editing keeps its edit guard.
+			if (!empty($item->id))
 			{
- 				$app = Factory::getApplication();
-  				$app->enqueueMessage(Text::_('Not authorised!'), 'error');
-				$app->redirect('index.php?option=com_servicedirectory');
-				return false;
+				$app = Factory::getApplication();
+
+				if ($app->isClient('api'))
+				{
+					$user = $app->getIdentity();
+					if ((!$user->authorise('core.options', 'com_servicedirectory') && !in_array((int) $item->access, $user->getAuthorisedViewLevels())))
+					{
+						throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+					}
+				}
+				elseif (!$this->allowEdit((array) $item))
+				{
+					$app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+					$app->redirect('index.php?option=com_servicedirectory');
+					return false;
+				}
 			}
 
 			if (!empty($item->addresses))
@@ -429,8 +442,13 @@ class Review_company_updateModel extends AdminModel
 
 		$jinput = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
 
+		// The record being saved decides the permissions, so its id wins over the request.
+		if (is_array($data) && isset($data['id']) && (int) $data['id'] > 0)
+		{
+			$id = (int) $data['id'];
+		}
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
-		if ($jinput->get('a_id'))
+		elseif ($jinput->get('a_id'))
 		{
 			$id = $jinput->get('a_id', 0, 'INT');
 		}
@@ -463,20 +481,46 @@ class Review_company_updateModel extends AdminModel
 		// Modify the form based on Edit Creaded By access controls.
 		if (!$user->authorise('core.edit.created_by', 'com_servicedirectory'))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'disabled', 'true');
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'readonly', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created_by', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created_by');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created_by', 'disabled', 'true');
+				$form->setFieldAttribute('created_by', 'readonly', 'true');
+				$form->setFieldAttribute('created_by', 'filter', 'unset');
+			}
 		}
 		// Modify the form based on Edit Creaded Date access controls.
 		if (!$user->authorise('core.edit.created', 'com_servicedirectory'))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created', 'disabled', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created', 'disabled', 'true');
+				$form->setFieldAttribute('created', 'filter', 'unset');
+			}
+		}
+
+		// Omitted PATCH metadata must not be filtered or rebound from storage.
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$submittedApiData = $jinput->get('data', json_decode($jinput->json->getRaw(), true), 'array');
+			foreach (['created', 'created_by'] as $metadataField)
+			{
+				if (!is_array($submittedApiData) || !array_key_exists($metadataField, $submittedApiData))
+				{
+					$form->removeField($metadataField);
+				}
+			}
 		}
 		// Modify the form based on Edit Name access controls.
 		if ($id != 0 && (!$user->authorise('review_company_update.edit.name', 'com_servicedirectory.review_company_update.' . (int) $id))
@@ -858,6 +902,10 @@ class Review_company_updateModel extends AdminModel
 			$form->setValue('guid', null, GuidHelper::get());
 		}
 
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$this->setState('jcb.api.patch.form', $form);
+		}
 		return $form;
 	}
 
@@ -966,7 +1014,7 @@ class Review_company_updateModel extends AdminModel
 		// get user object.
 		$user = $this->getCurrentUser();
 		// get record id.
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+		$recordId = isset($data[$key]) ? (int) $data[$key] : 0;
 
 
 		if ($recordId)
@@ -975,10 +1023,10 @@ class Review_company_updateModel extends AdminModel
 			$permission = $user->authorise('core.edit', 'com_servicedirectory.review_company_update.' . (int) $recordId);
 			if (!$permission)
 			{
-				if ($user->authorise('core.edit.own', 'com_servicedirectory.review_company_update.' . $recordId))
+				if ($user->authorise('core.edit.own', 'com_servicedirectory.review_company_update.' . (int) $recordId))
 				{
 					// Now test the owner is the user.
-					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+					$ownerId = isset($data['created_by']) ? (int) $data['created_by'] : 0;
 					if (empty($ownerId))
 					{
 						return false;
@@ -1151,6 +1199,80 @@ class Review_company_updateModel extends AdminModel
 			$data['metadata'] = (string) $metadata;
 		}
 
+		// The record keys, as every line below expects them: the primary key as an
+		// integer that is never taken from the request (null from the API on create).
+		$data['id'] = (int) ($data['id'] ?? 0);
+
+		// The guid is the server's: an existing record keeps the guid it was stored
+		// with, and the API never takes one from the request.
+		if ($data['id'] > 0)
+		{
+			$data['guid'] = (string) GetHelper::var('review_company_update', $data['id'], 'id', 'guid', '=', 'servicedirectory');
+		}
+		elseif (Factory::getApplication()->isClient('api'))
+		{
+			$data['guid'] = '';
+		}
+		else
+		{
+			$data['guid'] = (string) ($data['guid'] ?? '');
+		}
+
+		// Set the guid while it is empty, not valid, or not unique in this table.
+		while (!GuidHelper::valid($data['guid'], 'review_company_update', $data['id'], 'servicedirectory'))
+		{
+			$data['guid'] = (string) GuidHelper::get();
+		}
+
+		// A new record without an alias gets one from its title when the table checks it.
+		if ($data['id'] === 0 && !isset($data['alias']))
+		{
+			$data['alias'] = '';
+		}
+
+		// Preserve omitted API PATCH values in their original storage representation.
+		$jcbPatchStored = [];
+		$jcbPatchInput = [];
+		$jcbPatchId = $data['id'];
+
+		if ($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api') && $jcbPatchId > 0)
+		{
+			$jcbPatchSubmitted = $input->get('data', json_decode($input->json->getRaw(), true), 'array');
+			$jcbPatchSubmitted = is_array($jcbPatchSubmitted) ? $jcbPatchSubmitted : [];
+			// Joomla's API inserts an empty tags array after validation. It must not
+			// clear omitted relationships or bypass the form's field permissions.
+			$jcbPatchForm = $this->getState('jcb.api.patch.form');
+			if (!array_key_exists('tags', $jcbPatchSubmitted)
+				|| ($jcbPatchForm !== null && (!$jcbPatchForm->getField('tags')
+					|| strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'filter', '')) === 'unset'
+					|| in_array(strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'disabled', '')), ['true', '1'], true))))
+			{
+				unset($data['tags']);
+			}
+
+			$jcbPatchTable = $this->getTable();
+
+			if (!$jcbPatchTable->load($jcbPatchId))
+			{
+				$this->setError(Text::_('JLIB_APPLICATION_ERROR_RECORD_LOAD'));
+
+				return false;
+			}
+
+			foreach ($jcbPatchTable->getFields() as $jcbPatchField)
+			{
+				$jcbPatchName = $jcbPatchField->Field;
+
+				if ($jcbPatchName !== $jcbPatchTable->getKeyName() && $jcbPatchName !== 'guid'
+					&& !array_key_exists($jcbPatchName, $jcbPatchSubmitted)
+					&& array_key_exists($jcbPatchName, $data))
+				{
+					$jcbPatchStored[$jcbPatchName] = $jcbPatchTable->{$jcbPatchName};
+					$jcbPatchInput[$jcbPatchName] = serialize($data[$jcbPatchName]);
+				}
+			}
+		}
+
 
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
@@ -1218,8 +1340,31 @@ class Review_company_updateModel extends AdminModel
 			$data['published']     = 1;
 		}
 
+		// A copy or a custom derivation must follow the normal storage transforms.
+		if ((int) $data['id'] !== $jcbPatchId)
+		{
+			$jcbPatchStored = [];
+		}
+		else
+		{
+			foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
+			{
+				if (!array_key_exists($jcbPatchName, $data)
+					|| serialize($data[$jcbPatchName]) !== $jcbPatchInput[$jcbPatchName])
+				{
+					unset($jcbPatchStored[$jcbPatchName]);
+				}
+			}
+		}
+
+		if (array_key_exists('addresses', $jcbPatchStored)
+			&& (!array_key_exists('addresses', $data) || serialize($data['addresses']) !== $jcbPatchInput['addresses']))
+		{
+			unset($jcbPatchStored['addresses']);
+		}
+
 		// Set the addresses items to data.
-		if (isset($data['addresses']) && is_array($data['addresses']))
+		if (isset($data['addresses']) && is_array($data['addresses']) && !array_key_exists('addresses', $jcbPatchStored))
 		{
 			$addresses = new Registry;
 			$addresses->loadArray($data['addresses']);
@@ -1228,14 +1373,20 @@ class Review_company_updateModel extends AdminModel
 		// Also check permission since the value may be removed due to permissions
 		// Then we do not want to clear it out, but simple ignore the empty addresses
 		elseif (!isset($data['addresses'])
-			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.addresses', 'com_servicedirectory'))
+			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.addresses', 'com_servicedirectory') && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty addresses to data
 			$data['addresses'] = '';
 		}
 
+		if (array_key_exists('languages', $jcbPatchStored)
+			&& (!array_key_exists('languages', $data) || serialize($data['languages']) !== $jcbPatchInput['languages']))
+		{
+			unset($jcbPatchStored['languages']);
+		}
+
 		// Set the languages items to data.
-		if (isset($data['languages']) && is_array($data['languages']))
+		if (isset($data['languages']) && is_array($data['languages']) && !array_key_exists('languages', $jcbPatchStored))
 		{
 			$languages = new Registry;
 			$languages->loadArray($data['languages']);
@@ -1244,14 +1395,20 @@ class Review_company_updateModel extends AdminModel
 		// Also check permission since the value may be removed due to permissions
 		// Then we do not want to clear it out, but simple ignore the empty languages
 		elseif (!isset($data['languages'])
-			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.languages', 'com_servicedirectory'))
+			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.languages', 'com_servicedirectory') && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty languages to data
 			$data['languages'] = '';
 		}
 
+		if (array_key_exists('tags', $jcbPatchStored)
+			&& (!array_key_exists('tags', $data) || serialize($data['tags']) !== $jcbPatchInput['tags']))
+		{
+			unset($jcbPatchStored['tags']);
+		}
+
 		// Set the tags items to data.
-		if (isset($data['tags']) && is_array($data['tags']))
+		if (isset($data['tags']) && is_array($data['tags']) && !array_key_exists('tags', $jcbPatchStored))
 		{
 			$tags = new Registry;
 			$tags->loadArray($data['tags']);
@@ -1260,14 +1417,20 @@ class Review_company_updateModel extends AdminModel
 		// Also check permission since the value may be removed due to permissions
 		// Then we do not want to clear it out, but simple ignore the empty tags
 		elseif (!isset($data['tags'])
-			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.tags', 'com_servicedirectory'))
+			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.tags', 'com_servicedirectory') && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty tags to data
 			$data['tags'] = '';
 		}
 
+		if (array_key_exists('areas_of_expertise', $jcbPatchStored)
+			&& (!array_key_exists('areas_of_expertise', $data) || serialize($data['areas_of_expertise']) !== $jcbPatchInput['areas_of_expertise']))
+		{
+			unset($jcbPatchStored['areas_of_expertise']);
+		}
+
 		// Set the areas_of_expertise items to data.
-		if (isset($data['areas_of_expertise']) && is_array($data['areas_of_expertise']))
+		if (isset($data['areas_of_expertise']) && is_array($data['areas_of_expertise']) && !array_key_exists('areas_of_expertise', $jcbPatchStored))
 		{
 			$areas_of_expertise = new Registry;
 			$areas_of_expertise->loadArray($data['areas_of_expertise']);
@@ -1276,14 +1439,20 @@ class Review_company_updateModel extends AdminModel
 		// Also check permission since the value may be removed due to permissions
 		// Then we do not want to clear it out, but simple ignore the empty areas_of_expertise
 		elseif (!isset($data['areas_of_expertise'])
-			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.areas_of_expertise', 'com_servicedirectory'))
+			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.areas_of_expertise', 'com_servicedirectory') && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty areas_of_expertise to data
 			$data['areas_of_expertise'] = '';
 		}
 
+		if (array_key_exists('portfolios', $jcbPatchStored)
+			&& (!array_key_exists('portfolios', $data) || serialize($data['portfolios']) !== $jcbPatchInput['portfolios']))
+		{
+			unset($jcbPatchStored['portfolios']);
+		}
+
 		// Set the portfolios items to data.
-		if (isset($data['portfolios']) && is_array($data['portfolios']))
+		if (isset($data['portfolios']) && is_array($data['portfolios']) && !array_key_exists('portfolios', $jcbPatchStored))
 		{
 			$portfolios = new Registry;
 			$portfolios->loadArray($data['portfolios']);
@@ -1292,14 +1461,20 @@ class Review_company_updateModel extends AdminModel
 		// Also check permission since the value may be removed due to permissions
 		// Then we do not want to clear it out, but simple ignore the empty portfolios
 		elseif (!isset($data['portfolios'])
-			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.portfolios', 'com_servicedirectory'))
+			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.portfolios', 'com_servicedirectory') && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty portfolios to data
 			$data['portfolios'] = '';
 		}
 
+		if (array_key_exists('social_handles', $jcbPatchStored)
+			&& (!array_key_exists('social_handles', $data) || serialize($data['social_handles']) !== $jcbPatchInput['social_handles']))
+		{
+			unset($jcbPatchStored['social_handles']);
+		}
+
 		// Set the social_handles items to data.
-		if (isset($data['social_handles']) && is_array($data['social_handles']))
+		if (isset($data['social_handles']) && is_array($data['social_handles']) && !array_key_exists('social_handles', $jcbPatchStored))
 		{
 			$social_handles = new Registry;
 			$social_handles->loadArray($data['social_handles']);
@@ -1308,10 +1483,20 @@ class Review_company_updateModel extends AdminModel
 		// Also check permission since the value may be removed due to permissions
 		// Then we do not want to clear it out, but simple ignore the empty social_handles
 		elseif (!isset($data['social_handles'])
-			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.social_handles', 'com_servicedirectory'))
+			&& Factory::getApplication()->getIdentity()->authorise('review_company_update.edit.social_handles', 'com_servicedirectory') && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty social_handles to data
 			$data['social_handles'] = '';
+		}
+
+		// Restore unchanged omitted columns without a lossy decode/encode round trip.
+		foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
+		{
+			if (array_key_exists($jcbPatchName, $data)
+				&& serialize($data[$jcbPatchName]) === $jcbPatchInput[$jcbPatchName])
+			{
+				$data[$jcbPatchName] = $jcbPatchValue;
+			}
 		}
 
 		// Set the Params Items to data

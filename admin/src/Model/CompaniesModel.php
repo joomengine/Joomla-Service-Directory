@@ -339,7 +339,7 @@ class CompaniesModel extends ListModel
 			foreach ($items as $nr => &$item)
 			{
 				// concatenate these fields
-				$item->created_by = $item->created_by . ', ' . $item->created_by;
+				$item->created_by = $item->created_by;
 			}
 		}
 
@@ -653,7 +653,7 @@ class CompaniesModel extends ListModel
 					foreach ($items as $nr => &$item)
 					{
 						// concatenate these fields
-						$item->created_by = $item->created_by . ', ' . $item->created_by;
+						$item->created_by = $item->created_by;
 					}
 				}
 			// Add these translation only if text only is required

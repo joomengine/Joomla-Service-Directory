@@ -10,38 +10,38 @@ Designed for flexibility and ease of use, Service Directory helps you organize a
 + *Author*: [Lemuel van der Merwe](mailto:joomla@vdm.io)
 + *Name*: [Service Directory](https://github.com/joomengine/Joomla-Service-Directory)
 + *First Build*: 4th October, 2025
-+ *Last Build*: 4th December, 2025
++ *Last Build*: 10th October, 2026
 + *Version*: 5.0.x
 + *Copyright*: Copyright (C) 2015 Vast Development Method. All rights reserved.
 + *License*: GNU General Public License version 2 or later; see LICENSE.txt
 
 ## Build Time
 
-**893 Hours** or **111 Eight Hour Days**  (actual time the author saved - 
+**1181 Hours** or **147 Eight Hour Days**  (actual time the author saved - 
 due to [Automated Component Builder](https://www.joomlacomponentbuilder.com))
 
 > (if creating a folder and file took **5 seconds** and writing one line of code took **10 seconds**,
 > never making one mistake or taking any coffee break.)
 
-+ *Line count*: **337947**
-+ *File count*: **1180**
-+ *Folder count*: **226**
++ *Line count*: **446499**
++ *File count*: **1848**
++ *Folder count*: **369**
 
-**581 Hours** or **73 Eight Hour Days** (the actual time the author spent)
+**815 Hours** or **102 Eight Hour Days** (the actual time the author spent)
 
 > (with the following break down:
-> **debugging @223hours** = codingtime / 4;
-> **planning @125hours** = codingtime / 7;
-> **mapping @89hours** = codingtime / 10;
-> **office @142hours** = codingtime / 6;)
+> **debugging @295hours** = codingtime / 4;
+> **planning @165hours** = codingtime / 7;
+> **mapping @165hours** = codingtime / 10;
+> **office @188hours** = codingtime / 6;)
 
-**1474 Hours** or **184 Eight Hour Days**
+**1996 Hours** or **249 Eight Hour Days**
 (a total of the realistic time frame for this project)
 
 > (if creating a folder and file took **5 seconds** and writing one line of code took **10 seconds**,
 > with the normal everyday realities at the office, that includes the component planning, mapping & debugging.)
 
-Project duration: **36.8 weeks** or **7.6 months**
+Project duration: **49.8 weeks** or **10.3 months**
 
 > This **component** was build with a Joomla [Automated Component Builder](https://www.joomlacomponentbuilder.com).
 > Developed by [Llewellyn van der Merwe](mailto:joomla@vdm.io)

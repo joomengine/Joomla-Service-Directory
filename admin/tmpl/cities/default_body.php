@@ -70,26 +70,26 @@ $edit = "index.php?option=com_servicedirectory&view=cities&task=city.edit";
 		<td class="nowrap">
 			<div class="name">
 				<?php if (!$this->isModal && $canDo->get('city.edit')): ?>
-					<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?>"><?php echo $this->escape($item->name); ?></a>
+					<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?>"><?php echo $this->sanitize($item->name); ?></a>
 					<?php if ($item->checked_out): ?>
 						<?php echo Html::_('jgrid.checkedout', $i, $userChkOut->name, $item->checked_out_time, 'cities.', $canCheckin); ?>
 					<?php endif; ?>
 				<?php else: ?>
 					<?php if (!$this->isModal): ?>
-						<?php echo $this->escape($item->name); ?>
+						<?php echo $this->sanitize($item->name); ?>
 					<?php else: ?>
 						<?php
 							$link = "{$edit}&id={$item->id}";
 							$dataId = $item->{$this->getModalTitleKey()} ?? 0;
-							$itemHtml = '<a href="' . $this->escape($link, false) . '">' . $this->escape($item->name, false) . '</a>';
+							$itemHtml = '<a href="' . $this->sanitize($link, false) . '">' . $this->sanitize($item->name, false) . '</a>';
 							$attribs = 'data-content-select data-content-type="com_servicedirectory.city"'
-								. ' data-id="' . $dataId . '"'
-								. ' data-title="' . $this->escape($item->name, false) . '"'
-								. ' data-uri="' . $this->escape($link, false) . '"'
-								. ' data-html="' . $this->escape($itemHtml, false) . '"';
+								. ' data-id="' . $this->sanitize($dataId, false) . '"'
+								. ' data-title="' . $this->sanitize($item->name, false) . '"'
+								. ' data-uri="' . $this->sanitize($link, false) . '"'
+								. ' data-html="' . $this->sanitize($itemHtml, false) . '"';
 						?>
 						<a class="select-link" href="javascript:void(0)" <?php echo $attribs; ?>>
-							<?php echo $this->escape($item->name); ?>
+							<?php echo $this->sanitize($item->name); ?>
 						</a>
 					<?php endif; ?>
 				<?php endif; ?>
@@ -98,17 +98,17 @@ $edit = "index.php?option=com_servicedirectory&view=cities&task=city.edit";
 		<td class="nowrap">
 			<div class="name">
 				<?php if (!$this->isModal && $this->user->authorise('state.edit', 'com_servicedirectory.state.' . (int) ($item->state_id ?? 0))): ?>
-					<a href="index.php?option=com_servicedirectory&view=states&task=state.edit&id=<?php echo $item->state_id; ?>&return=<?php echo $this->return_here; ?>"><?php echo $this->escape($item->state_name); ?></a>
+					<a href="index.php?option=com_servicedirectory&view=states&task=state.edit&id=<?php echo $item->state_id; ?>&return=<?php echo $this->return_here; ?>"><?php echo $this->sanitize($item->state_name); ?></a>
 				<?php else: ?>
-					<?php echo $this->escape($item->state_name); ?>
+					<?php echo $this->sanitize($item->state_name); ?>
 				<?php endif; ?>
 			</div>
 		</td>
 		<td class="hidden-phone">
-			<?php echo $this->escape($item->latitude); ?>
+			<?php echo $this->sanitize($item->latitude); ?>
 		</td>
 		<td class="hidden-phone">
-			<?php echo $this->escape($item->longitude); ?>
+			<?php echo $this->sanitize($item->longitude); ?>
 		</td>
 		<td class="center">
 		<?php if (!$this->isModal && $canDo->get('city.edit.state')) : ?>

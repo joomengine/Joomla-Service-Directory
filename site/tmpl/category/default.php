@@ -29,7 +29,9 @@ $search_value = $this->input->get('search', null, 'STRING');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_servicedirectory'); ?>" method="post" name="adminForm" id="adminForm">
 <?php echo LayoutHelper::render('entitybanner', $this->banner ?? null); ?>
+
 <?php echo LayoutHelper::render('searchbox', ['url' => $search_link, 'value' => $search_value]); ?>
+
 <?php if (!empty($this->items)): ?>
 	<?php echo $this->loadTemplate('companies'); ?>
 <?php else: ?>

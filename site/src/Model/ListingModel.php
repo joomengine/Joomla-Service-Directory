@@ -249,6 +249,11 @@ class ListingModel extends ItemModel
 				if (empty($data))
 				{
 					$app = Factory::getApplication();
+					// The API answers not found instead of redirecting.
+					if ($app->isClient('api'))
+					{
+						throw new \Exception(Text::_('COM_SERVICEDIRECTORY_NOT_FOUND_OR_ACCESS_DENIED'), 404);
+					}
 					// If no data is found redirect to default page and show warning.
 					$app->enqueueMessage(Text::_('COM_SERVICEDIRECTORY_NOT_FOUND_OR_ACCESS_DENIED'), 'warning');
 					$app->redirect(Route::_('index.php?option=com_servicedirectory&view=directory'));
@@ -1244,18 +1249,19 @@ class ListingModel extends ItemModel
 	 * @param   mixed  $var     The output to escape.
 	 * @param   bool   $shorten The switch to shorten.
 	 * @param   int    $length  The shorting length.
+	 * @param   bool   $addTip  Whether to append a tooltip (ellipsis) when shortening (default: false).
 	 *
 	 * @return  mixed  The escaped value.
 	 * @since   5.1.2
 	 */
-	protected function escape($var, bool $shorten = false, int $length = 40)
+	protected function escape($var, bool $shorten = false, int $length = 40, $addTip = false)
 	{
 		if (!is_string($var))
 		{
 			return $var;
 		}
 
-		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
+		return StringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length, $addTip);
 	}
 
 	/**

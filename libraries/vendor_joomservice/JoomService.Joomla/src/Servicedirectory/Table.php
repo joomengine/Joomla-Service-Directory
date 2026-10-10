@@ -332,7 +332,7 @@ class Table extends BaseTable implements TableInterface
 				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
-					'type' => 'CHAR(64)',
+					'type' => 'VARCHAR(255)',
 					'default' => '',
 					'GUID' => '335866ce-b81b-4329-901d-c20254135c9c',
 					'null_switch' => 'NULL',
@@ -829,7 +829,7 @@ class Table extends BaseTable implements TableInterface
 				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
-					'type' => 'CHAR(64)',
+					'type' => 'VARCHAR(255)',
 					'default' => '',
 					'GUID' => '335866ce-b81b-4329-901d-c20254135c9c',
 					'null_switch' => 'NULL',
@@ -1023,7 +1023,7 @@ class Table extends BaseTable implements TableInterface
 				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
-					'type' => 'CHAR(64)',
+					'type' => 'VARCHAR(255)',
 					'default' => '',
 					'GUID' => '335866ce-b81b-4329-901d-c20254135c9c',
 					'null_switch' => 'NULL',
@@ -1221,7 +1221,7 @@ class Table extends BaseTable implements TableInterface
 				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
-					'type' => 'CHAR(64)',
+					'type' => 'VARCHAR(255)',
 					'default' => '',
 					'GUID' => '335866ce-b81b-4329-901d-c20254135c9c',
 					'null_switch' => 'NULL',
@@ -3890,7 +3890,7 @@ class Table extends BaseTable implements TableInterface
 				'store' => NULL,
 				'tab_name' => 'Details',
 				'db' => [
-					'type' => 'CHAR(64)',
+					'type' => 'VARCHAR(255)',
 					'default' => '',
 					'GUID' => '335866ce-b81b-4329-901d-c20254135c9c',
 					'null_switch' => 'NULL',

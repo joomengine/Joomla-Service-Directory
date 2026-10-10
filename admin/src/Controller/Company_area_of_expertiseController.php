@@ -164,7 +164,7 @@ class Company_area_of_expertiseController extends FormController
 		// get user object.
 		$user = $this->app->getIdentity();
 		// get record id.
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+		$recordId = isset($data[$key]) ? (int) $data[$key] : 0;
 
 
 		// Access check.
@@ -180,21 +180,17 @@ class Company_area_of_expertiseController extends FormController
 			$permission = $user->authorise('company_area_of_expertise.edit', 'com_servicedirectory.company_area_of_expertise.' . (int) $recordId);
 			if (!$permission)
 			{
-				if ($user->authorise('company_area_of_expertise.edit.own', 'com_servicedirectory.company_area_of_expertise.' . $recordId))
+				if ($user->authorise('company_area_of_expertise.edit.own', 'com_servicedirectory.company_area_of_expertise.' . (int) $recordId))
 				{
 					// Now test the owner is the user.
-					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
-					if (empty($ownerId))
-					{
-						// Need to do a lookup from the model.
-						$record = $this->getModel()->getItem($recordId);
+					// The owner comes from the stored record, never from $data.
+					$record = $this->getModel()->getItem($recordId);
 
-						if (empty($record))
-						{
-							return false;
-						}
-						$ownerId = $record->created_by;
+					if (empty($record))
+					{
+						return false;
 					}
+					$ownerId = (int) $record->created_by;
 
 					// If the owner matches 'me' then allow.
 					if ($ownerId == $user->id)
