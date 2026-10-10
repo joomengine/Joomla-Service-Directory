@@ -70,33 +70,33 @@ $edit = "index.php?option=com_servicedirectory&view=ticket_comments&task=ticket_
 		<td class="nowrap">
 			<div class="name">
 				<?php if (!$this->isModal && $canDo->get('ticket_comment.edit')): ?>
-					<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?>"><?php echo $this->escape($item->ticket_subject); ?></a>
+					<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?>"><?php echo $this->sanitize($item->ticket_subject); ?></a>
 					<?php if ($item->checked_out): ?>
 						<?php echo Html::_('jgrid.checkedout', $i, $userChkOut->name, $item->checked_out_time, 'ticket_comments.', $canCheckin); ?>
 					<?php endif; ?>
 				<?php else: ?>
 					<?php if (!$this->isModal): ?>
-						<?php echo $this->escape($item->ticket_subject); ?>
+						<?php echo $this->sanitize($item->ticket_subject); ?>
 					<?php else: ?>
 						<?php
 							$link = "{$edit}&id={$item->id}";
 							$dataId = $item->{$this->getModalTitleKey()} ?? 0;
-							$itemHtml = '<a href="' . $this->escape($link, false) . '">' . $this->escape($item->ticket_subject, false) . '</a>';
+							$itemHtml = '<a href="' . $this->sanitize($link, false) . '">' . $this->sanitize($item->ticket_subject, false) . '</a>';
 							$attribs = 'data-content-select data-content-type="com_servicedirectory.ticket_comment"'
-								. ' data-id="' . $dataId . '"'
-								. ' data-title="' . $this->escape($item->ticket_subject, false) . '"'
-								. ' data-uri="' . $this->escape($link, false) . '"'
-								. ' data-html="' . $this->escape($itemHtml, false) . '"';
+								. ' data-id="' . $this->sanitize($dataId, false) . '"'
+								. ' data-title="' . $this->sanitize($item->ticket_subject, false) . '"'
+								. ' data-uri="' . $this->sanitize($link, false) . '"'
+								. ' data-html="' . $this->sanitize($itemHtml, false) . '"';
 						?>
 						<a class="select-link" href="javascript:void(0)" <?php echo $attribs; ?>>
-							<?php echo $this->escape($item->ticket_subject); ?>
+							<?php echo $this->sanitize($item->ticket_subject); ?>
 						</a>
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</td>
 		<td class="hidden-phone">
-			<?php echo $this->escape($item->comment); ?>
+			<?php echo $this->sanitize($item->comment); ?>
 		</td>
 		<td class="center">
 		<?php if (!$this->isModal && $canDo->get('ticket_comment.edit.state')) : ?>

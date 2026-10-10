@@ -33,6 +33,7 @@ use Joomla\CMS\Helper\TagsHelper;
 use JoomService\Joomla\Utilities\GuidHelper;
 use JoomService\Joomla\Utilities\GetHelper;
 use JoomService\Joomla\Utilities\ArrayHelper as UtilitiesArrayHelper;
+use Joomla\CMS\Access\Exception\NotAllowed;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -148,13 +149,25 @@ class File_typeModel extends AdminModel
 				$item->metadata = $metadata->toArray();
 			}
 
-			// check edit access permissions
-			if (!empty($item->id) && !$this->allowEdit((array) $item))
+			// API reads use read permissions; administrator editing keeps its edit guard.
+			if (!empty($item->id))
 			{
- 				$app = Factory::getApplication();
-  				$app->enqueueMessage(Text::_('Not authorised!'), 'error');
-				$app->redirect('index.php?option=com_servicedirectory');
-				return false;
+				$app = Factory::getApplication();
+
+				if ($app->isClient('api'))
+				{
+					$user = $app->getIdentity();
+					if (!($user->authorise('file_type.access', 'com_servicedirectory.file_type.' . $item->id) && $user->authorise('file_type.access', 'com_servicedirectory')) || (!$user->authorise('core.options', 'com_servicedirectory') && !in_array((int) $item->access, $user->getAuthorisedViewLevels())))
+					{
+						throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+					}
+				}
+				elseif (!$this->allowEdit((array) $item))
+				{
+					$app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
+					$app->redirect('index.php?option=com_servicedirectory');
+					return false;
+				}
 			}
 
 			if (!empty($item->target))
@@ -250,8 +263,13 @@ class File_typeModel extends AdminModel
 
 		$jinput = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
 
+		// The record being saved decides the permissions, so its id wins over the request.
+		if (is_array($data) && isset($data['id']) && (int) $data['id'] > 0)
+		{
+			$id = (int) $data['id'];
+		}
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
-		if ($jinput->get('a_id'))
+		elseif ($jinput->get('a_id'))
 		{
 			$id = $jinput->get('a_id', 0, 'INT');
 		}
@@ -285,21 +303,47 @@ class File_typeModel extends AdminModel
 		if ($id != 0 && (!$user->authorise('file_type.edit.created_by', 'com_servicedirectory.file_type.' . (int) $id))
 			|| ($id == 0 && !$user->authorise('file_type.edit.created_by', 'com_servicedirectory')))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'disabled', 'true');
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'readonly', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created_by', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created_by');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created_by', 'disabled', 'true');
+				$form->setFieldAttribute('created_by', 'readonly', 'true');
+				$form->setFieldAttribute('created_by', 'filter', 'unset');
+			}
 		}
 		// Modify the form based on Edit Creaded Date access controls.
 		if ($id != 0 && (!$user->authorise('file_type.edit.created', 'com_servicedirectory.file_type.' . (int) $id))
 			|| ($id == 0 && !$user->authorise('file_type.edit.created', 'com_servicedirectory')))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created', 'disabled', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created', 'disabled', 'true');
+				$form->setFieldAttribute('created', 'filter', 'unset');
+			}
+		}
+
+		// Omitted PATCH metadata must not be filtered or rebound from storage.
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$submittedApiData = $jinput->get('data', json_decode($jinput->json->getRaw(), true), 'array');
+			foreach (['created', 'created_by'] as $metadataField)
+			{
+				if (!is_array($submittedApiData) || !array_key_exists($metadataField, $submittedApiData))
+				{
+					$form->removeField($metadataField);
+				}
+			}
 		}
 		// Modify the form based on Edit Access 'access' controls.
 		if ($id != 0 && (!$user->authorise('file_type.edit.access', 'com_servicedirectory.file_type.' . (int) $id))
@@ -347,6 +391,10 @@ class File_typeModel extends AdminModel
 			$form->setValue('guid', null, GuidHelper::get());
 		}
 
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$this->setState('jcb.api.patch.form', $form);
+		}
 		return $form;
 	}
 
@@ -455,7 +503,7 @@ class File_typeModel extends AdminModel
 		// get user object.
 		$user = $this->getCurrentUser();
 		// get record id.
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+		$recordId = isset($data[$key]) ? (int) $data[$key] : 0;
 
 
 		// Access check.
@@ -471,10 +519,10 @@ class File_typeModel extends AdminModel
 			$permission = $user->authorise('file_type.edit', 'com_servicedirectory.file_type.' . (int) $recordId);
 			if (!$permission)
 			{
-				if ($user->authorise('file_type.edit.own', 'com_servicedirectory.file_type.' . $recordId))
+				if ($user->authorise('file_type.edit.own', 'com_servicedirectory.file_type.' . (int) $recordId))
 				{
 					// Now test the owner is the user.
-					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+					$ownerId = isset($data['created_by']) ? (int) $data['created_by'] : 0;
 					if (empty($ownerId))
 					{
 						return false;
@@ -647,6 +695,74 @@ class File_typeModel extends AdminModel
 			$data['metadata'] = (string) $metadata;
 		}
 
+		// The record keys, as every line below expects them: the primary key as an
+		// integer that is never taken from the request (null from the API on create).
+		$data['id'] = (int) ($data['id'] ?? 0);
+
+		// The guid is the server's: an existing record keeps the guid it was stored
+		// with, and the API never takes one from the request.
+		if ($data['id'] > 0)
+		{
+			$data['guid'] = (string) GetHelper::var('file_type', $data['id'], 'id', 'guid', '=', 'servicedirectory');
+		}
+		elseif (Factory::getApplication()->isClient('api'))
+		{
+			$data['guid'] = '';
+		}
+		else
+		{
+			$data['guid'] = (string) ($data['guid'] ?? '');
+		}
+
+		// Set the guid while it is empty, not valid, or not unique in this table.
+		while (!GuidHelper::valid($data['guid'], 'file_type', $data['id'], 'servicedirectory'))
+		{
+			$data['guid'] = (string) GuidHelper::get();
+		}
+
+		// Preserve omitted API PATCH values in their original storage representation.
+		$jcbPatchStored = [];
+		$jcbPatchInput = [];
+		$jcbPatchId = $data['id'];
+
+		if ($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api') && $jcbPatchId > 0)
+		{
+			$jcbPatchSubmitted = $input->get('data', json_decode($input->json->getRaw(), true), 'array');
+			$jcbPatchSubmitted = is_array($jcbPatchSubmitted) ? $jcbPatchSubmitted : [];
+			// Joomla's API inserts an empty tags array after validation. It must not
+			// clear omitted relationships or bypass the form's field permissions.
+			$jcbPatchForm = $this->getState('jcb.api.patch.form');
+			if (!array_key_exists('tags', $jcbPatchSubmitted)
+				|| ($jcbPatchForm !== null && (!$jcbPatchForm->getField('tags')
+					|| strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'filter', '')) === 'unset'
+					|| in_array(strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'disabled', '')), ['true', '1'], true))))
+			{
+				unset($data['tags']);
+			}
+
+			$jcbPatchTable = $this->getTable();
+
+			if (!$jcbPatchTable->load($jcbPatchId))
+			{
+				$this->setError(Text::_('JLIB_APPLICATION_ERROR_RECORD_LOAD'));
+
+				return false;
+			}
+
+			foreach ($jcbPatchTable->getFields() as $jcbPatchField)
+			{
+				$jcbPatchName = $jcbPatchField->Field;
+
+				if ($jcbPatchName !== $jcbPatchTable->getKeyName() && $jcbPatchName !== 'guid'
+					&& !array_key_exists($jcbPatchName, $jcbPatchSubmitted)
+					&& array_key_exists($jcbPatchName, $data))
+				{
+					$jcbPatchStored[$jcbPatchName] = $jcbPatchTable->{$jcbPatchName};
+					$jcbPatchInput[$jcbPatchName] = serialize($data[$jcbPatchName]);
+				}
+			}
+		}
+
 
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
@@ -662,82 +778,145 @@ class File_typeModel extends AdminModel
 			$data['guid'] = (string) GuidHelper::get();
 		}
 
+		// A copy or a custom derivation must follow the normal storage transforms.
+		if ((int) $data['id'] !== $jcbPatchId)
+		{
+			$jcbPatchStored = [];
+		}
+		else
+		{
+			foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
+			{
+				if (!array_key_exists($jcbPatchName, $data)
+					|| serialize($data[$jcbPatchName]) !== $jcbPatchInput[$jcbPatchName])
+				{
+					unset($jcbPatchStored[$jcbPatchName]);
+				}
+			}
+		}
+
+		if (array_key_exists('target', $jcbPatchStored)
+			&& (!array_key_exists('target', $data) || serialize($data['target']) !== $jcbPatchInput['target']))
+		{
+			unset($jcbPatchStored['target']);
+		}
+
 		// Set the target items to data.
-		if (isset($data['target']) && is_array($data['target']))
+		if (isset($data['target']) && is_array($data['target']) && !array_key_exists('target', $jcbPatchStored))
 		{
 			$target = new Registry;
 			$target->loadArray($data['target']);
 			$data['target'] = (string) $target;
 		}
-		elseif (!isset($data['target']))
+		elseif (!isset($data['target']) && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty target to data
 			$data['target'] = '';
 		}
 
+		if (array_key_exists('crop', $jcbPatchStored)
+			&& (!array_key_exists('crop', $data) || serialize($data['crop']) !== $jcbPatchInput['crop']))
+		{
+			unset($jcbPatchStored['crop']);
+		}
+
 		// Set the crop items to data.
-		if (isset($data['crop']) && is_array($data['crop']))
+		if (isset($data['crop']) && is_array($data['crop']) && !array_key_exists('crop', $jcbPatchStored))
 		{
 			$crop = new Registry;
 			$crop->loadArray($data['crop']);
 			$data['crop'] = (string) $crop;
 		}
-		elseif (!isset($data['crop']))
+		elseif (!isset($data['crop']) && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty crop to data
 			$data['crop'] = '';
 		}
 
+		if (array_key_exists('file_formats', $jcbPatchStored)
+			&& (!array_key_exists('file_formats', $data) || serialize($data['file_formats']) !== $jcbPatchInput['file_formats']))
+		{
+			unset($jcbPatchStored['file_formats']);
+		}
+
 		// Set the file_formats items to data.
-		if (isset($data['file_formats']) && is_array($data['file_formats']))
+		if (isset($data['file_formats']) && is_array($data['file_formats']) && !array_key_exists('file_formats', $jcbPatchStored))
 		{
 			$file_formats = new Registry;
 			$file_formats->loadArray($data['file_formats']);
 			$data['file_formats'] = (string) $file_formats;
 		}
-		elseif (!isset($data['file_formats']))
+		elseif (!isset($data['file_formats']) && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty file_formats to data
 			$data['file_formats'] = '';
 		}
 
+		if (array_key_exists('document_formats', $jcbPatchStored)
+			&& (!array_key_exists('document_formats', $data) || serialize($data['document_formats']) !== $jcbPatchInput['document_formats']))
+		{
+			unset($jcbPatchStored['document_formats']);
+		}
+
 		// Set the document_formats items to data.
-		if (isset($data['document_formats']) && is_array($data['document_formats']))
+		if (isset($data['document_formats']) && is_array($data['document_formats']) && !array_key_exists('document_formats', $jcbPatchStored))
 		{
 			$document_formats = new Registry;
 			$document_formats->loadArray($data['document_formats']);
 			$data['document_formats'] = (string) $document_formats;
 		}
-		elseif (!isset($data['document_formats']))
+		elseif (!isset($data['document_formats']) && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty document_formats to data
 			$data['document_formats'] = '';
 		}
 
+		if (array_key_exists('media_formats', $jcbPatchStored)
+			&& (!array_key_exists('media_formats', $data) || serialize($data['media_formats']) !== $jcbPatchInput['media_formats']))
+		{
+			unset($jcbPatchStored['media_formats']);
+		}
+
 		// Set the media_formats items to data.
-		if (isset($data['media_formats']) && is_array($data['media_formats']))
+		if (isset($data['media_formats']) && is_array($data['media_formats']) && !array_key_exists('media_formats', $jcbPatchStored))
 		{
 			$media_formats = new Registry;
 			$media_formats->loadArray($data['media_formats']);
 			$data['media_formats'] = (string) $media_formats;
 		}
-		elseif (!isset($data['media_formats']))
+		elseif (!isset($data['media_formats']) && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty media_formats to data
 			$data['media_formats'] = '';
 		}
 
+		if (array_key_exists('image_formats', $jcbPatchStored)
+			&& (!array_key_exists('image_formats', $data) || serialize($data['image_formats']) !== $jcbPatchInput['image_formats']))
+		{
+			unset($jcbPatchStored['image_formats']);
+		}
+
 		// Set the image_formats items to data.
-		if (isset($data['image_formats']) && is_array($data['image_formats']))
+		if (isset($data['image_formats']) && is_array($data['image_formats']) && !array_key_exists('image_formats', $jcbPatchStored))
 		{
 			$image_formats = new Registry;
 			$image_formats->loadArray($data['image_formats']);
 			$data['image_formats'] = (string) $image_formats;
 		}
-		elseif (!isset($data['image_formats']))
+		elseif (!isset($data['image_formats']) && !($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api')))
 		{
 			// Set the empty image_formats to data
 			$data['image_formats'] = '';
+		}
+
+		// Restore unchanged omitted columns without a lossy decode/encode round trip.
+		foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
+		{
+			if (array_key_exists($jcbPatchName, $data)
+				&& serialize($data[$jcbPatchName]) === $jcbPatchInput[$jcbPatchName])
+			{
+				$data[$jcbPatchName] = $jcbPatchValue;
+			}
 		}
 
 		// Set the Params Items to data

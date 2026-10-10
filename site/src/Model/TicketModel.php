@@ -200,18 +200,19 @@ class TicketModel extends AdminModel
 	 * @param   mixed  $var     The output to escape.
 	 * @param   bool   $shorten The switch to shorten.
 	 * @param   int    $length  The shorting length.
+	 * @param   bool   $addTip  Whether to append a tooltip (ellipsis) when shortening (default: false).
 	 *
 	 * @return  mixed  The escaped value.
 	 * @since   5.1.2
 	 */
-	protected function escape($var, bool $shorten = false, int $length = 40)
+	protected function escape($var, bool $shorten = false, int $length = 40, $addTip = false)
 	{
 		if (!is_string($var))
 		{
 			return $var;
 		}
 
-		return UtilitiesStringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length);
+		return UtilitiesStringHelper::html($var, $this->_charset ?? 'UTF-8', $shorten, $length, $addTip);
 	}
 
 	/**
@@ -300,8 +301,13 @@ class TicketModel extends AdminModel
 
 		$jinput = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
 
+		// The record being saved decides the permissions, so its id wins over the request.
+		if (is_array($data) && isset($data['id']) && (int) $data['id'] > 0)
+		{
+			$id = (int) $data['id'];
+		}
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
-		if ($jinput->get('a_id'))
+		elseif ($jinput->get('a_id'))
 		{
 			$id = $jinput->get('a_id', 0, 'INT');
 		}
@@ -335,21 +341,47 @@ class TicketModel extends AdminModel
 		if ($id != 0 && (!$user->authorise('ticket.edit.created_by', 'com_servicedirectory.ticket.' . (int) $id))
 			|| ($id == 0 && !$user->authorise('ticket.edit.created_by', 'com_servicedirectory')))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'disabled', 'true');
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'readonly', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created_by', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created_by');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created_by', 'disabled', 'true');
+				$form->setFieldAttribute('created_by', 'readonly', 'true');
+				$form->setFieldAttribute('created_by', 'filter', 'unset');
+			}
 		}
 		// Modify the form based on Edit Creaded Date access controls.
 		if ($id != 0 && (!$user->authorise('ticket.edit.created', 'com_servicedirectory.ticket.' . (int) $id))
 			|| ($id == 0 && !$user->authorise('ticket.edit.created', 'com_servicedirectory')))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created', 'disabled', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created', 'disabled', 'true');
+				$form->setFieldAttribute('created', 'filter', 'unset');
+			}
+		}
+
+		// Omitted PATCH metadata must not be filtered or rebound from storage.
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$submittedApiData = $jinput->get('data', json_decode($jinput->json->getRaw(), true), 'array');
+			foreach (['created', 'created_by'] as $metadataField)
+			{
+				if (!is_array($submittedApiData) || !array_key_exists($metadataField, $submittedApiData))
+				{
+					$form->removeField($metadataField);
+				}
+			}
 		}
 		// Modify the form based on Edit Access 'access' controls.
 		if ($id != 0 && (!$user->authorise('ticket.edit.access', 'com_servicedirectory.ticket.' . (int) $id))
@@ -499,6 +531,10 @@ class TicketModel extends AdminModel
 			$form->setValue('guid', null, GuidHelper::get());
 		}
 
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$this->setState('jcb.api.patch.form', $form);
+		}
 		return $form;
 	}
 
@@ -607,7 +643,7 @@ class TicketModel extends AdminModel
 		// get user object.
 		$user = $this->getCurrentUser();
 		// get record id.
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+		$recordId = isset($data[$key]) ? (int) $data[$key] : 0;
 
 
 		// Access check.
@@ -623,10 +659,10 @@ class TicketModel extends AdminModel
 			$permission = $user->authorise('ticket.edit', 'com_servicedirectory.ticket.' . (int) $recordId);
 			if (!$permission)
 			{
-				if ($user->authorise('ticket.edit.own', 'com_servicedirectory.ticket.' . $recordId))
+				if ($user->authorise('ticket.edit.own', 'com_servicedirectory.ticket.' . (int) $recordId))
 				{
 					// Now test the owner is the user.
-					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+					$ownerId = isset($data['created_by']) ? (int) $data['created_by'] : 0;
 					if (empty($ownerId))
 					{
 						return false;
@@ -945,6 +981,74 @@ class TicketModel extends AdminModel
 			$data['metadata'] = (string) $metadata;
 		}
 
+		// The record keys, as every line below expects them: the primary key as an
+		// integer that is never taken from the request (null from the API on create).
+		$data['id'] = (int) ($data['id'] ?? 0);
+
+		// The guid is the server's: an existing record keeps the guid it was stored
+		// with, and the API never takes one from the request.
+		if ($data['id'] > 0)
+		{
+			$data['guid'] = (string) GetHelper::var('ticket', $data['id'], 'id', 'guid', '=', 'servicedirectory');
+		}
+		elseif (Factory::getApplication()->isClient('api'))
+		{
+			$data['guid'] = '';
+		}
+		else
+		{
+			$data['guid'] = (string) ($data['guid'] ?? '');
+		}
+
+		// Set the guid while it is empty, not valid, or not unique in this table.
+		while (!GuidHelper::valid($data['guid'], 'ticket', $data['id'], 'servicedirectory'))
+		{
+			$data['guid'] = (string) GuidHelper::get();
+		}
+
+		// Preserve omitted API PATCH values in their original storage representation.
+		$jcbPatchStored = [];
+		$jcbPatchInput = [];
+		$jcbPatchId = $data['id'];
+
+		if ($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api') && $jcbPatchId > 0)
+		{
+			$jcbPatchSubmitted = $input->get('data', json_decode($input->json->getRaw(), true), 'array');
+			$jcbPatchSubmitted = is_array($jcbPatchSubmitted) ? $jcbPatchSubmitted : [];
+			// Joomla's API inserts an empty tags array after validation. It must not
+			// clear omitted relationships or bypass the form's field permissions.
+			$jcbPatchForm = $this->getState('jcb.api.patch.form');
+			if (!array_key_exists('tags', $jcbPatchSubmitted)
+				|| ($jcbPatchForm !== null && (!$jcbPatchForm->getField('tags')
+					|| strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'filter', '')) === 'unset'
+					|| in_array(strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'disabled', '')), ['true', '1'], true))))
+			{
+				unset($data['tags']);
+			}
+
+			$jcbPatchTable = $this->getTable();
+
+			if (!$jcbPatchTable->load($jcbPatchId))
+			{
+				$this->setError(Text::_('JLIB_APPLICATION_ERROR_RECORD_LOAD'));
+
+				return false;
+			}
+
+			foreach ($jcbPatchTable->getFields() as $jcbPatchField)
+			{
+				$jcbPatchName = $jcbPatchField->Field;
+
+				if ($jcbPatchName !== $jcbPatchTable->getKeyName() && $jcbPatchName !== 'guid'
+					&& !array_key_exists($jcbPatchName, $jcbPatchSubmitted)
+					&& array_key_exists($jcbPatchName, $data))
+				{
+					$jcbPatchStored[$jcbPatchName] = $jcbPatchTable->{$jcbPatchName};
+					$jcbPatchInput[$jcbPatchName] = serialize($data[$jcbPatchName]);
+				}
+			}
+		}
+
 
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
@@ -959,20 +1063,66 @@ class TicketModel extends AdminModel
 			// must always be set
 			$data['guid'] = (string) GuidHelper::get();
 		}
-		if (!empty($data['comment']) && is_string($data['comment']) && !empty($data['guid']))
+
+		// A copy or a custom derivation must follow the normal storage transforms.
+		if ((int) $data['id'] !== $jcbPatchId)
 		{
-			$user = $this->getCurrentUser();
-			$ticket = (object) [
-				'guid' => '',
-				'ticket' => $data['guid'],
-				'comment' => $data['comment'],
-				'created_by' => (int) $user->id
-			];
-		
-			DataFactory::_('Data.Item')
-				->table('ticket_comment')->set($ticket, 'guid', 'insert');
-		
-			unset($data['comment']);
+			$jcbPatchStored = [];
+		}
+		else
+		{
+			foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
+			{
+				if (!array_key_exists($jcbPatchName, $data)
+					|| serialize($data[$jcbPatchName]) !== $jcbPatchInput[$jcbPatchName])
+				{
+					unset($jcbPatchStored[$jcbPatchName]);
+				}
+			}
+		}
+
+		if (array_key_exists('comment', $jcbPatchStored)
+			&& (!array_key_exists('comment', $data) || serialize($data['comment']) !== $jcbPatchInput['comment']))
+		{
+			unset($jcbPatchStored['comment']);
+		}
+
+		if (!array_key_exists('comment', $jcbPatchStored))
+		{
+
+			if (array_key_exists('comment', $jcbPatchStored)
+				&& (!array_key_exists('comment', $data) || serialize($data['comment']) !== $jcbPatchInput['comment']))
+			{
+				unset($jcbPatchStored['comment']);
+			}
+			if (!array_key_exists('comment', $jcbPatchStored))
+			{
+				if (!empty($data['comment']) && is_string($data['comment']) && !empty($data['guid']))
+				{
+					$user = $this->getCurrentUser();
+					$ticket = (object) [
+						'guid' => '',
+						'ticket' => $data['guid'],
+						'comment' => $data['comment'],
+						'created_by' => (int) $user->id
+					];
+				
+					DataFactory::_('Data.Item')
+						->table('ticket_comment')->set($ticket, 'guid', 'insert');
+				
+					unset($data['comment']);
+				}
+			}
+		}
+
+		// Restore unchanged omitted columns without a lossy decode/encode round trip.
+		foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
+		{
+			if (array_key_exists($jcbPatchName, $data)
+				&& serialize($data[$jcbPatchName]) === $jcbPatchInput[$jcbPatchName])
+			{
+				$data[$jcbPatchName] = $jcbPatchValue;
+			}
 		}
 
 		// Set the Params Items to data

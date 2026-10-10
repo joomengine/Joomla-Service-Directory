@@ -27,7 +27,7 @@ $search_link = Route::_(RouteHelper::getLangRoute($id)) . '/';
 $search_value = $this->input->get('search', null, 'STRING');
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_servicedirectory'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 <h1><?php echo $this->lang->name ?? Text::_('COM_SERVICEDIRECTORY_LANGUAGE'); ?></h1>
 <?php echo LayoutHelper::render('searchbox', ['url' => $search_link, 'value' => $search_value]); ?>
 <?php if (!empty($this->items)): ?>

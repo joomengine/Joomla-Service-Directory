@@ -389,8 +389,13 @@ class CompanyModel extends AdminModel
 
 		$jinput = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
 
+		// The record being saved decides the permissions, so its id wins over the request.
+		if (is_array($data) && isset($data['id']) && (int) $data['id'] > 0)
+		{
+			$id = (int) $data['id'];
+		}
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
-		if ($jinput->get('a_id'))
+		elseif ($jinput->get('a_id'))
 		{
 			$id = $jinput->get('a_id', 0, 'INT');
 		}
@@ -423,20 +428,46 @@ class CompanyModel extends AdminModel
 		// Modify the form based on Edit Creaded By access controls.
 		if (!$user->authorise('core.edit.created_by', 'com_servicedirectory'))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'disabled', 'true');
-			// Disable fields for display.
-			$form->setFieldAttribute('created_by', 'readonly', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created_by', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created_by');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created_by', 'disabled', 'true');
+				$form->setFieldAttribute('created_by', 'readonly', 'true');
+				$form->setFieldAttribute('created_by', 'filter', 'unset');
+			}
 		}
 		// Modify the form based on Edit Creaded Date access controls.
 		if (!$user->authorise('core.edit.created', 'com_servicedirectory'))
 		{
-			// Disable fields for display.
-			$form->setFieldAttribute('created', 'disabled', 'true');
-			// Disable fields while saving.
-			$form->setFieldAttribute('created', 'filter', 'unset');
+			if ($app->isClient('api'))
+			{
+				// Exclude protected metadata from API validation and binding.
+				$form->removeField('created');
+			}
+			else
+			{
+				// Retain disabled metadata controls in administrator forms.
+				$form->setFieldAttribute('created', 'disabled', 'true');
+				$form->setFieldAttribute('created', 'filter', 'unset');
+			}
+		}
+
+		// Omitted PATCH metadata must not be filtered or rebound from storage.
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$submittedApiData = $jinput->get('data', json_decode($jinput->json->getRaw(), true), 'array');
+			foreach (['created', 'created_by'] as $metadataField)
+			{
+				if (!is_array($submittedApiData) || !array_key_exists($metadataField, $submittedApiData))
+				{
+					$form->removeField($metadataField);
+				}
+			}
 		}
 		// Modify the form based on Edit Name access controls.
 		if ($id != 0 && (!$user->authorise('company.edit.name', 'com_servicedirectory.company.' . (int) $id))
@@ -801,6 +832,10 @@ class CompanyModel extends AdminModel
 			$form->setValue('guid', null, GuidHelper::get());
 		}
 
+		if ($app->isClient('api') && $jinput->getMethod() === 'PATCH')
+		{
+			$this->setState('jcb.api.patch.form', $form);
+		}
 		return $form;
 	}
 
@@ -909,7 +944,7 @@ class CompanyModel extends AdminModel
 		// get user object.
 		$user = $this->getCurrentUser();
 		// get record id.
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+		$recordId = isset($data[$key]) ? (int) $data[$key] : 0;
 
 
 		if ($recordId)
@@ -918,10 +953,10 @@ class CompanyModel extends AdminModel
 			$permission = $user->authorise('core.edit', 'com_servicedirectory.company.' . (int) $recordId);
 			if (!$permission)
 			{
-				if ($user->authorise('core.edit.own', 'com_servicedirectory.company.' . $recordId))
+				if ($user->authorise('core.edit.own', 'com_servicedirectory.company.' . (int) $recordId))
 				{
 					// Now test the owner is the user.
-					$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+					$ownerId = isset($data['created_by']) ? (int) $data['created_by'] : 0;
 					if (empty($ownerId))
 					{
 						return false;
@@ -1252,6 +1287,80 @@ class CompanyModel extends AdminModel
 			$data['metadata'] = (string) $metadata;
 		}
 
+		// The record keys, as every line below expects them: the primary key as an
+		// integer that is never taken from the request (null from the API on create).
+		$data['id'] = (int) ($data['id'] ?? 0);
+
+		// The guid is the server's: an existing record keeps the guid it was stored
+		// with, and the API never takes one from the request.
+		if ($data['id'] > 0)
+		{
+			$data['guid'] = (string) GetHelper::var('company', $data['id'], 'id', 'guid', '=', 'servicedirectory');
+		}
+		elseif (Factory::getApplication()->isClient('api'))
+		{
+			$data['guid'] = '';
+		}
+		else
+		{
+			$data['guid'] = (string) ($data['guid'] ?? '');
+		}
+
+		// Set the guid while it is empty, not valid, or not unique in this table.
+		while (!GuidHelper::valid($data['guid'], 'company', $data['id'], 'servicedirectory'))
+		{
+			$data['guid'] = (string) GuidHelper::get();
+		}
+
+		// A new record without an alias gets one from its title when the table checks it.
+		if ($data['id'] === 0 && !isset($data['alias']))
+		{
+			$data['alias'] = '';
+		}
+
+		// Preserve omitted API PATCH values in their original storage representation.
+		$jcbPatchStored = [];
+		$jcbPatchInput = [];
+		$jcbPatchId = $data['id'];
+
+		if ($input->getMethod() === 'PATCH' && Factory::getApplication()->isClient('api') && $jcbPatchId > 0)
+		{
+			$jcbPatchSubmitted = $input->get('data', json_decode($input->json->getRaw(), true), 'array');
+			$jcbPatchSubmitted = is_array($jcbPatchSubmitted) ? $jcbPatchSubmitted : [];
+			// Joomla's API inserts an empty tags array after validation. It must not
+			// clear omitted relationships or bypass the form's field permissions.
+			$jcbPatchForm = $this->getState('jcb.api.patch.form');
+			if (!array_key_exists('tags', $jcbPatchSubmitted)
+				|| ($jcbPatchForm !== null && (!$jcbPatchForm->getField('tags')
+					|| strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'filter', '')) === 'unset'
+					|| in_array(strtolower((string) $jcbPatchForm->getFieldAttribute('tags', 'disabled', '')), ['true', '1'], true))))
+			{
+				unset($data['tags']);
+			}
+
+			$jcbPatchTable = $this->getTable();
+
+			if (!$jcbPatchTable->load($jcbPatchId))
+			{
+				$this->setError(Text::_('JLIB_APPLICATION_ERROR_RECORD_LOAD'));
+
+				return false;
+			}
+
+			foreach ($jcbPatchTable->getFields() as $jcbPatchField)
+			{
+				$jcbPatchName = $jcbPatchField->Field;
+
+				if ($jcbPatchName !== $jcbPatchTable->getKeyName() && $jcbPatchName !== 'guid'
+					&& !array_key_exists($jcbPatchName, $jcbPatchSubmitted)
+					&& array_key_exists($jcbPatchName, $data))
+				{
+					$jcbPatchStored[$jcbPatchName] = $jcbPatchTable->{$jcbPatchName};
+					$jcbPatchInput[$jcbPatchName] = serialize($data[$jcbPatchName]);
+				}
+			}
+		}
+
 
 		// Set the GUID if empty or not valid
 		if (empty($data['guid']) && $data['id'] > 0)
@@ -1296,176 +1405,297 @@ class CompanyModel extends AdminModel
 				$data['published'] = 0; // unpublish the listing, until its been reviewed
 			}
 		}
-		if (isset($data['addresses']))
+
+		// A copy or a custom derivation must follow the normal storage transforms.
+		if ((int) $data['id'] !== $jcbPatchId)
 		{
-			DataFactory::_('Data.Subform')->table('address')->set($data['addresses'] ?? [], 'guid', 'company', $data['guid'] ?? '');
+			$jcbPatchStored = [];
 		}
-		if (!empty($data['languages']) && is_array($data['languages']))
+		else
 		{
-			$langSub = [];
-			$companyGuid = $data['guid'] ?? 'error';
-		
-			// Retrieve existing language records for this company
-			$existing = DataFactory::_('Data.Items')
-				->table('company_language')
-				->get([$companyGuid], 'company');
-		
-			// Index existing records by language for quick lookup
-			$existingMap = [];
-			if (!empty($existing))
+			foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
 			{
-				foreach ($existing as $row)
+				if (!array_key_exists($jcbPatchName, $data)
+					|| serialize($data[$jcbPatchName]) !== $jcbPatchInput[$jcbPatchName])
 				{
-					if (!empty($row->language))
+					unset($jcbPatchStored[$jcbPatchName]);
+				}
+			}
+		}
+
+		if (array_key_exists('addresses', $jcbPatchStored)
+			&& (!array_key_exists('addresses', $data) || serialize($data['addresses']) !== $jcbPatchInput['addresses']))
+		{
+			unset($jcbPatchStored['addresses']);
+		}
+
+		if (array_key_exists('languages', $jcbPatchStored)
+			&& (!array_key_exists('languages', $data) || serialize($data['languages']) !== $jcbPatchInput['languages']))
+		{
+			unset($jcbPatchStored['languages']);
+		}
+
+		if (array_key_exists('tags', $jcbPatchStored)
+			&& (!array_key_exists('tags', $data) || serialize($data['tags']) !== $jcbPatchInput['tags']))
+		{
+			unset($jcbPatchStored['tags']);
+		}
+
+		if (array_key_exists('areas_of_expertise', $jcbPatchStored)
+			&& (!array_key_exists('areas_of_expertise', $data) || serialize($data['areas_of_expertise']) !== $jcbPatchInput['areas_of_expertise']))
+		{
+			unset($jcbPatchStored['areas_of_expertise']);
+		}
+
+		if (array_key_exists('portfolios', $jcbPatchStored)
+			&& (!array_key_exists('portfolios', $data) || serialize($data['portfolios']) !== $jcbPatchInput['portfolios']))
+		{
+			unset($jcbPatchStored['portfolios']);
+		}
+
+		if (array_key_exists('social_handles', $jcbPatchStored)
+			&& (!array_key_exists('social_handles', $data) || serialize($data['social_handles']) !== $jcbPatchInput['social_handles']))
+		{
+			unset($jcbPatchStored['social_handles']);
+		}
+
+		if (!array_key_exists('addresses', $jcbPatchStored) || !array_key_exists('languages', $jcbPatchStored) || !array_key_exists('tags', $jcbPatchStored) || !array_key_exists('areas_of_expertise', $jcbPatchStored) || !array_key_exists('portfolios', $jcbPatchStored) || !array_key_exists('social_handles', $jcbPatchStored))
+		{
+
+			if (array_key_exists('addresses', $jcbPatchStored)
+				&& (!array_key_exists('addresses', $data) || serialize($data['addresses']) !== $jcbPatchInput['addresses']))
+			{
+				unset($jcbPatchStored['addresses']);
+			}
+			if (!array_key_exists('addresses', $jcbPatchStored))
+			{
+				if (isset($data['addresses']))
+				{
+					DataFactory::_('Data.Subform')->table('address')->set($data['addresses'] ?? [], 'guid', 'company', $data['guid'] ?? '');
+				}
+			}
+
+			if (array_key_exists('languages', $jcbPatchStored)
+				&& (!array_key_exists('languages', $data) || serialize($data['languages']) !== $jcbPatchInput['languages']))
+			{
+				unset($jcbPatchStored['languages']);
+			}
+			if (!array_key_exists('languages', $jcbPatchStored))
+			{
+				if (!empty($data['languages']) && is_array($data['languages']))
+				{
+					$langSub = [];
+					$companyGuid = $data['guid'] ?? 'error';
+				
+					// Retrieve existing language records for this company
+					$existing = DataFactory::_('Data.Items')
+						->table('company_language')
+						->get([$companyGuid], 'company');
+				
+					// Index existing records by language for quick lookup
+					$existingMap = [];
+					if (!empty($existing))
 					{
-						$existingMap[$row->language] = $row->guid ?? '';
+						foreach ($existing as $row)
+						{
+							if (!empty($row->language))
+							{
+								$existingMap[$row->language] = $row->guid ?? '';
+							}
+						}
 					}
-				}
-			}
-		
-			// get max allowed number of items
-			$max = Helper::getParams()->get('max_languages', 5);
-			$m = 0;
-		
-			// Build subform data entries
-			foreach ($data['languages'] as $n => $lang)
-			{
-				if (!is_string($lang) || $lang === '')
-				{
-					continue; // Skip invalid entries
-				}
-		
-				if ($m >= $max)
-				{
-					break;
-				}
-		
-				$langSub["language{$n}"] = [
-					'guid'     => $existingMap[$lang] ?? '',
-					'language' => $lang
-				];
-		
-				$m++;
-			}
-		
-			DataFactory::_('Data.Subform')
-				->table('company_language')
-				->set($langSub, 'guid', 'company', $companyGuid);
-				unset($data['languages']);
-		}
-		if (!empty($data['tags']) && is_array($data['tags']))
-		{
-			$tagSub = [];
-			$companyGuid = $data['guid'] ?? 'error';
-		
-			// Retrieve existing tag records for this company
-			$existing = DataFactory::_('Data.Items')
-				->table('company_tag')
-				->get([$companyGuid], 'company');
-		
-			// Index existing records by tag for quick lookup
-			$existingMap = [];
-			if (!empty($existing))
-			{
-				foreach ($existing as $row)
-				{
-					if (!empty($row->tag))
+				
+					// get max allowed number of items
+					$max = Helper::getParams()->get('max_languages', 5);
+					$m = 0;
+				
+					// Build subform data entries
+					foreach ($data['languages'] as $n => $lang)
 					{
-						$existingMap[$row->tag] = $row->guid ?? '';
+						if (!is_string($lang) || $lang === '')
+						{
+							continue; // Skip invalid entries
+						}
+				
+						if ($m >= $max)
+						{
+							break;
+						}
+				
+						$langSub["language{$n}"] = [
+							'guid'     => $existingMap[$lang] ?? '',
+							'language' => $lang
+						];
+				
+						$m++;
 					}
+				
+					DataFactory::_('Data.Subform')
+						->table('company_language')
+						->set($langSub, 'guid', 'company', $companyGuid);
+						unset($data['languages']);
 				}
 			}
-		
-			// get max allowed number of items
-			$max = Helper::getParams()->get('max_tags', 5);
-			$m = 0;
-		
-			// Build subform data entries
-			foreach ($data['tags'] as $n => $tag)
+
+			if (array_key_exists('tags', $jcbPatchStored)
+				&& (!array_key_exists('tags', $data) || serialize($data['tags']) !== $jcbPatchInput['tags']))
 			{
-				if (!is_string($tag) || $tag === '')
-				{
-					continue; // Skip invalid entries
-				}
-		
-				if ($m >= $max)
-				{
-					break;
-				}
-		
-				$tagSub["tag{$n}"] = [
-					'guid'     => $existingMap[$tag] ?? '',
-					'tag' => $tag
-				];
-		
-				$m++;
+				unset($jcbPatchStored['tags']);
 			}
-		
-			DataFactory::_('Data.Subform')
-				->table('company_tag')
-				->set($tagSub, 'guid', 'company', $companyGuid);
-				unset($data['tags']);
-		}
-		if (!empty($data['areas_of_expertise']) && is_array($data['areas_of_expertise']))
-		{
-			$area_of_expertiseSub = [];
-			$companyGuid = $data['guid'] ?? 'error';
-		
-			// Retrieve existing area_of_expertise records for this company
-			$existing = DataFactory::_('Data.Items')
-				->table('company_area_of_expertise')
-				->get([$companyGuid], 'company');
-		
-			// Index existing records by area_of_expertise for quick lookup
-			$existingMap = [];
-			if (!empty($existing))
+			if (!array_key_exists('tags', $jcbPatchStored))
 			{
-				foreach ($existing as $row)
+				if (!empty($data['tags']) && is_array($data['tags']))
 				{
-					if (!empty($row->area_of_expertise))
+					$tagSub = [];
+					$companyGuid = $data['guid'] ?? 'error';
+				
+					// Retrieve existing tag records for this company
+					$existing = DataFactory::_('Data.Items')
+						->table('company_tag')
+						->get([$companyGuid], 'company');
+				
+					// Index existing records by tag for quick lookup
+					$existingMap = [];
+					if (!empty($existing))
 					{
-						$existingMap[$row->area_of_expertise] = $row->guid ?? '';
+						foreach ($existing as $row)
+						{
+							if (!empty($row->tag))
+							{
+								$existingMap[$row->tag] = $row->guid ?? '';
+							}
+						}
 					}
+				
+					// get max allowed number of items
+					$max = Helper::getParams()->get('max_tags', 5);
+					$m = 0;
+				
+					// Build subform data entries
+					foreach ($data['tags'] as $n => $tag)
+					{
+						if (!is_string($tag) || $tag === '')
+						{
+							continue; // Skip invalid entries
+						}
+				
+						if ($m >= $max)
+						{
+							break;
+						}
+				
+						$tagSub["tag{$n}"] = [
+							'guid'     => $existingMap[$tag] ?? '',
+							'tag' => $tag
+						];
+				
+						$m++;
+					}
+				
+					DataFactory::_('Data.Subform')
+						->table('company_tag')
+						->set($tagSub, 'guid', 'company', $companyGuid);
+						unset($data['tags']);
 				}
 			}
-		
-			// get max allowed number of items
-			$max = Helper::getParams()->get('max_expertise', 5);
-			$m = 0;
-		
-			// Build subform data entries
-			foreach ($data['areas_of_expertise'] as $n => $area_of_expertise)
+
+			if (array_key_exists('areas_of_expertise', $jcbPatchStored)
+				&& (!array_key_exists('areas_of_expertise', $data) || serialize($data['areas_of_expertise']) !== $jcbPatchInput['areas_of_expertise']))
 			{
-				if (!is_string($area_of_expertise) || $area_of_expertise === '')
-				{
-					continue; // Skip invalid entries
-				}
-		
-				if ($m >= $max)
-				{
-					break;
-				}
-		
-				$area_of_expertiseSub["area_of_expertise{$n}"] = [
-					'guid'     => $existingMap[$area_of_expertise] ?? '',
-					'area_of_expertise' => $area_of_expertise
-				];
-		
-				$m++;
+				unset($jcbPatchStored['areas_of_expertise']);
 			}
-		
-			DataFactory::_('Data.Subform')
-				->table('company_area_of_expertise')
-				->set($area_of_expertiseSub, 'guid', 'company', $companyGuid);
-				unset($data['areas_of_expertise']);
+			if (!array_key_exists('areas_of_expertise', $jcbPatchStored))
+			{
+				if (!empty($data['areas_of_expertise']) && is_array($data['areas_of_expertise']))
+				{
+					$area_of_expertiseSub = [];
+					$companyGuid = $data['guid'] ?? 'error';
+				
+					// Retrieve existing area_of_expertise records for this company
+					$existing = DataFactory::_('Data.Items')
+						->table('company_area_of_expertise')
+						->get([$companyGuid], 'company');
+				
+					// Index existing records by area_of_expertise for quick lookup
+					$existingMap = [];
+					if (!empty($existing))
+					{
+						foreach ($existing as $row)
+						{
+							if (!empty($row->area_of_expertise))
+							{
+								$existingMap[$row->area_of_expertise] = $row->guid ?? '';
+							}
+						}
+					}
+				
+					// get max allowed number of items
+					$max = Helper::getParams()->get('max_expertise', 5);
+					$m = 0;
+				
+					// Build subform data entries
+					foreach ($data['areas_of_expertise'] as $n => $area_of_expertise)
+					{
+						if (!is_string($area_of_expertise) || $area_of_expertise === '')
+						{
+							continue; // Skip invalid entries
+						}
+				
+						if ($m >= $max)
+						{
+							break;
+						}
+				
+						$area_of_expertiseSub["area_of_expertise{$n}"] = [
+							'guid'     => $existingMap[$area_of_expertise] ?? '',
+							'area_of_expertise' => $area_of_expertise
+						];
+				
+						$m++;
+					}
+				
+					DataFactory::_('Data.Subform')
+						->table('company_area_of_expertise')
+						->set($area_of_expertiseSub, 'guid', 'company', $companyGuid);
+						unset($data['areas_of_expertise']);
+				}
+			}
+
+			if (array_key_exists('portfolios', $jcbPatchStored)
+				&& (!array_key_exists('portfolios', $data) || serialize($data['portfolios']) !== $jcbPatchInput['portfolios']))
+			{
+				unset($jcbPatchStored['portfolios']);
+			}
+			if (!array_key_exists('portfolios', $jcbPatchStored))
+			{
+				if (isset($data['portfolios']))
+				{
+					DataFactory::_('Data.Subform')->table('portfolio')->set($data['portfolios'] ?? [], 'guid', 'company', $data['guid'] ?? '');
+				}
+			}
+
+			if (array_key_exists('social_handles', $jcbPatchStored)
+				&& (!array_key_exists('social_handles', $data) || serialize($data['social_handles']) !== $jcbPatchInput['social_handles']))
+			{
+				unset($jcbPatchStored['social_handles']);
+			}
+			if (!array_key_exists('social_handles', $jcbPatchStored))
+			{
+				if (isset($data['social_handles']))
+				{
+					DataFactory::_('Data.Subform')->table('social_handle')->set($data['social_handles'] ?? [], 'guid', 'company', $data['guid'] ?? '');
+				}
+			}
 		}
-		if (isset($data['portfolios']))
+
+		// Restore unchanged omitted columns without a lossy decode/encode round trip.
+		foreach ($jcbPatchStored as $jcbPatchName => $jcbPatchValue)
 		{
-			DataFactory::_('Data.Subform')->table('portfolio')->set($data['portfolios'] ?? [], 'guid', 'company', $data['guid'] ?? '');
-		}
-		if (isset($data['social_handles']))
-		{
-			DataFactory::_('Data.Subform')->table('social_handle')->set($data['social_handles'] ?? [], 'guid', 'company', $data['guid'] ?? '');
+			if (array_key_exists($jcbPatchName, $data)
+				&& serialize($data[$jcbPatchName]) === $jcbPatchInput[$jcbPatchName])
+			{
+				$data[$jcbPatchName] = $jcbPatchValue;
+			}
 		}
 
 		// Set the Params Items to data

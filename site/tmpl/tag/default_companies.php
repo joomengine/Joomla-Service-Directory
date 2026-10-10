@@ -25,7 +25,7 @@ defined('_JEXEC') or die;
 		<?php
 			$url = $item->link ?? '#';
 			$name = $this->escape($item->name ?? '');
-			$description = $this->escape($item->description ?? '', true, 100);
+			$description = $this->sanitize($item->description ?? '', true, 100);
 			$logo = is_array($this->logos) ? ($this->logos[$item->guid] ?? null) : null;
 		?>
 		<div class="col">

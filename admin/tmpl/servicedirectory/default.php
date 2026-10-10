@@ -19,14 +19,20 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
 defined('_JEXEC') or die;
 
 ?>
-<div id="j-main-container">
-	<div class="main-card" style="padding: 20px;">
-		<div class="row">
-			<div class="col-md-9">
-				<?php echo $this->loadTemplate('main');?>
+<div id="j-main-container" class="container-fluid">
+	<div class="main-card jcb-dashboard p-3 p-lg-4">
+		<div class="jcb-dashboard__content">
+			<div class="row g-4 align-items-start">
+			<div class="col-12 col-xxl-9">
+				<div class="jcb-dashboard__main d-flex flex-column gap-4">
+					<?php echo $this->loadTemplate('main');?>
+				</div>
 			</div>
-			<div class="col-md-3">
-				<?php echo $this->loadTemplate('vdm');?>
+			<div class="col-12 col-xxl-3">
+				<div class="jcb-dashboard__sidebar d-flex flex-column gap-4">
+					<?php echo $this->loadTemplate('vdm');?>
+				</div>
+			</div>
 			</div>
 		</div>
 	</div>

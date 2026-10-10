@@ -58,7 +58,7 @@ $search_value = $this->input->get('search', null, 'STRING');
 		<?php
 			$url = $item->link ?? null;
 			$name = $this->escape($item->name ?? 'error');
-			$description = $this->escape($item->description ?? '');
+			$description = $this->sanitize($item->description ?? '');
 			$image = $this->images[$item->guid] ?? null;
 		?>
 		<div class="col">

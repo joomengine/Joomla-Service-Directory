@@ -130,6 +130,7 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 			$this->deleteFiles = [
 				'/administrator/components/com_servicedirectory/servicedirectory.php',
 				'/administrator/components/com_servicedirectory/controller.php',
+				'/administrator/components/com_servicedirectory/script.php',
 				'/components/com_servicedirectory/servicedirectory.php',
 				'/components/com_servicedirectory/controller.php',
 				'/components/com_servicedirectory/router.php',
@@ -1676,7 +1677,7 @@ class Com_ServicedirectoryInstallerScript implements InstallerScriptInterface
 			echo '<div style="background-color: #fff;" class="alert alert-info"><a target="_blank" href="https://github.com/joomengine/Joomla-Service-Directory" title="Service Directory">
 				<img src="components/com_servicedirectory/assets/images/vdm-component.jpg"/>
 				</a>
-				<h3>Upgrade to Version 6.0.3 Was Successful! Let us know if anything is not working as expected.</h3></div>';
+				<h3>Upgrade to Version 6.0.4 Was Successful! Let us know if anything is not working as expected.</h3></div>';
 
 			// Add/Update component in the action logs extensions table.
 			$this->setActionLogsExtensions();

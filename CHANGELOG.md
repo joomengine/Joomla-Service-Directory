@@ -1,3 +1,16 @@
+# v6.0.4
+
+- Add comprehensive Joomla Web Services API support for Service Directory resources.
+- Add JSON:API controllers, models, and views for managing directory data.
+- Integrate the API application into the component installation package.
+- Improve security across administrative and frontend controllers and models.
+- Apply security improvements inherited from Joomla Component Builder (JCB).
+- Introduce an improved file management architecture with dedicated handlers,
+  managers, definitions, and service interfaces.
+- Redesign the administration dashboard with a modern, responsive icon grid.
+- Improve company support layouts and frontend presentation.
+- Update database structures to improve alias field compatibility.
+
 # v6.0.3
 
 - Update Site Router to align with the new JCB Router Helper class.

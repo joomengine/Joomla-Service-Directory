@@ -13,7 +13,9 @@ namespace JoomService\Component\Servicedirectory\Api\View\Companies;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
+use Joomla\Registry\Registry;
 use JoomService\Component\Servicedirectory\Administrator\Helper\ServicedirectoryHelper;
+use JoomService\Component\Servicedirectory\Api\Serializer\CompanySerializer;
 
 // No direct access to this file
 \defined('_JEXEC') or die;
@@ -25,4 +27,96 @@ use JoomService\Component\Servicedirectory\Administrator\Helper\Servicedirectory
  */
 class JsonapiView extends BaseApiView
 {
+	/**
+	 * The fields to render items in the documents
+	 *
+	 * @var    array
+	 * @since  4.0.0
+	 */
+	protected $fieldsToRenderList = [
+		'id',
+		'name',
+		'contactname',
+		'category',
+		'created_by',
+		'chamber_of_commerce',
+		'guid',
+		'email',
+		'alias',
+		'company_type',
+		'description',
+		'website',
+		'phone',
+		'companysize',
+		'created',
+		'modified',
+		'modified_by',
+		'published',
+		'ordering',
+		'access',
+		'version',
+		'hits',
+		'metakey',
+		'metadesc',
+		'metadata',
+	];
+
+	/**
+	 * The relationships the items have
+	 *
+	 * @var    array
+	 * @since  4.0.0
+	 */
+	protected $relationship = [
+		'category',
+		'created_by',
+		'modified_by',
+	];
+
+	/**
+	 * Constructor.
+	 *
+	 * @param   array  $config  A named configuration array for object construction.
+	 *                          contentType: the name (optional) of the content type to use for the serialization
+	 *
+	 * @since   4.0.0
+	 */
+	public function __construct($config = [])
+	{
+		if (\array_key_exists('contentType', $config))
+		{
+			$this->serializer = new CompanySerializer($config['contentType']);
+		}
+
+		parent::__construct($config);
+	}
+
+	/**
+	 * Execute and display a template script.
+	 *
+	 * @param   ?array  $items  Array of items
+	 *
+	 * @return  string
+	 *
+	 * @since   4.0.0
+	 */
+	public function displayList(?array $items = null)
+	{
+
+		return parent::displayList($items);
+	}
+
+	/**
+	 * Prepare item before render.
+	 *
+	 * @param   object  $item  The model item
+	 *
+	 * @return  object
+	 *
+	 * @since   4.0.0
+	 */
+	protected function prepareItem($item)
+	{
+		return parent::prepareItem($item);
+	}
 }

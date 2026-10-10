@@ -16,6 +16,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use JoomService\Joomla\Servicedirectory\File\Type;
 use JoomService\Joomla\Servicedirectory\File\Handler;
+use JoomService\Joomla\File\Agent;
 use JoomService\Joomla\Servicedirectory\File\Manager;
 use JoomService\Joomla\Servicedirectory\File\Display;
 use JoomService\Joomla\Servicedirectory\File\Image;
@@ -43,6 +44,9 @@ class File implements ServiceProviderInterface
 
 		$container->alias(Handler::class, 'File.Handler')
 			->share('File.Handler', [$this, 'getHandler'], true);
+
+		$container->alias(Agent::class, 'File.Agent')
+			->share('File.Agent', [$this, 'getAgent'], true);
 
 		$container->alias(Manager::class, 'File.Manager')
 			->share('File.Manager', [$this, 'getManager'], true);
@@ -96,8 +100,23 @@ class File implements ServiceProviderInterface
 			$container->get('Data.Item'),
 			$container->get('Data.Items'),
 			$container->get('File.Type'),
-			$container->get('File.Handler'),
+			$container->get('File.Agent'),
 			$container->get('File.Image')
+		);
+	}
+
+	/**
+	 * Get The Agent Class.
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Agent
+	 * @since   5.1.4
+	 */
+	public function getAgent(Container $container): Agent
+	{
+		return new Agent(
+			$container->get('File.Handler')
 		);
 	}
 

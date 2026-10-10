@@ -70,33 +70,33 @@ $edit = "index.php?option=com_servicedirectory&view=companies&task=company.edit"
 		<td class="nowrap">
 			<div>
 			<?php if (!$this->isModal && $canDo->get('core.edit')): ?>
-				<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?>"><?php echo $this->escape($item->name); ?></a>
+				<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?>"><?php echo $this->sanitize($item->name); ?></a>
 				<?php if ($item->checked_out): ?>
 					<?php echo Html::_('jgrid.checkedout', $i, $userChkOut->name, $item->checked_out_time, 'companies.', $canCheckin); ?>
 				<?php endif; ?>
 			<?php else: ?>
 				<?php if (!$this->isModal): ?>
-					<?php echo $this->escape($item->name); ?>
+					<?php echo $this->sanitize($item->name); ?>
 				<?php else: ?>
 					<?php
 						$link = "{$edit}&id={$item->id}";
 						$dataId = $item->{$this->getModalTitleKey()} ?? 0;
-						$itemHtml = '<a href="' . $this->escape($link, false) . '">' . $this->escape($item->name, false) . '</a>';
+						$itemHtml = '<a href="' . $this->sanitize($link, false) . '">' . $this->sanitize($item->name, false) . '</a>';
 						$attribs = 'data-content-select data-content-type="com_servicedirectory.company"'
-							. ' data-id="' . $dataId . '"'
-							. ' data-title="' . $this->escape($item->name, false) . '"'
-							. ' data-uri="' . $this->escape($link, false) . '"'
-							. ' data-html="' . $this->escape($itemHtml, false) . '"';
+							. ' data-id="' . $this->sanitize($dataId, false) . '"'
+							. ' data-title="' . $this->sanitize($item->name, false) . '"'
+							. ' data-uri="' . $this->sanitize($link, false) . '"'
+							. ' data-html="' . $this->sanitize($itemHtml, false) . '"';
 					?>
 					<a class="select-link" href="javascript:void(0)" <?php echo $attribs; ?>>
-						<?php echo $this->escape($item->name); ?>
+						<?php echo $this->sanitize($item->name); ?>
 					</a>
 				<?php endif; ?>
 			<?php endif; ?><?php if (!empty($item->company_type)): ?> <small>
-			<?php echo $this->escape($item->company_type); ?></small><?php endif; ?>
+			<?php echo $this->sanitize($item->company_type); ?></small><?php endif; ?>
 			<small><ul class="list-unstyled">
 			<?php if (!empty($item->chamber_of_commerce)): ?><li><?php echo Text::_('COM_SERVICEDIRECTORY_CHAMBER_OF_COMMERCE'); ?>: <b> 
-			<?php echo $this->escape($item->chamber_of_commerce); ?></b></li><?php endif; ?>
+			<?php echo $this->sanitize($item->chamber_of_commerce); ?></b></li><?php endif; ?>
 			<?php if (!empty($item->companysize)): ?><li><?php echo Text::_('COM_SERVICEDIRECTORY_COMPANY_SIZE'); ?>:  <b>
 			<?php echo Text::_($item->companysize); ?><b/></li><?php endif; ?>
 			</ul></small>
@@ -105,22 +105,22 @@ $edit = "index.php?option=com_servicedirectory&view=companies&task=company.edit"
 		<td class="hidden-phone">
 			<div><small><ul class="list-unstyled">
 			<?php if (!empty($item->contactname)): ?><li>
-			<?php echo $this->escape($item->contactname); ?></li><?php endif; ?>
+			<?php echo $this->sanitize($item->contactname); ?></li><?php endif; ?>
 			<?php if (!empty($item->email)): ?><li>
-			<?php echo $this->escape($item->email); ?></li><?php endif; ?>
+			<?php echo $this->sanitize($item->email); ?></li><?php endif; ?>
 			<?php if (!empty($item->phone)): ?><li>
-			<?php echo $this->escape($item->phone); ?></li><?php endif; ?>
+			<?php echo $this->sanitize($item->phone); ?></li><?php endif; ?>
 			<?php if (!empty($item->website)): ?><li>
-			<?php echo $this->escape($item->website); ?></li><?php endif; ?>
+			<?php echo $this->sanitize($item->website); ?></li><?php endif; ?>
 			</ul></small>
 			</div>
 		</td>
 		<td class="nowrap">
 			<div class="name">
 				<?php if (!$this->isModal && $this->user->authorise('category.edit', 'com_servicedirectory.category.' . (int) ($item->category_id ?? 0))): ?>
-					<a href="index.php?option=com_servicedirectory&view=categories&task=category.edit&id=<?php echo $item->category_id; ?>&return=<?php echo $this->return_here; ?>"><?php echo $this->escape($item->category_name); ?></a>
+					<a href="index.php?option=com_servicedirectory&view=categories&task=category.edit&id=<?php echo $item->category_id; ?>&return=<?php echo $this->return_here; ?>"><?php echo $this->sanitize($item->category_name); ?></a>
 				<?php else: ?>
-					<?php echo $this->escape($item->category_name); ?>
+					<?php echo $this->sanitize($item->category_name); ?>
 				<?php endif; ?>
 			</div>
 		</td>

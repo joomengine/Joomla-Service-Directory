@@ -35,4 +35,27 @@
       <item>Update depreciated Factory::getDBO() calls to use latest standards. #1</item>
     </change>
   </changelog>
+  <changelog>
+    <element>com_servicedirectory</element>
+    <type>component</type>
+    <version>6.0.4</version>
+    <security>
+      <item>Improve security across administrative and frontend controllers and models.</item>
+      <item>Apply security improvements inherited from Joomla Component Builder (JCB).</item>
+    </security>
+    <addition>
+      <item>Add comprehensive Joomla Web Services API support for Service Directory resources.</item>
+      <item>Add JSON:API controllers, models, and views for managing directory data.</item>
+    </addition>
+    <change>
+      <item>Update database structures to improve alias field compatibility.</item>
+    </change>
+    <note>
+      <item>Integrate the API application into the component installation package.</item>
+      <item>Introduce an improved file management architecture with dedicated handlers,</item>
+      <item>managers, definitions, and service interfaces.</item>
+      <item>Redesign the administration dashboard with a modern, responsive icon grid.</item>
+      <item>Improve company support layouts and frontend presentation.</item>
+    </note>
+  </changelog>
 </changelogs>

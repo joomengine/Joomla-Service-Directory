@@ -92,32 +92,32 @@ $can = Actions::get('ticket');
 	<tr>
 		<td>
 			<?php if (!$displayData->isModal && $canDo->get('ticket.edit')): ?>
-				<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?><?php echo $ref; ?>"><?php echo $displayData->escape($item->subject); ?></a>
+				<a href="<?php echo $edit; ?>&id=<?php echo $item->id; ?><?php echo $ref; ?>"><?php echo $displayData->sanitize($item->subject); ?></a>
 				<?php if ($item->checked_out): ?>
 					<?php echo Html::_('jgrid.checkedout', $i, $userChkOut->name, $item->checked_out_time, 'tickets.', $canCheckin); ?>
 				<?php endif; ?>
 			<?php else: ?>
 				<?php if (!$displayData->isModal): ?>
-					<?php echo $displayData->escape($item->subject); ?>
+					<?php echo $displayData->sanitize($item->subject); ?>
 				<?php else: ?>
 					<?php
 						$link = "{$edit}&id={$item->id}";
 						$dataId = $item->{$displayData->getModalTitleKey()} ?? 0;
-						$itemHtml = '<a href="' . $displayData->escape($link, false) . '">' . $displayData->escape($item->subject, false) . '</a>';
+						$itemHtml = '<a href="' . $displayData->sanitize($link, false) . '">' . $displayData->sanitize($item->subject, false) . '</a>';
 						$attribs = 'data-content-select data-content-type="com_servicedirectory.ticket"'
-							. ' data-id="' . $dataId . '"'
-							. ' data-title="' . $displayData->escape($item->subject, false) . '"'
-							. ' data-uri="' . $displayData->escape($link, false) . '"'
-							. ' data-html="' . $displayData->escape($itemHtml, false) . '"';
+							. ' data-id="' . $displayData->sanitize($dataId, false) . '"'
+							. ' data-title="' . $displayData->sanitize($item->subject, false) . '"'
+							. ' data-uri="' . $displayData->sanitize($link, false) . '"'
+							. ' data-html="' . $displayData->sanitize($itemHtml, false) . '"';
 					?>
 					<a class="select-link" href="javascript:void(0)" <?php echo $attribs; ?>>
-						<?php echo $displayData->escape($item->subject); ?>
+						<?php echo $displayData->sanitize($item->subject); ?>
 					</a>
 				<?php endif; ?>
 			<?php endif; ?>
 		</td>
 		<td>
-			<?php echo $displayData->escape($item->company_name); ?>
+			<?php echo $displayData->sanitize($item->company_name); ?>
 		</td>
 		<td>
 			<?php echo Text::_($item->priority); ?>
