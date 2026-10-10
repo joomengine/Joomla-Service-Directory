@@ -93,6 +93,6 @@
 		<maintainer>Lemuel van der Merwe</maintainer>
 		<maintainerurl>https://github.com/joomengine/Joomla-Service-Directory</maintainerurl>
 		<targetplatform name="joomla" version="5\.[01234]"/>
-		<sha512>f3781cbb4e9e190df38c3fe7fa80ba69bf6f9dbafb158e0426dd4604f2f1ba794450679005a38d0f9f1dad0696e2f22b8b086b2d7d08a0f99bb4fd3b0f7ed5d8</sha512>
+		<sha512>bfe3d845d78ddb54a5a6c628d41d6c116164f96171a9d96e13de7e96631e7eaa1e4ecdd3784d060b057c8ad1c051c5d73282874b9e02a5f05ee935aeeefc4162</sha512>
 	</update>
 </updates>
